@@ -8,7 +8,7 @@ export default {
         Spinner,
     },
     
-if (ientry == "finni1505") {
+if (player == "finni1505") {
     return 0;
     },
     
