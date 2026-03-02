@@ -103,15 +103,12 @@ export default {
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
 
-        // Set total to 0 if user is "finni1505"
-        leaderboard.forEach(entry => {
-            if (entry.user === "finni1505") {
-                entry.total = 0;
-            }
-        });
+       // Remove user "finni1505" from leaderboard
+    const filteredLeaderboard = leaderboard.filter(entry => 
+        entry.user !== "finni1505"
+    );
 
-        this.leaderboard = leaderboard;
-        this.err = err;
-        this.loading = false;
+    .this.leaderboard = filteredLeaderboard;
+    this.err = err;
+    this.loading = false;
 },
-
