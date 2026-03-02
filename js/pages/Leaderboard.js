@@ -8,9 +8,9 @@ export default {
         Spinner,
     },
     
-if (ientry.total == 1995.281) {
+if (score == 1995.281) {
     return 0;
-    }
+    },
     
     data: () => ({
         leaderboard: [],
