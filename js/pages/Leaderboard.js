@@ -8,6 +8,9 @@ export default {
         Spinner,
     },
     
+if (total == 1995.281) {
+    return 0;
+    }
     
     data: () => ({
         leaderboard: [],
