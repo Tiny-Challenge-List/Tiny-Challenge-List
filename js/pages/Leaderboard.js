@@ -113,5 +113,5 @@ export default {
         this.leaderboard = leaderboard;
         this.err = err;
         this.loading = false;
-}
+},
 
