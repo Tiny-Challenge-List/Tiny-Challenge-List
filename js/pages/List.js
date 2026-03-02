@@ -74,10 +74,12 @@ export default {
   if (this.list) {
 
     // Remove records by "finni"
-    this.list.forEach(([level]) => {
+    const hiddenUsers = ["finni"];
+
+this.list.forEach(([level]) => {
   if (level && Array.isArray(level.records)) {
     level.records = level.records.filter(record =>
-      record.user.toLowerCase() !== "finni1505"
+      !hiddenUsers.includes(record.user.toLowerCase())
     );
   }
 });
