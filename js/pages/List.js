@@ -77,7 +77,7 @@ export default {
     this.list.forEach(([level]) => {
       if (level && level.records) {
         level.records = level.records.filter(record =>
-          record.user !== "finni"
+          record.user !== "finni1505"
         );
       }
     });
