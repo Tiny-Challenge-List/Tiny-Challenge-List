@@ -108,7 +108,7 @@ export default {
         entry.user !== "finni1505"
     );
 
-    .this.leaderboard = filteredLeaderboard;
+    this.leaderboard = filteredLeaderboard;
     this.err = err;
     this.loading = false;
 },
