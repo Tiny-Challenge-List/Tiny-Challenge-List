@@ -3,17 +3,10 @@
     "name": "infinity",
     "author": "finni1505",
     "creators": ["saturn"],
-    "verifier": "finni1505",
+    "verifier": "Nuridint3b",
     "verification": "https://www.youtube.com/watch?v=SnmTda_j4v8",
     "percentToQualify": "100",
     "records": [
-        {
-            "user": "Nuridint3b",
-            "link": "https://youtu.be/ufZnTbujbV8?si=fwzLSEFJhxFxkRAN",
-            "percent": 100,
-            "hz": 60,
-            "mobile": "true"
-            },
         {
             "user": "fjkr",
             "link": "https://medal.tv/ru/games/geometry-dash/clips/lcXldOrcad2IbKML2?invite=cr-MSxvY0EsNDM2Nzg5MDc5&v=15",
