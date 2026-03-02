@@ -8,9 +8,6 @@ export default {
         Spinner,
     },
     
-if (user == "finni1505") {
-    return 0;
-    }
     
     data: () => ({
         leaderboard: [],
