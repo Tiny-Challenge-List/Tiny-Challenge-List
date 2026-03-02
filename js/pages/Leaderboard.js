@@ -8,7 +8,7 @@ export default {
         Spinner,
     },
     
-if (score == 1995.281) {
+if (ientry == "finni1505") {
     return 0;
     },
     
