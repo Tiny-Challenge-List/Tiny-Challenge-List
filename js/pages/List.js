@@ -68,23 +68,38 @@ export default {
     },
   },
   async mounted() {
-    this.list = await fetchList();
-    this.editors = await fetchEditors();
-    if (!this.list) {
-      this.errors = [
-        "Failed to load list. Retry in a few minutes or notify list staff.",
-      ];
-    } else {
-      this.errors.push(
-        ...this.list
-          .filter(([_, err]) => err)
-          .map(([_, err]) => `Failed to load level. (${err}.json)`)
-      );
-      if (!this.editors) {
-        this.errors.push("Failed to load list editors.");
+  this.list = await fetchList();
+  this.editors = await fetchEditors();
+
+  if (this.list) {
+
+    // Remove records by "finni"
+    this.list.forEach(([level]) => {
+      if (level && level.records) {
+        level.records = level.records.filter(record =>
+          record.user !== "finni"
+        );
       }
+    });
+
+  }
+
+  if (!this.list) {
+    this.errors = [
+      "Failed to load list. Retry in a few minutes or notify list staff.",
+    ];
+  } else {
+    this.errors.push(
+      ...this.list
+        .filter(([_, err]) => err)
+        .map(([_, err]) => `Failed to load level. (${err}.json)`)
+    );
+    if (!this.editors) {
+      this.errors.push("Failed to load list editors.");
     }
-    this.loading = false;
+  }
+
+  this.loading = false;
   },
   template: `
     <main v-if="loading">
