@@ -8,7 +8,7 @@ export default {
         Spinner,
     },
     
-if (total == 1995.281) {
+if (ientry.total == 1995.281) {
     return 0;
     }
     
