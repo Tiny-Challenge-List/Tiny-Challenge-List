@@ -1,0 +1,29 @@
+{
+    "id": 129226776,
+    "name": "Infinite Colors",
+    "author": "Zis76",
+    "creators": [],
+    "verifier": "zis76",
+    "verification": "https://youtu.be/T5QqulkYZBE",
+    "percentToQualify": "100",
+    "records": [
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=dozfsyBdyLo",
+            "percent": 100,
+            "hz": "CBF"
+        },
+        {
+            "user": "Shluppy Puppy Gabpreme",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1470763754919559282",
+            "hz": "CBF",
+            "percent": 100
+        },
+        {
+            "user": "Sadisyourlife",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1471134463516741875",
+            "hz": "CBF",
+            "percent": 100
+        }
+    ]
+}

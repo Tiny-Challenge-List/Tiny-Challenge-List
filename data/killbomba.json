@@ -1,0 +1,26 @@
+{
+    "id": 131879318,
+    "name": "killbomba",
+    "author": "hypeytw",
+    "creators": [],
+    "verifier": "Maxr",
+    "verification": "https://youtu.be/AY6JJWx852k",
+    "percentToQualify": "100",
+    "fps": "Any",
+    "records": [
+        {
+            "user": "tomato",
+            "link": "https://cdn.discordapp.com/attachments/1413628930065301616/1463702268280045602/alignment_challenge.mp4?ex=6976bef7&is=69756d77&hm=b39be1076d8681335532de183193e0fcf259208f34d1ea3bfdae43319ff360eb&",
+            "hz": "240",
+            "percent": 100
+        },
+         {
+            "user": "Sadisyourlife",
+            "link": "https://cdn.discordapp.com/attachments/1413628930065301616/1469348542085861471/Killbomba.mp4?ex=698754f7&is=69860377&hm=35628a9d4c2d9c8d3964a500b8383d6681c37cf22af10cbf320aea60052b28c7&",
+            "hz": "240",
+            "percent": 100
+        }
+
+    ]
+}
+     

@@ -1,0 +1,54 @@
+{
+    "id": 129190320,
+    "name": "UnOwned",
+    "author": "DuckInTheUSA",
+    "creators": [],
+    "verifier": "DuckInTheUSA",
+    "verification": "https://youtu.be/JSds_aNq7qg",
+    "percentToQualify": "100",
+    "records": [
+         {
+            "user": "Sadisyourlife",
+            "link": "https://cdn.discordapp.com/attachments/1413628930065301616/1448097699089092820/unowned.mp4?ex=693aae53&is=69395cd3&hm=554252af68ce651510936e53d1431f5061da5ca9c90272a7f4a9e60bec8edda7&",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=ADG1OSziI-M",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "zis76",
+            "link": "https://youtu.be/W5zYZ5BjY6k",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1449654940413853761",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1457332143096205353",
+            "hz": "60",
+            "percent": 100,
+            "mobile": "true"
+        },
+        {
+        "user": "Darkcity8",
+        "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1464036363044261969",
+        "hz": "144",
+        "percent": 100
+        },
+        {
+            "user": "aelz",
+            "link": "https://www.youtube.com/live/4QU4yfnmqYw",
+            "hz": "240",
+            "percent": 100
+      }
+    ]
+} 

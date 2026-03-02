@@ -1,0 +1,35 @@
+{
+    "id": 130309345,
+    "name": "rakastan fenttia",
+    "author": "Fentanyl",
+    "creators": [],
+    "verifier": "Fentanyl",
+    "verification": "https://youtu.be/fQ-10w7_xLg?si=jGfS-hk8-d3KMyF9",
+    "percentToQualify": "100",
+    "records": [
+                 {
+            "user": "Maxr",
+            "link": "https://medal.tv/games/geometry-dash/clips/lPwVzEh2fiuz8yDr8?invite=cr-MSxJb2YsNDc0NzU4NTcw&v=300",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Sadisyourlife",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1460715382070317387",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Bananas",
+            "link": "https://medal.tv/games/geometry-dash/clips/lVOeCbVWXdqVNNZuQ?invite=cr-MSxmaXcsMjMzODMwODYy&v=16",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=cn4EQICpltA",
+            "hz": "CBF",
+            "percent": 100
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "id": 129738747,
+    "name": "Wave questionmark",
+    "author": "DuckInTheUSA",
+    "creators": [],
+    "verifier": "DuckInTheUSA",
+    "verification": "https://youtu.be/QNjHUjyAV7I",
+    "percentToQualify": "100",
+    "fps": "Any",
+    "records": [
+          {
+            "user": "Sadisyourlife",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1452103517262315651",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "finni1505",
+            "link": "https://medal.tv/de/games/geometry-dash/clips/lYkAOAIIHGbp-6593?invite=cr-MSxjTm4sMzY5MjUzOTQw&v=30",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=qZSjgSqJihY",
+            "hz": "CBF",
+            "percent": 100
+        }
+    ]
+}

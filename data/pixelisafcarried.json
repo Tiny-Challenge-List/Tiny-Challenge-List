@@ -1,0 +1,24 @@
+{
+    "id": 132913528,
+    "name": "pixel is af carried",
+    "author": "idkthisnamelol",
+    "creators": [],
+    "verifier": "Bananas",
+    "verification": "https://youtu.be/7NRzofz9Arc",
+    "percentToQualify": "100",
+    "fps": "60",
+    "records": [
+        {
+            "user": "tFluffy",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1470719063759261788",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "FoldedZero",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1472854542860292148",
+            "hz": "60",
+            "percent": 100
+        }
+    ]
+}

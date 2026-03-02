@@ -1,0 +1,23 @@
+{
+    "id": 129176312,
+    "name": "Tomato Town",
+    "author": "TomatoKatsup",
+    "creators": [],
+    "verifier": "tomato",
+    "verification": "https://youtu.be/I4bOIi9uL-o",
+    "percentToQualify": "100",
+    "records": [
+        {
+            "user": "zis76",
+            "link": "https://youtu.be/E7hupEM9Cn0?si=BK5cVqspCFJgcQUr",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Shluppy Puppy Gabpreme",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1470307511994417184",
+            "hz": "360",
+            "percent": 100
+        }
+    ]
+}

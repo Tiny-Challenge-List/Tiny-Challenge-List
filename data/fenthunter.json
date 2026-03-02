@@ -1,0 +1,30 @@
+{
+    "id": 133253672,
+    "name": "FentHunter",
+    "author": "FenttiGD",
+    "creators": [],
+    "verifier": "Fentanyl",
+    "verification": "https://www.youtube.com/watch?v=1ETnwRghSBQ",
+    "percentToQualify": "100",
+    "fps": "Any",
+    "records": [
+         {
+            "user": "FJKR",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1472503044074770553",
+            "percent": 100,
+            "hz": "240"
+        },
+          {
+            "user": "Sadisyourlife",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1473273844600017040",
+            "hz": "CBF",
+            "percent": 100
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=Iui1I2TwDl0",
+            "hz": "CBF",
+            "percent": 100
+        }
+    ]
+}

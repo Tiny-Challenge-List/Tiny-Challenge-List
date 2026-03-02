@@ -1,0 +1,55 @@
+{
+    "id": 130444203,
+    "name": "Fluctuation",
+    "author": "Zis76",
+    "creators": [],
+    "verifier": "zis76",
+    "verification": "https://www.youtube.com/watch?v=EESr9I5S_PY",
+    "percentToQualify": "100",
+    "records": [
+        {
+            "user": "finni1505",
+            "link": "https://medal.tv/games/geometry-dash/clips/lQ0CBHvy3oC5dmMxY?invite=cr-MSx0OEQsMzY5MjUzOTQw",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://youtu.be/MXisd6H14Xo?si=8W6_akjRr80FabOP",
+            "hz": "60",
+            "percent": 100,
+            "mobile": "true"
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=ojVElO6ouoo",
+            "hz": "360",
+            "percent": 100
+        },
+        {
+            "user": "Sadisyourlife",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1460714905027215464",
+            "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1461831507827232839",
+            "hz": "CBF",
+            "percent": 100
+        },
+        {
+            "user": "aelz",
+            "link": "https://www.youtube.com/live/Lps_gw0gIuI?si=P6CJIfIamTS9NA5z",
+            "hz": "240",
+            "percent": 100
+      },
+        {
+            "user": "Pillow112",
+            "link": "https://www.youtube.com/watch?v=Wkc51au1waY",
+            "hz": "CBF",
+            "percent": 100
+        }
+    ]
+}
+

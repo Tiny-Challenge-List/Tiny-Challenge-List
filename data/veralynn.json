@@ -1,0 +1,36 @@
+{
+    "id": 132426809,
+    "name": "Vera Lynn",
+    "author": "tFluffy",
+    "creators": ["Probro675"],
+    "verifier": "Probro675",
+    "verification": "https://youtu.be/9NelJXyqsCE?si=x99dHraB5c6CgVhE",
+    "percentToQualify": "100",
+    "fps": "Any",
+    "records": [
+        {
+            "user": "MMB9595",
+            "link": "https://www.youtube.com/watch?v=SF9FmHuRKds",
+            "hz": "CBF",
+            "percent": 100
+        },
+        {
+            "user": "tFluffy",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1467024200937246825",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "Shluppy Puppy Gabpreme",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1469150698816930053",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=46YhhDsd4zU",
+            "hz": "60",
+            "percent": 100
+        }
+    ]
+}
