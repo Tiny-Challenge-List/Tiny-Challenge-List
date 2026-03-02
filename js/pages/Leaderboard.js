@@ -102,16 +102,16 @@ export default {
     },
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
+
+        // Set total to 0 if user is "finni1505"
+        leaderboard.forEach(entry => {
+            if (entry.user === "finni1505") {
+                entry.total = 0;
+            }
+        });
+
         this.leaderboard = leaderboard;
         this.err = err;
-        // Hide loading spinner
         this.loading = false;
-    },
-    methods: {
-        localize,
-    },    
-};
+}
 
-if ("finni1505".equals(player)) {
-    total = 0;
-    }
