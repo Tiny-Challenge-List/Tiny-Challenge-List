@@ -8,9 +8,7 @@ export default {
         Spinner,
     },
     
-if ("finni1505".equals(player)) {
-    total = 0;
-    }
+
     
     data: () => ({
         leaderboard: [],
@@ -111,5 +109,9 @@ if ("finni1505".equals(player)) {
     },
     methods: {
         localize,
-    },
+    },    
 };
+
+if ("finni1505".equals(player)) {
+    total = 0;
+    }
