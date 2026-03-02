@@ -8,8 +8,8 @@ export default {
         Spinner,
     },
     
-if (player.equals("finni1505")) {
-    return 0;
+if ("finni1505".equals(player)) {
+    total = 0;
     }
     
     data: () => ({
