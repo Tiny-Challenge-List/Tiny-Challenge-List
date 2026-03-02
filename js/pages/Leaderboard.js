@@ -100,6 +100,7 @@ export default {
             return this.leaderboard[this.selected];
         },
     },
+    
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
 
@@ -109,6 +110,12 @@ export default {
     );
 
     this.leaderboard = filteredLeaderboard;
-    this.err = err;
-    this.loading = false;
-},
+        this.selected = 0;
+        this.err = err;
+        this.loading = false;
+    },
+
+    methods: {
+        localize,
+    },
+};
