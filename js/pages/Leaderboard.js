@@ -8,9 +8,9 @@ export default {
         Spinner,
     },
     
-if (player == "finni1505") {
+if (player.equals("finni1505")) {
     return 0;
-    },
+    }
     
     data: () => ({
         leaderboard: [],
