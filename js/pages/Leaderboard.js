@@ -8,7 +8,7 @@ export default {
         Spinner,
     },
     
-if (user == "Finni1505") {
+if (user == "finni1505") {
     return 0;
     }
     
