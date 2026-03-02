@@ -7,6 +7,11 @@ export default {
     components: {
         Spinner,
     },
+    
+if (user == "Finni1505") {
+    return 0;
+    }
+    
     data: () => ({
         leaderboard: [],
         loading: true,
