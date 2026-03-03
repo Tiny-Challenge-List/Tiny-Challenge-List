@@ -8,6 +8,12 @@
     "percentToQualify": "100",
     "records": [
         {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=bwrPSrMcVMc",
+            "hz": "360",
+            "percent": 100
+        },
+        {
             "user": "Nuridint3b",
             "link": "https://youtu.be/Rmu1JrzQOBA?si=r-EfGq3Vcb3l6l7-",
             "hz": "60",
