@@ -40,7 +40,14 @@
         {
             "user": "Nuridint3b",
             "link": "https://youtu.be/F9ye3paiEtA?si=Ui6EcYroeP03pG7P",
-            "hz": "CBS",
+            "hz": "60",
+            "percent": 100,
+            "mobile": "true"
+        }, 
+        {
+            "user": "Probro675",
+            "link": "https://youtu.be/aFZ635MxUck?si=UWRE9RdpfcInu0iy",
+            "hz": "60",
             "percent": 100,
             "mobile": "true"
         }
