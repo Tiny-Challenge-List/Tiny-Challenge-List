@@ -21,8 +21,14 @@
             },
         {
             "user": "Sadisyourlife",
-            "link": "https://cdn.discordapp.com/attachments/1413628930065301616/1465454004241961217/Every_Ending.mp4?ex=698701a5&is=6985b025&hm=3d861ffc04b8898c2bdfa65ace54ab93eed757a87da3b9be3324f2f1a620db70&",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1465454004858519666",
             "hz": "240",
+            "percent": 100
+        },
+        {
+            "user": "tFluffy",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1465577413621842043",
+            "hz": "60",
             "percent": 100
         }
     ]
