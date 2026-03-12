@@ -73,8 +73,7 @@ export default {
 
   if (this.list) {
 
-    // Remove records by "finni"
-    const hiddenUsers = ["finni"];
+    const hiddenUsers = ["finni1505"];
 
 this.list.forEach(([level]) => {
   if (level && Array.isArray(level.records)) {
