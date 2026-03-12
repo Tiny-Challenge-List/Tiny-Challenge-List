@@ -30,6 +30,13 @@
             "link": "https://www.youtube.com/watch?v=l2hqliZHM-w",
             "hz": "CBS",
             "percent": 100
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://youtu.be/Dn8ygPuZ1TA?is=4I0ryub2y8xmXk7C",
+            "hz": "CBS",
+            "percent": 100,
+            "mobile": "true"
         }
     ]
 }
