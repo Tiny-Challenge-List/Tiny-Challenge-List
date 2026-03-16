@@ -32,17 +32,23 @@
             "percent": 100,
             "mobile": "true"
         },
-               {
+        {
             "user": "finni1505",
             "link": "https://medal.tv/de/games/geometry-dash/clips/m25GEO6xlyFeydtD9?invite=cr-MSxMejMsMzY5MjUzOTQw&v=30",
             "percent": 100,
             "hz": "CBF"
-            },
-            {
+        },
+        {
             "user": "FJKR",
             "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1469694835836326009",
             "percent": 100,
             "hz": "240"
-            }
+        },
+        {
+            "user": "Tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1483148362743152821/1483148362743152821",
+            "hz": "288",
+            "percent": 100
+        }
     ]
 }
