@@ -19,11 +19,17 @@
             "hz": "240",
             "percent": 100
         },
-               {
+        {
             "user": "finni1505",
             "link": "https://medal.tv/de/games/geometry-dash/clips/m26DLUJVxyYjmxtH7?invite=cr-MSwwd2ksMzY5MjUzOTQw&v=30",
             "percent": 100,
             "hz": "CBF"
-            }
+        },
+        {
+            "user": "Tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1483148362743152821/1483148362743152821",
+            "hz": "CBF",
+            "percent": 100,
+        }
     ]
 }
