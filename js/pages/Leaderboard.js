@@ -62,9 +62,10 @@ export default {
                                 </td>
                             </tr>
                         </table>
-                        <h2 v-if="entry.completed.length > 0">Completed ({{ entry.completed.length }})</h2>
+                        
+                        <h2 v-if="top150.length > 0">Completions ({{ top150.length }})</h2>
                         <table class="table">
-                            <tr v-for="score in entry.completed">
+                            <tr v-for="score in top150" :key="score.rank">
                                 <td class="rank">
                                     <p>#{{ score.rank }}</p>
                                 </td>
@@ -76,6 +77,23 @@ export default {
                                 </td>
                             </tr>
                         </table>
+                        
+                        <h2 v-if="above150.length > 0">Legacy Completions ({{ above150.length }})</h2>
+                        <table class="table">
+                            <tr v-for="score in above150" :key="score.rank">
+                                <td class="rank">
+                                    <p>#{{ score.rank }}</p>
+                                </td>
+                                <td class="level">
+                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        
                         <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
                         <table class="table">
                             <tr v-for="score in entry.progressed">
