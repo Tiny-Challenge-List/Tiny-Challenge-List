@@ -113,11 +113,25 @@ export default {
             </div>
         </main>
     `,
-    computed: {
-        entry() {
-            return this.leaderboard[this.selected];
-        },
+computed: {
+    entry() {
+        return this.leaderboard[this.selected] || {
+            completed: [],
+            verified: [],
+            progressed: [],
+            user: '',
+            total: 0
+        };
     },
+
+    top150() {
+        return (this.entry.completed || []).filter(score => score.rank <= 150);
+    },
+
+    above150() {
+        return (this.entry.completed || []).filter(score => score.rank > 150);
+    }
+},
     
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
