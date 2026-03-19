@@ -179,17 +179,18 @@ export default {
         // ✅ FIXED MULTI-PLAYER SUPPORT
         playerPacks() {
             return this.packCompletion.filter(pack => {
+                // support SINGLE player format
+                if (pack.player) {
+                    return pack.player.trim().toLowerCase() === this.entry.user.trim().toLowerCase();
+                }
+        
+                // support MULTI player format (future-proof)
                 if (pack.players) {
                     return pack.players.some(
-                        p => p.toLowerCase() === this.entry.user.toLowerCase()
+                        p => p.trim().toLowerCase() === this.entry.user.trim().toLowerCase()
                     );
                 }
-
-                // fallback for old format
-                if (pack.player) {
-                    return pack.player.toLowerCase() === this.entry.user.toLowerCase();
-                }
-
+        
                 return false;
             });
         }
