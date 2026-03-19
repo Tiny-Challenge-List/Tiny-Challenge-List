@@ -149,7 +149,7 @@ computed: {
     this.selected = 0;
     this.err = err;
     this.loading = false;
-}
+},
 
     this.leaderboard = filteredLeaderboard;
         this.selected = 0;
