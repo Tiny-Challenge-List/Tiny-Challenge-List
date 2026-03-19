@@ -225,4 +225,4 @@ export default {
     methods: {
         localize,
     },
-;
+};
