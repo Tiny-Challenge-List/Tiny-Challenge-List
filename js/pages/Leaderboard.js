@@ -1,4 +1,4 @@
-// working manual pack loader
+// working manual pack loader (AUTO VERSION)
 
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
@@ -140,13 +140,21 @@ export default {
                                 </td>
 
                                 <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
+                                    <p>
+                                        {{ score.progress }}/{{ score.total }}
+                                        ({{ score.percent }}%)
+                                    </p>
                                 </td>
 
-                                <!-- OPTIONAL: show all players -->
-                                <td class="players">
-                                    <p>{{ (score.players || []).join(', ') }}</p>
+                                <td class="points">
+                                    <p v-if="score.score > 0">
+                                        +{{ localize(score.score) }}
+                                    </p>
+                                    <p v-else>
+                                        —
+                                    </p>
                                 </td>
+
                             </tr>
                         </table>
 
@@ -175,21 +183,40 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
+        // 🔥 NEW: all player level IDs
+        playerLevelIds() {
+            const completed = this.entry.completed || [];
+            const verified = this.entry.verified || [];
+
+            return new Set([
+                ...completed.map(l => l.id),
+                ...verified.map(l => l.id)
+            ]);
+        },
+
+        // 🔥 NEW: auto pack detection
         playerPacks() {
-            return this.packCompletion.filter(pack => {
-                if (pack.players) {
-                    return pack.players.some(
-                        p => p.toLowerCase() === this.entry.user.toLowerCase()
-                    );
-                }
+            return this.packCompletion.map(pack => {
+                const total = pack.levels.length;
 
-                // fallback for old format
-                if (pack.player) {
-                    return pack.player.toLowerCase() === this.entry.user.toLowerCase();
-                }
+                const beaten = pack.levels.filter(id =>
+                    this.playerLevelIds.has(id)
+                ).length;
 
-                return false;
-            });
+                const percent = total > 0
+                    ? Math.round((beaten / total) * 100)
+                    : 0;
+
+                return {
+                    level: pack.name,
+                    progress: beaten,
+                    total,
+                    percent,
+                    score: beaten === total ? pack.points : 0
+                };
+            })
+            .filter(pack => pack.progress > 0)
+            .sort((a, b) => b.percent - a.percent);
         }
     },
 
@@ -209,12 +236,12 @@ export default {
 
         this.leaderboard = filteredLeaderboard;
 
-        // LOAD PACK COMPLETIONS
+        // LOAD PACKS
         try {
-            const res = await fetch("/data/pack-completions.json");
+            const res = await fetch("/data/_packs.json");
             this.packCompletion = await res.json();
         } catch (e) {
-            console.error("Failed to load pack-completions.json", e);
+            console.error("Failed to load packs", e);
         }
 
         this.selected = 0;
