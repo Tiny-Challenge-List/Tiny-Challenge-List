@@ -2,11 +2,13 @@
   {
     "level": "Beginner Pack",
     "player": "zis08",
+    "rank": "1",
     "score": 100
   },
   {
     "level": "Intermediate Pack",
     "player": "zis08",
+    "rank": "2",
     "score": 150
   }
 ]
