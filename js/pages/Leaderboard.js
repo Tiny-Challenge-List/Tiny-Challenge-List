@@ -72,31 +72,6 @@ export default {
                             </tr>
                         </table>
 
-                        <!-- PACK COMPLETION -->
-                        <h2 v-if="playerPacks.length > 0">
-                            Pack Completion ({{ playerPacks.length }})
-                        </h2>
-                        <table class="table">
-                            <tr v-for="(score, i) in playerPacks" :key="i">
-                                <td class="rank">
-                                    <p>#{{ i + 1 }}</p>
-                                </td>
-
-                                <td class="level">
-                                    <p class="type-label-lg">{{ score.level }}</p>
-                                </td>
-
-                                <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
-                                </td>
-
-                                <!-- OPTIONAL: show all players -->
-                                <td class="players">
-                                    <p>{{ (score.players || []).join(', ') }}</p>
-                                </td>
-                            </tr>
-                        </table>
-
                         <!-- TOP 150 -->
                         <h2 v-if="top150.length > 0">
                             Completions ({{ top150.length }})
@@ -147,6 +122,31 @@ export default {
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- PACK COMPLETION -->
+                        <h2 v-if="playerPacks.length > 0">
+                            Pack Completion ({{ playerPacks.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="(score, i) in playerPacks" :key="i">
+                                <td class="rank">
+                                    <p>#{{ i + 1 }}</p>
+                                </td>
+
+                                <td class="level">
+                                    <p class="type-label-lg">{{ score.level }}</p>
+                                </td>
+
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+
+                                <!-- OPTIONAL: show all players -->
+                                <td class="players">
+                                    <p>{{ (score.players || []).join(', ') }}</p>
                                 </td>
                             </tr>
                         </table>
