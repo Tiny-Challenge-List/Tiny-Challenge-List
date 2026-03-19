@@ -124,9 +124,6 @@ export default {
                     <td>#{{ i + 1 }}</td>
                     <td>{{ pack.level }}</td>
                     <td>+{{ localize(pack.score) }}</td>
-                    <td>
-                        <div :style="{ width: '15px', height: '15px', backgroundColor: pack.color, display: 'inline-block', borderRadius: '3px' }"></div>
-                    </td>
                 </tr>
             </table>
 
