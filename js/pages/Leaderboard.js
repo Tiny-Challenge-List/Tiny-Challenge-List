@@ -71,7 +71,7 @@ export default {
 
         // Load packs
         try {
-            const res = await fetch("/_packs.json");
+            const res = await fetch("/data/_packs.json");
             this.packs = await res.json();
         } catch (e) {
             console.error("Failed to load _packs.json", e);
