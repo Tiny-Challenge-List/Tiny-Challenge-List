@@ -10,6 +10,7 @@ export default {
 
     data: () => ({
         leaderboard: [],
+        packCompletion: [], // 👈 NEW
         loading: true,
         selected: 0,
         err: [],
@@ -19,8 +20,10 @@ export default {
         <main v-if="loading">
             <Spinner></Spinner>
         </main>
+
         <main v-else class="page-leaderboard-container">
             <div class="page-leaderboard">
+
                 <div class="error-container">
                     <p class="error" v-if="err.length > 0">
                         Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
@@ -47,9 +50,11 @@ export default {
 
                 <div class="player-container">
                     <div class="player">
+
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
 
+                        <!-- VERIFIED -->
                         <h2 v-if="entry.verified.length > 0">
                             Verified ({{ entry.verified.length }})
                         </h2>
@@ -67,6 +72,27 @@ export default {
                             </tr>
                         </table>
 
+                        <!-- PACK COMPLETION -->
+                        <h2 v-if="playerPacks.length > 0">
+                            Pack Completion ({{ playerPacks.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="(score, i) in playerPacks" :key="i">
+                                <td class="rank">
+                                    <p>#{{ i + 1 }}</p>
+                                </td>
+
+                                <td class="level">
+                                    <p class="type-label-lg">{{ score.level }}</p>
+                                </td>
+
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- TOP 150 -->
                         <h2 v-if="top150.length > 0">
                             Completions ({{ top150.length }})
                         </h2>
@@ -84,6 +110,7 @@ export default {
                             </tr>
                         </table>
 
+                        <!-- ABOVE 150 -->
                         <h2 v-if="above150.length > 0">
                             Legacy Completions ({{ above150.length }})
                         </h2>
@@ -101,6 +128,7 @@ export default {
                             </tr>
                         </table>
 
+                        <!-- PROGRESSED -->
                         <h2 v-if="entry.progressed.length > 0">
                             Progressed ({{ entry.progressed.length }})
                         </h2>
@@ -141,6 +169,13 @@ export default {
 
         above150() {
             return (this.entry.completed || []).filter(score => score.rank > 150);
+        },
+
+        // FILTER PACKS PER PLAYER
+        playerPacks() {
+            return this.packCompletion.filter(
+                p => p.player.toLowerCase() === this.entry.user.toLowerCase()
+            );
         }
     },
 
@@ -159,6 +194,11 @@ export default {
             }));
 
         this.leaderboard = filteredLeaderboard;
+
+        // LOAD PACK COMPLETIONS
+        const res = await fetch("/pack-completions.json");
+        this.packCompletion = await res.json();
+
         this.selected = 0;
         this.err = err;
         this.loading = false;
