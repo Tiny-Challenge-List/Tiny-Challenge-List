@@ -1,4 +1,3 @@
-
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
 
@@ -139,19 +138,7 @@ export default {
                                 </td>
 
                                 <td class="score">
-                                    <p>
-                                        {{ score.progress }}/{{ score.total }}
-                                        ({{ score.percent }}%)
-                                    </p>
-                                </td>
-
-                                <td class="points">
-                                    <p v-if="score.score > 0">
-                                        +{{ localize(score.score) }}
-                                    </p>
-                                    <p v-else>
-                                        —
-                                    </p>
+                                    <p>+{{ localize(score.score) }}</p>
                                 </td>
 
                             </tr>
@@ -182,40 +169,29 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // 🔥 NEW: all player level IDs
+        // 🔥 Collect all level IDs the player has beaten
         playerLevelIds() {
             const completed = this.entry.completed || [];
             const verified = this.entry.verified || [];
 
             return new Set([
-                ...completed.map(l => l.id),
-                ...verified.map(l => l.id)
+                ...completed.map(l => l.id).filter(id => id != null),
+                ...verified.map(l => l.id).filter(id => id != null)
             ]);
         },
 
-        // 🔥 NEW: auto pack detection
+        // 🔥 Only show packs where ALL levels are beaten
         playerPacks() {
-            return this.packCompletion.map(pack => {
-                const total = pack.levels.length;
-
-                const beaten = pack.levels.filter(id =>
-                    this.playerLevelIds.has(id)
-                ).length;
-
-                const percent = total > 0
-                    ? Math.round((beaten / total) * 100)
-                    : 0;
-
-                return {
+            return this.packCompletion
+                .filter(pack =>
+                    pack.levels.every(id =>
+                        this.playerLevelIds.has(id)
+                    )
+                )
+                .map(pack => ({
                     level: pack.name,
-                    progress: beaten,
-                    total,
-                    percent,
-                    score: beaten === total ? pack.points : 0
-                };
-            })
-            .filter(pack => pack.progress > 0)
-            .sort((a, b) => b.percent - a.percent);
+                    score: pack.points
+                }));
         }
     },
 
