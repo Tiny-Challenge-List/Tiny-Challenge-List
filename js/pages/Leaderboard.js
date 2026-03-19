@@ -44,7 +44,6 @@ export default {
                 .map(pack => ({
                     level: pack.name,
                     score: pack.points,
-                    color: pack.color,
                     players: [this.entry.user]
                 }));
         }
