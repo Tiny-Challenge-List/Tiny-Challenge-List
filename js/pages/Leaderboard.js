@@ -134,13 +134,22 @@ computed: {
 },
     
     async mounted() {
-        const [leaderboard, err] = await fetchLeaderboard();
+    const [leaderboard, err] = await fetchLeaderboard();
 
     const excludedUsers = ["finni1505"];
 
-    const filteredLeaderboard = leaderboard.filter(entry => 
-    !excludedUsers.includes(entry.user)
-    );
+    const filteredLeaderboard = leaderboard
+        .filter(entry => !excludedUsers.includes(entry.user))
+        .map(entry => ({
+            ...entry,
+            user: entry.user === "zis76" ? "zis08" : entry.user
+        }));
+
+    this.leaderboard = filteredLeaderboard;
+    this.selected = 0;
+    this.err = err;
+    this.loading = false;
+}
 
     this.leaderboard = filteredLeaderboard;
         this.selected = 0;
