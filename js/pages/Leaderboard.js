@@ -176,7 +176,6 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // ✅ FIXED MULTI-PLAYER SUPPORT
         playerPacks() {
             return this.packCompletion.filter(pack => {
                 if (pack.players) {
@@ -211,9 +210,9 @@ export default {
 
         this.leaderboard = filteredLeaderboard;
 
-        // ✅ LOAD PACK COMPLETIONS
+        // LOAD PACK COMPLETIONS
         try {
-            const res = await fetch("/pack-completions.json");
+            const res = await fetch("/data/pack-completions.json");
             this.packCompletion = await res.json();
         } catch (e) {
             console.error("Failed to load pack-completions.json", e);
