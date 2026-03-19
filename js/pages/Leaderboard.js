@@ -89,6 +89,11 @@ export default {
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
+
+                                <!-- OPTIONAL: show all players -->
+                                <td class="players">
+                                    <p>{{ (score.players || []).join(', ') }}</p>
+                                </td>
                             </tr>
                         </table>
 
@@ -171,11 +176,22 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // FILTER PACKS PER PLAYER
+        // ✅ FIXED MULTI-PLAYER SUPPORT
         playerPacks() {
-            return this.packCompletion.filter(
-                p => p.player.toLowerCase() === this.entry.user.toLowerCase()
-            );
+            return this.packCompletion.filter(pack => {
+                if (pack.players) {
+                    return pack.players.some(
+                        p => p.toLowerCase() === this.entry.user.toLowerCase()
+                    );
+                }
+
+                // fallback for old format
+                if (pack.player) {
+                    return pack.player.toLowerCase() === this.entry.user.toLowerCase();
+                }
+
+                return false;
+            });
         }
     },
 
@@ -195,9 +211,13 @@ export default {
 
         this.leaderboard = filteredLeaderboard;
 
-        // LOAD PACK COMPLETIONS
-        const res = await fetch("/pack-completions.json");
-        this.packCompletion = await res.json();
+        // ✅ LOAD PACK COMPLETIONS
+        try {
+            const res = await fetch("/pack-completions.json");
+            this.packCompletion = await res.json();
+        } catch (e) {
+            console.error("Failed to load pack-completions.json", e);
+        }
 
         this.selected = 0;
         this.err = err;
