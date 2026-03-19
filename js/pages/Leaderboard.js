@@ -7,15 +7,14 @@ export default {
     components: {
         Spinner,
     },
-    
 
-    
     data: () => ({
         leaderboard: [],
         loading: true,
         selected: 0,
         err: [],
     }),
+
     template: `
         <main v-if="loading">
             <Spinner></Spinner>
@@ -27,9 +26,10 @@ export default {
                         Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
                     </p>
                 </div>
+
                 <div class="board-container">
                     <table class="board">
-                        <tr v-for="(ientry, i) in leaderboard">
+                        <tr v-for="(ientry, i) in leaderboard" :key="i">
                             <td class="rank">
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
@@ -44,114 +44,121 @@ export default {
                         </tr>
                     </table>
                 </div>
+
                 <div class="player-container">
                     <div class="player">
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ entry.total }}</h3>
-                        <h2 v-if="entry.verified.length > 0">Verified ({{ entry.verified.length}})</h2>
+
+                        <h2 v-if="entry.verified.length > 0">
+                            Verified ({{ entry.verified.length }})
+                        </h2>
                         <table class="table">
-                            <tr v-for="score in entry.verified">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                            <tr v-for="score in entry.verified" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
-                        
-                        <h2 v-if="top150.length > 0">Completions ({{ top150.length }})</h2>
+
+                        <h2 v-if="top150.length > 0">
+                            Completions ({{ top150.length }})
+                        </h2>
                         <table class="table">
                             <tr v-for="score in top150" :key="score.rank">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
-                        
-                        <h2 v-if="above150.length > 0">Legacy Completions ({{ above150.length }})</h2>
+
+                        <h2 v-if="above150.length > 0">
+                            Legacy Completions ({{ above150.length }})
+                        </h2>
                         <table class="table">
                             <tr v-for="score in above150" :key="score.rank">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
-                        
-                        
-                        <h2 v-if="entry.progressed.length > 0">Progressed ({{entry.progressed.length}})</h2>
+
+                        <h2 v-if="entry.progressed.length > 0">
+                            Progressed ({{ entry.progressed.length }})
+                        </h2>
                         <table class="table">
-                            <tr v-for="score in entry.progressed">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                            <tr v-for="score in entry.progressed" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">{{ score.percent }}% {{ score.level }}</a>
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.percent }}% {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
+
                     </div>
                 </div>
             </div>
         </main>
     `,
-computed: {
-    entry() {
-        return this.leaderboard[this.selected] || {
-            completed: [],
-            verified: [],
-            progressed: [],
-            user: '',
-            total: 0
-        };
+
+    computed: {
+        entry() {
+            return this.leaderboard[this.selected] || {
+                completed: [],
+                verified: [],
+                progressed: [],
+                user: '',
+                total: 0
+            };
+        },
+
+        top150() {
+            return (this.entry.completed || []).filter(score => score.rank <= 150);
+        },
+
+        above150() {
+            return (this.entry.completed || []).filter(score => score.rank > 150);
+        }
     },
 
-    top150() {
-        return (this.entry.completed || []).filter(score => score.rank <= 150);
-    },
-
-    above150() {
-        return (this.entry.completed || []).filter(score => score.rank > 150);
-    }
-},
-    
     async mounted() {
-    const [leaderboard, err] = await fetchLeaderboard();
+        const [leaderboard, err] = await fetchLeaderboard();
 
-    const excludedUsers = ["finni1505"];
+        const excludedUsers = ["finni1505"];
 
-    const filteredLeaderboard = leaderboard
-        .filter(entry => !excludedUsers.includes(entry.user))
-        .map(entry => ({
-            ...entry,
-            user: entry.user === "zis76" ? "zis08" : entry.user
-        }));
+        const filteredLeaderboard = leaderboard
+            .filter(entry => !excludedUsers.includes(entry.user))
+            .map(entry => ({
+                ...entry,
+                user: entry.user.trim().toLowerCase() === "zis76"
+                    ? "zis08"
+                    : entry.user
+            }));
 
-    this.leaderboard = filteredLeaderboard;
-    this.selected = 0;
-    this.err = err;
-    this.loading = false;
-},
-
-    this.leaderboard = filteredLeaderboard;
+        this.leaderboard = filteredLeaderboard;
         this.selected = 0;
         this.err = err;
         this.loading = false;
