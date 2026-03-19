@@ -90,9 +90,9 @@ export default {
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
 
-                                <!-- OPTIONAL: show all players -->
+                                <!-- show all players who completed it -->
                                 <td class="players">
-                                    <p>{{ (score.players || []).join(', ') }}</p>
+                                    <p>{{ (score.players || (score.player ? [score.player] : [])).join(', ') }}</p>
                                 </td>
                             </tr>
                         </table>
@@ -176,15 +176,23 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // ✅ FIXED MULTI-PLAYER SUPPORT
+        // ✅ FIXED MULTI-PLAYER + SINGLE PLAYER SUPPORT
         playerPacks() {
+            const currentUser = (this.entry.user || '').trim().toLowerCase();
+
             return this.packCompletion.filter(pack => {
-                if (pack.players) {
+                // Multi-player array
+                if (pack.players && Array.isArray(pack.players)) {
                     return pack.players.some(
-                        p => p.trim().toLowerCase() === this.entry.user.trim().toLowerCase()
+                        p => p.trim().toLowerCase() === currentUser
                     );
                 }
-        
+
+                // Single-player fallback
+                if (pack.player) {
+                    return pack.player.trim().toLowerCase() === currentUser;
+                }
+
                 return false;
             });
         }
@@ -195,18 +203,19 @@ export default {
 
         const excludedUsers = ["finni1505"];
 
+        // Normalize leaderboard usernames to lowercase for matching
         const filteredLeaderboard = leaderboard
             .filter(entry => !excludedUsers.includes(entry.user))
             .map(entry => ({
                 ...entry,
                 user: entry.user.trim().toLowerCase() === "zis76"
                     ? "zis08"
-                    : entry.user
+                    : entry.user.trim().toLowerCase() // normalize all to lowercase
             }));
 
         this.leaderboard = filteredLeaderboard;
 
-        // ✅ LOAD PACK COMPLETIONS
+        // ✅ Load pack completions
         try {
             const res = await fetch("/pack-completions.json");
             this.packCompletion = await res.json();
