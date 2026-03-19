@@ -1,4 +1,3 @@
-// working manual pack loader (AUTO VERSION)
 
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
