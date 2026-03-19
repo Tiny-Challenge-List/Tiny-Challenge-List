@@ -10,7 +10,7 @@ export default {
 
     data: () => ({
         leaderboard: [],
-        packCompletion: [], // 👈 NEW
+        packCompletion: [],
         loading: true,
         selected: 0,
         err: [],
