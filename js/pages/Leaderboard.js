@@ -132,9 +132,6 @@ export default {
                         </h2>
                         <table class="table">
                             <tr v-for="(score, i) in playerPacks" :key="i">
-                                <td class="rank">
-                                    <p>#{{ i + 1 }}</p>
-                                </td>
 
                                 <td class="level">
                                     <p class="type-label-lg">{{ score.level }}</p>
