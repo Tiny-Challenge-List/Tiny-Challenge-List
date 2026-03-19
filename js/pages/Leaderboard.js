@@ -1,159 +1,228 @@
+// working manual pack loader
+
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
+
 import Spinner from '../components/Spinner.js';
 
 export default {
-  components: { Spinner },
-
-  data: () => ({
-    leaderboard: [],
-    packs: [], // loads _packs.json
-    loading: true,
-    selected: 0,
-    err: [],
-  }),
-
-  computed: {
-    entry() {
-      return this.leaderboard[this.selected] || {
-        completed: [],
-        verified: [],
-        progressed: [],
-        user: '',
-        total: 0,
-      };
+    components: {
+        Spinner,
     },
 
-    top150() {
-      return (this.entry.completed || []).filter(score => score.rank <= 150);
+    data: () => ({
+        leaderboard: [],
+        packCompletion: [],
+        loading: true,
+        selected: 0,
+        err: [],
+    }),
+
+    template: `
+        <main v-if="loading">
+            <Spinner></Spinner>
+        </main>
+
+        <main v-else class="page-leaderboard-container">
+            <div class="page-leaderboard">
+
+                <div class="error-container">
+                    <p class="error" v-if="err.length > 0">
+                        Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
+                    </p>
+                </div>
+
+                <div class="board-container">
+                    <table class="board">
+                        <tr v-for="(ientry, i) in leaderboard" :key="i">
+                            <td class="rank">
+                                <p class="type-label-lg">#{{ i + 1 }}</p>
+                            </td>
+                            <td class="total">
+                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
+                            </td>
+                            <td class="user" :class="{ 'active': selected == i }">
+                                <button @click="selected = i">
+                                    <span class="type-label-lg">{{ ientry.user }}</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="player-container">
+                    <div class="player">
+
+                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                        <h3>{{ entry.total }}</h3>
+
+                        <!-- VERIFIED -->
+                        <h2 v-if="entry.verified.length > 0">
+                            Verified ({{ entry.verified.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="score in entry.verified" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
+                                <td class="level">
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- TOP 150 -->
+                        <h2 v-if="top150.length > 0">
+                            Completions ({{ top150.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="score in top150" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
+                                <td class="level">
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- ABOVE 150 -->
+                        <h2 v-if="above150.length > 0">
+                            Legacy Completions ({{ above150.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="score in above150" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
+                                <td class="level">
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- PROGRESSED -->
+                        <h2 v-if="entry.progressed.length > 0">
+                            Progressed ({{ entry.progressed.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="score in entry.progressed" :key="score.rank">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
+                                <td class="level">
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.percent }}% {{ score.level }}
+                                    </a>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        <!-- PACK COMPLETION -->
+                        <h2 v-if="playerPacks.length > 0">
+                            Pack Completion ({{ playerPacks.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="(score, i) in playerPacks" :key="i">
+
+                                <td class="level">
+                                    <p class="type-label-lg">{{ score.level }}</p>
+                                </td>
+
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+
+                                <!-- OPTIONAL: show all players -->
+                                <td class="players">
+                                    <p>{{ (score.players || []).join(', ') }}</p>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    `,
+
+    computed: {
+        entry() {
+            return this.leaderboard[this.selected] || {
+                completed: [],
+                verified: [],
+                progressed: [],
+                user: '',
+                total: 0
+            };
+        },
+
+        top150() {
+            return (this.entry.completed || []).filter(score => score.rank <= 150);
+        },
+
+        above150() {
+            return (this.entry.completed || []).filter(score => score.rank > 150);
+        },
+
+        playerPacks() {
+            return this.packCompletion.filter(pack => {
+                if (pack.players) {
+                    return pack.players.some(
+                        p => p.toLowerCase() === this.entry.user.toLowerCase()
+                    );
+                }
+
+                // fallback for old format
+                if (pack.player) {
+                    return pack.player.toLowerCase() === this.entry.user.toLowerCase();
+                }
+
+                return false;
+            });
+        }
     },
 
-    above150() {
-      return (this.entry.completed || []).filter(score => score.rank > 150);
+    async mounted() {
+        const [leaderboard, err] = await fetchLeaderboard();
+
+        const excludedUsers = ["finni1505"];
+
+        const filteredLeaderboard = leaderboard
+            .filter(entry => !excludedUsers.includes(entry.user))
+            .map(entry => ({
+                ...entry,
+                user: entry.user.trim().toLowerCase() === "zis76"
+                    ? "zis08"
+                    : entry.user
+            }));
+
+        this.leaderboard = filteredLeaderboard;
+
+        // LOAD PACK COMPLETIONS
+        try {
+            const res = await fetch("/data/pack-completions.json");
+            this.packCompletion = await res.json();
+        } catch (e) {
+            console.error("Failed to load pack-completions.json", e);
+        }
+
+        this.selected = 0;
+        this.err = err;
+        this.loading = false;
     },
 
-    // Detect packs automatically based on both verified and completed levels
-    playerPacks() {
-      const levelIDs = new Set([
-        ...(this.entry.verified || []).map(v => Number(v.id || v.level || 0)),
-        ...(this.entry.completed || []).map(c => Number(c.id || c.level || 0)),
-      ]);
-
-      return this.packs
-        .filter(pack => pack.levels.every(levelID => levelIDs.has(levelID)))
-        .map(pack => ({
-          level: pack.name,
-          score: pack.points,
-          players: [this.entry.user],
-        }));
+    methods: {
+        localize,
     },
-  },
-
-  async mounted() {
-    // Load leaderboard
-    const [leaderboard, err] = await fetchLeaderboard();
-    console.log('Leaderboard loaded:', leaderboard, err);
-
-    const excludedUsers = ['finni1505'];
-
-    this.leaderboard = leaderboard
-      .filter(entry => !excludedUsers.includes(entry.user))
-      .map(entry => ({
-        ...entry,
-        user:
-          (entry.user || '').trim().toLowerCase() === 'zis76'
-            ? 'zis08'
-            : (entry.user || '').trim().toLowerCase(),
-      }));
-
-    this.err = err;
-
-    // Load packs
-    try {
-      const res = await fetch('/data/_packs.json');
-      this.packs = await res.json();
-      console.log('Packs loaded:', this.packs);
-    } catch (e) {
-      console.error('Failed to load _packs.json', e);
-      this.packs = [];
-    }
-
-    this.selected = 0;
-    this.loading = false;
-  },
-
-  methods: {
-    localize,
-  },
-
-  template: `
-<main v-if="loading">
-  <Spinner />
-</main>
-
-<main v-else class="page-leaderboard-container">
-  <div class="page-leaderboard">
-
-    <!-- Leaderboard -->
-    <div class="board-container">
-      <table class="board">
-        <tr v-for="(ientry, i) in leaderboard" :key="i">
-          <td>#{{ i + 1 }}</td>
-          <td>{{ localize(ientry.total) }}</td>
-          <td :class="{ 'active': selected == i }">
-            <button @click="selected = i">{{ ientry.user }}</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-
-    <!-- Player Details -->
-    <div class="player-container">
-      <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
-      <h3>Total: {{ entry.total }}</h3>
-
-      <!-- Verified Levels -->
-      <h2 v-if="entry.verified.length">Verified ({{ entry.verified.length }})</h2>
-      <table class="table" v-if="entry.verified.length">
-        <tr v-for="score in entry.verified" :key="score.rank">
-          <td>#{{ score.rank }}</td>
-          <td>{{ score.level }}</td>
-          <td>+{{ localize(score.score) }}</td>
-        </tr>
-      </table>
-
-      <!-- Pack Completion (auto-detected) -->
-      <h2 v-if="playerPacks.length">Pack Completion ({{ playerPacks.length }})</h2>
-      <table class="table" v-if="playerPacks.length">
-        <tr v-for="(pack, i) in playerPacks" :key="i">
-          <td>#{{ i + 1 }}</td>
-          <td>{{ pack.level }}</td>
-          <td>+{{ localize(pack.score) }}</td>
-        </tr>
-      </table>
-
-      <!-- Top 150 -->
-      <h2 v-if="top150.length">Completions ({{ top150.length }})</h2>
-      <table class="table" v-if="top150.length">
-        <tr v-for="score in top150" :key="score.rank">
-          <td>#{{ score.rank }}</td>
-          <td>{{ score.level }}</td>
-          <td>+{{ localize(score.score) }}</td>
-        </tr>
-      </table>
-
-      <!-- Above 150 -->
-      <h2 v-if="above150.length">Legacy Completions ({{ above150.length }})</h2>
-      <table class="table" v-if="above150.length">
-        <tr v-for="score in above150" :key="score.rank">
-          <td>#{{ score.rank }}</td>
-          <td>{{ score.level }}</td>
-          <td>+{{ localize(score.score) }}</td>
-        </tr>
-      </table>
-
-    </div>
-  </div>
-</main>
-  `,
-};
+;
