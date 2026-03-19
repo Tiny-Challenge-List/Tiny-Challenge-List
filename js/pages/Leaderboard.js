@@ -7,7 +7,7 @@ export default {
 
   data: () => ({
     leaderboard: [],
-    packs: [], // will load _packs.json
+    packs: [], // loads _packs.json
     loading: true,
     selected: 0,
     err: [],
@@ -32,11 +32,11 @@ export default {
       return (this.entry.completed || []).filter(score => score.rank > 150);
     },
 
-    // Combine verified and completed levels to detect packs
+    // Detect packs automatically based on both verified and completed levels
     playerPacks() {
       const levelIDs = new Set([
-        ...(this.entry.verified || []).map(v => v.id || v.level || 0),
-        ...(this.entry.completed || []).map(c => c.id || c.level || 0),
+        ...(this.entry.verified || []).map(v => Number(v.id || v.level || 0)),
+        ...(this.entry.completed || []).map(c => Number(c.id || c.level || 0)),
       ]);
 
       return this.packs
@@ -50,7 +50,10 @@ export default {
   },
 
   async mounted() {
+    // Load leaderboard
     const [leaderboard, err] = await fetchLeaderboard();
+    console.log('Leaderboard loaded:', leaderboard, err);
+
     const excludedUsers = ['finni1505'];
 
     this.leaderboard = leaderboard
@@ -69,6 +72,7 @@ export default {
     try {
       const res = await fetch('/data/_packs.json');
       this.packs = await res.json();
+      console.log('Packs loaded:', this.packs);
     } catch (e) {
       console.error('Failed to load _packs.json', e);
       this.packs = [];
@@ -78,7 +82,9 @@ export default {
     this.loading = false;
   },
 
-  methods: { localize },
+  methods: {
+    localize,
+  },
 
   template: `
 <main v-if="loading">
@@ -88,7 +94,7 @@ export default {
 <main v-else class="page-leaderboard-container">
   <div class="page-leaderboard">
 
-    <!-- Leaderboard table -->
+    <!-- Leaderboard -->
     <div class="board-container">
       <table class="board">
         <tr v-for="(ientry, i) in leaderboard" :key="i">
@@ -101,7 +107,7 @@ export default {
       </table>
     </div>
 
-    <!-- Player details -->
+    <!-- Player Details -->
     <div class="player-container">
       <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
       <h3>Total: {{ entry.total }}</h3>
@@ -116,7 +122,7 @@ export default {
         </tr>
       </table>
 
-      <!-- Combined Pack Completion -->
+      <!-- Pack Completion (auto-detected) -->
       <h2 v-if="playerPacks.length">Pack Completion ({{ playerPacks.length }})</h2>
       <table class="table" v-if="playerPacks.length">
         <tr v-for="(pack, i) in playerPacks" :key="i">
