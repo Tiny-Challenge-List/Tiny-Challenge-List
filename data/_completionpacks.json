@@ -215,5 +215,13 @@
             "mud",
             "gravity 2"
     ]
+  },
+  {
+    "name": "test",
+    "color": "#f2f23f",
+    "points": 700,
+    "levels": [
+      "ZenosSins gives birt"
+    ]
   }
 ]
