@@ -177,7 +177,7 @@ export default {
                 ...completed.map(l => Number(l.id)).filter(n => !isNaN(n)),
                 ...verified.map(l => Number(l.id)).filter(n => !isNaN(n))
             ]);
-        }
+        },
 
          playerPacks() {
             if (!Array.isArray(this.packCompletion)) return [];
@@ -186,14 +186,14 @@ export default {
                 .filter(pack =>
                     Array.isArray(pack.levels) &&
                     pack.levels.every(level =>
-                        this.playerLevelKeys.has(Number(level)) // 🔥 force number
+                        this.playerLevelKeys.has(Number(level)) 
                     )
                 )
                 .map(pack => ({
                     level: pack.name,
                     score: pack.points
                 }));
-        }
+        },
 
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
