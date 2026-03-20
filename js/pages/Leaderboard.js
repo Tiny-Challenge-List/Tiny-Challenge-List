@@ -169,7 +169,7 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // 🔥 Collect all level IDs the player has beaten
+        // Collect all level IDs the player has beaten
         playerLevelIds() {
             const completed = this.entry.completed || [];
             const verified = this.entry.verified || [];
@@ -180,12 +180,15 @@ export default {
             ]);
         },
 
-        // 🔥 Only show packs where ALL levels are beaten
-        playerPacks() {
+         playerPacks() {
             return this.packCompletion
                 .filter(pack =>
-                    pack.levels.every(id =>
-                        this.playerLevelIds.has(id)
+                    pack.levels.every(level =>
+                        this.playerLevelKeys.has(
+                            typeof level === "number"
+                                ? level
+                                : level.toLowerCase().trim()
+                        )
                     )
                 )
                 .map(pack => ({
