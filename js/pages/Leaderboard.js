@@ -58,6 +58,21 @@ export default {
 
                         <!-- UPDATED TOTAL -->
                         <h3>{{ localize(totalWithPacks) }}</h3>
+                        
+                        <!-- PACK COMPLETION -->
+                        <h2 v-if="playerPacks.length > 0">
+                            Pack Completion ({{ playerPacks.length }})
+                        </h2>
+                        <table class="table">
+                            <tr v-for="(score, i) in playerPacks" :key="i">
+                                <td class="level">
+                                    <p class="type-label-lg">{{ score.level }}</p>
+                                </td>
+                                <td class="score">
+                                    <p>+{{ localize(score.score) }}</p>
+                                </td>
+                            </tr>
+                        </table>
 
                         <!-- VERIFIED -->
                         <h2 v-if="entry.verified.length > 0">
@@ -124,21 +139,6 @@ export default {
                                     <a class="type-label-lg" target="_blank" :href="score.link">
                                         {{ score.percent }}% {{ score.level }}
                                     </a>
-                                </td>
-                                <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
-                                </td>
-                            </tr>
-                        </table>
-                        
-                        <!-- PACK COMPLETION -->
-                        <h2 v-if="playerPacks.length > 0">
-                            Pack Completion ({{ playerPacks.length }})
-                        </h2>
-                        <table class="table">
-                            <tr v-for="(score, i) in playerPacks" :key="i">
-                                <td class="level">
-                                    <p class="type-label-lg">{{ score.level }}</p>
                                 </td>
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
