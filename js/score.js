@@ -1,10 +1,10 @@
 import fs from 'fs';
 const scale = 3;
 
-// Load completed packs JSON
-let completedPacks = {};
+// Load user completed levels JSON
+let completedLevels = {};
 try {
-    completedPacks = JSON.parse(fs.readFileSync('./_completedpacks.json', 'utf-8'));
+    completedLevels = JSON.parse(fs.readFileSync('./_completedpacks.json', 'utf-8'));
 } catch (e) {
     console.warn('Could not load _completedpacks.json, defaulting to empty');
 }
@@ -12,19 +12,24 @@ try {
 // Load all packs
 let packs = [];
 try {
-    packs = JSON.parse(fs.readFileSync('./packs.json', 'utf-8')); // your JSON from above
+    packs = JSON.parse(fs.readFileSync('./packs.json', 'utf-8'));
 } catch (e) {
     console.warn('Could not load packs.json, defaulting to empty');
 }
 
 /**
+ * Record a level as completed for a user
+ */
+function markLevelCompleted(user, levelName) {
+    if (!completedLevels[user]) completedLevels[user] = [];
+    if (!completedLevels[user].includes(levelName)) {
+        completedLevels[user].push(levelName);
+        fs.writeFileSync('./_completedpacks.json', JSON.stringify(completedLevels, null, 2));
+    }
+}
+
+/**
  * Calculate the score awarded for a level, plus automatic pack points if completed
- * @param {String} user User ID
- * @param {Number} rank Level rank
- * @param {Number} percent Completion percent
- * @param {Number} minPercent Minimum percent required
- * @param {String} levelName Level name
- * @returns {Number}
  */
 export function score(user, rank, percent, minPercent, levelName) {
     if (rank > 150) return 0;
@@ -39,19 +44,17 @@ export function score(user, rank, percent, minPercent, levelName) {
         scoreValue -= scoreValue / 3;
     }
 
-    // Check for pack completion
+    // Only consider 100% completions for pack points
     if (percent === 100) {
-        const userCompleted = completedPacks[user] || [];
+        markLevelCompleted(user, levelName); // mark this level as completed
 
         for (const pack of packs) {
-            // If this level is in the pack
-            if (pack.levels.includes(levelName)) {
-                // Check if all pack levels are completed by the user
-                const allCompleted = pack.levels.every(lvl => userCompleted.includes(lvl));
-                if (allCompleted) {
-                    // Add pack points
-                    scoreValue += pack.points;
-                }
+            // Check if all levels in the pack are completed
+            const userCompleted = completedLevels[user] || [];
+            const allCompleted = pack.levels.every(lvl => userCompleted.includes(lvl));
+            if (allCompleted) {
+                // Add pack points once per pack
+                scoreValue += pack.points;
             }
         }
     }
