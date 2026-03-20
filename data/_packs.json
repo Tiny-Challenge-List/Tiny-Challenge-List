@@ -173,6 +173,28 @@
     ]
   },
   {
+    "name": "Fent Pack",
+    "color": "#92b0b3",
+    "points": 100,
+    "levels": [
+        132428937,
+        130372936,
+        130309345,
+        130822968,
+        130042249
+        ]
+    },
+    {
+      "name": "VC Pack",
+      "color": "#ad92b3",
+      "points": 50,
+      "levels": [
+        130036150,
+        127046875,
+        127071347
+        ]
+      },
+  {
     "name": "Decoration Pack I",
     "color": "#c30ce8",
     "points": 300,
@@ -201,28 +223,6 @@
         132426809
     ]
   },
-  {
-    "name": "Fent Pack",
-    "color": "#92b0b3",
-    "points": 100,
-    "levels": [
-        132428937,
-        130372936,
-        130309345,
-        130822968,
-        130042249
-        ]
-    },
-    {
-      "name": "VC Pack",
-      "color": "#ad92b3",
-      "points": 50,
-      "levels": [
-        130036150,
-        127046875,
-        127071347
-        ]
-      },
   {
     "name": "Jack Of All Trades",
     "color": "#f2f23f",
