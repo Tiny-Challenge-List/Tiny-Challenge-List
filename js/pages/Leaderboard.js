@@ -199,7 +199,7 @@ export default {
                 }));
         },
 
-        // ✅ TOTAL WITH PACK BONUS
+        // TOTAL WITH PACK BONUS
         totalWithPacks() {
             const base = this.entry.total || 0;
 
@@ -244,7 +244,7 @@ export default {
     methods: {
         localize,
 
-        // ✅ USED FOR LEADERBOARD TABLE
+        // USED FOR LEADERBOARD TABLE
         getTotalWithPacks(entry) {
             const completed = entry.completed || [];
             const verified = entry.verified || [];
