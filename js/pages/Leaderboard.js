@@ -1,5 +1,3 @@
-// auto pack completion no point gained
-
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
 
@@ -39,7 +37,10 @@ export default {
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
                             <td class="total">
-                                <p class="type-label-lg">{{ localize(ientry.total) }}</p>
+                                <!-- UPDATED TOTAL -->
+                                <p class="type-label-lg">
+                                    {{ localize(getTotalWithPacks(ientry)) }}
+                                </p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
@@ -54,7 +55,9 @@ export default {
                     <div class="player">
 
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
-                        <h3>{{ entry.total }}</h3>
+
+                        <!-- UPDATED TOTAL -->
+                        <h3>{{ localize(totalWithPacks) }}</h3>
 
                         <!-- VERIFIED -->
                         <h2 v-if="entry.verified.length > 0">
@@ -134,15 +137,12 @@ export default {
                         </h2>
                         <table class="table">
                             <tr v-for="(score, i) in playerPacks" :key="i">
-
                                 <td class="level">
                                     <p class="type-label-lg">{{ score.level }}</p>
                                 </td>
-
                                 <td class="score">
                                     <p>+{{ localize(score.score) }}</p>
                                 </td>
-
                             </tr>
                         </table>
 
@@ -181,7 +181,7 @@ export default {
             ].filter(Boolean));
         },
 
-         playerPacks() {
+        playerPacks() {
             if (!Array.isArray(this.packCompletion)) return [];
         
             return this.packCompletion
@@ -197,6 +197,18 @@ export default {
                     level: pack.name,
                     score: pack.points
                 }));
+        },
+
+        // ✅ TOTAL WITH PACK BONUS
+        totalWithPacks() {
+            const base = this.entry.total || 0;
+
+            const bonus = this.playerPacks.reduce(
+                (sum, pack) => sum + pack.score,
+                0
+            );
+
+            return base + bonus;
         }
     },
 
@@ -231,5 +243,31 @@ export default {
 
     methods: {
         localize,
+
+        // ✅ USED FOR LEADERBOARD TABLE
+        getTotalWithPacks(entry) {
+            const completed = entry.completed || [];
+            const verified = entry.verified || [];
+
+            const playerKeys = new Set([
+                ...completed.map(l => l.level?.toLowerCase().trim()),
+                ...verified.map(l => l.level?.toLowerCase().trim())
+            ].filter(Boolean));
+
+            let bonus = 0;
+
+            for (const pack of this.packCompletion) {
+                if (
+                    Array.isArray(pack.levels) &&
+                    pack.levels.every(level =>
+                        playerKeys.has(level.toLowerCase().trim())
+                    )
+                ) {
+                    bonus += pack.points;
+                }
+            }
+
+            return (entry.total || 0) + bonus;
+        }
     },
 };
