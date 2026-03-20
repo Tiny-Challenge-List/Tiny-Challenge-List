@@ -195,7 +195,8 @@ export default {
                     level: pack.name,
                     score: pack.points
                 }));
-        },
+        }
+    },
 
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
