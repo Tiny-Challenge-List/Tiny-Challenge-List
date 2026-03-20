@@ -1,3 +1,5 @@
+// auto pack completion no point gained
+
 import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
 
