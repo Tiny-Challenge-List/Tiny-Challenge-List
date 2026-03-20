@@ -174,20 +174,19 @@ export default {
             const verified = this.entry.verified || [];
         
             return new Set([
-                ...completed.map(l => l.id ?? l.level?.toLowerCase().trim()),
-                ...verified.map(l => l.id ?? l.level?.toLowerCase().trim())
-            ].filter(Boolean));
-        },
+                ...completed.map(l => Number(l.id)).filter(n => !isNaN(n)),
+                ...verified.map(l => Number(l.id)).filter(n => !isNaN(n))
+            ]);
+        }
 
          playerPacks() {
+            if (!Array.isArray(this.packCompletion)) return [];
+        
             return this.packCompletion
                 .filter(pack =>
+                    Array.isArray(pack.levels) &&
                     pack.levels.every(level =>
-                        this.playerLevelKeys.has(
-                            typeof level === "number"
-                                ? level
-                                : level.toLowerCase().trim()
-                        )
+                        this.playerLevelKeys.has(Number(level)) // 🔥 force number
                     )
                 )
                 .map(pack => ({
@@ -195,7 +194,6 @@ export default {
                     score: pack.points
                 }));
         }
-    },
 
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
