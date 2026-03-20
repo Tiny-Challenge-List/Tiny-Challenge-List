@@ -169,14 +169,14 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-         playerLevelKeys() {
+        playerLevelKeys() {
             const completed = this.entry.completed || [];
             const verified = this.entry.verified || [];
         
             return new Set([
-                ...completed.map(l => Number(l.id)).filter(n => !isNaN(n)),
-                ...verified.map(l => Number(l.id)).filter(n => !isNaN(n))
-            ]);
+                ...completed.map(l => l.level?.toLowerCase().trim()),
+                ...verified.map(l => l.level?.toLowerCase().trim())
+            ].filter(Boolean));
         },
 
          playerPacks() {
@@ -186,15 +186,16 @@ export default {
                 .filter(pack =>
                     Array.isArray(pack.levels) &&
                     pack.levels.every(level =>
-                        this.playerLevelKeys.has(Number(level)) 
+                        this.playerLevelKeys.has(
+                            level.toLowerCase().trim()
+                        )
                     )
                 )
                 .map(pack => ({
                     level: pack.name,
                     score: pack.points
                 }));
-        }
-    },
+        },
 
     async mounted() {
         const [leaderboard, err] = await fetchLeaderboard();
@@ -214,7 +215,7 @@ export default {
 
         // LOAD PACKS
         try {
-            const res = await fetch("/data/_packs.json");
+            const res = await fetch("/data/_completionpacks.json");
             this.packCompletion = await res.json();
         } catch (e) {
             console.error("Failed to load packs", e);
