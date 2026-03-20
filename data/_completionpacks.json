@@ -173,6 +173,28 @@
     ]
   },
   {
+    "name": "Fent Pack",
+    "color": "#92b0b3",
+    "points": 100,
+    "levels": [
+        "Addicted to fent",
+        "Fent feaning",
+        "rakastan fenttia",
+        "I Ran out of fent",
+        "i heart fent"
+        ]
+    },
+    {
+      "name": "VC Pack",
+      "color": "#ad92b3",
+      "points": 50,
+      "levels": [
+        "maybe vc in tcl",
+        "vc in tcl",
+        "no vc in tcl"
+        ]
+      }
+  {
     "name": "Decoration Pack I",
     "color": "#c30ce8",
     "points": 300,
