@@ -9,5 +9,210 @@
       "Dont you forget",
       "Bear5 Demon"
     ]
-  }
+  },
+    {
+    "name": "Wave Pack",
+    "color": "#2f4094",
+    "points": 350,
+    "levels": [
+      "Bass God",
+      "BLACKOUT",
+      "hotrod",
+      "clusterfvck",
+      "Drowning Love"
+    ]
+  },
+  {
+    "name": "Cube Pack",
+    "color": "#62e835",
+    "points": 300,
+    "levels": [
+      "WeezerOMGItsWeezer",
+      "The Tears of hank",
+      "Infinite Colors",
+      "brighter",
+      "every beginning",
+      "My Massive Bounce"
+    ]
+  },
+  {
+    "name": "Robot Pack",
+    "color": "#d6d4d0",
+    "points": 650,
+    "levels": [
+      "Cliff Hanger",
+      "shark bait hoo haha",
+      "On The Cliff edge",
+      "Tomato Town",
+      "UNWELL",
+      "XENOS ZANS"
+    ]
+  },
+  {
+    "name": "Swing Pack",
+    "color": "#cc921d",
+    "points": 300,
+    "levels": [
+      "salted meatballs",
+      "gravity 2",
+      "gravity"
+    ]
+  },
+  {
+    "name": "Balls Pack",
+    "color": "#e39349",
+    "points": 550,
+    "levels": [
+        "Joyous Balls",
+        "Happy Balls",
+        "Flaming Balls",
+        "Scratchy balls",
+        "itchy balls"
+    ]
+  },
+  {
+    "name": "Dual Pack",
+    "color": "#bf7d00",
+    "points": 400,
+    "levels": [
+      "Kowareta 2",
+      "Whiplash",
+      "Cheated on my Crush",
+      "SMOTS"
+    ]
+  },
+  {
+    "name": "Consistency Pack",
+    "color": "#1dcc94",
+    "points": 500,
+    "levels": [
+      "clawbuckle sucks",
+      "knee",
+      "glorp",
+      "Mysts"
+    ]
+  },
+  {
+    "name": "2 Player Pack",
+    "color": "#d9261c",
+    "points": 700,
+    "levels": [
+      "Out of this earth",
+      "Drammer",
+      "my confession",
+      "ZISSABER"
+    ]
+  },
+  {
+    "name": "Memory Trials",
+    "color": "#8d1cd9",
+    "points": 300,
+    "levels": [
+      "memory trials II",
+      "memory Trials 1",
+      "Memory Trials III",
+      "memory trials"
+    ]
+  },
+  {
+    "name": "Hank Pack",
+    "color": "#b854b1",
+    "points": 350,
+    "levels": [
+      "BLACKOUT",
+      "The Tears of hank",
+      "Happy Hank"
+    ]
+  },
+  {
+    "name": "Anatomy Pack",
+    "color": "#e0bf80",
+    "points": 500,
+    "levels": [
+      "knee",
+      "salted meatballs",
+      "Pain in the Spine",
+      "brainguss aman thAT",
+      "dans toes chall"
+    ]
+  },
+  {
+    "name": "Hazbin Hotel",
+    "color": "#3f688f",
+    "points": 500,
+    "levels": [
+           "losing streak",
+           "loser",
+           "brighter",
+           "piss 2",
+           "gravity 2",
+           "gravity"
+    ]
+  },
+  {
+    "name": "Hazbin Resort",
+    "color": "#3f8b8f",
+    "points": 750,
+    "levels": [
+            "easy",
+            "VOX POPULI",
+            "out for love",
+            "poison",
+            "Dont you forget"
+    ]
+  },
+  {
+    "name": "Impossible Endings Pack",
+    "color": "#8f703f",
+    "points": 650,
+    "levels": [
+            "easy",
+            "Icedcave be like",
+            "Tomato Town",
+            "shark bait hoo haha"
+    ]
+  },
+  {
+    "name": "Decoration Pack I",
+    "color": "#c30ce8",
+    "points": 600,
+    "levels": [
+              "Stellar Symphony",
+              "UNWELL",
+              "On The Cliff edge",
+              "Infinite Colors",
+              "Pianist",
+              "merica",
+              "tictactictacTOE"
+        
+    ]
+  },
+  {
+    "name": "Decoration Pack II",
+    "color": "#7C1E96",
+    "points": 1000,
+    "levels": [
+              "the golden pit",
+              "Prism",
+              "Cliff Hanger",
+              "Joyous Balls",
+              "SHIPSCAPES",
+              "figurante",
+              "Vera Lynn"
+    ]
+  },
+  {
+    "name": "Jack Of All Trades",
+    "color": "#f2f23f",
+    "points": 1500,
+    "levels": [
+            "Cave A Neer",
+            "Katamari",
+            "Drammer",
+            "SHIPSCAPES",
+            "Joyous Balls",
+            "The Tears of hank",
+            "mud",
+            "gravity 2"
+    ]
 ]
