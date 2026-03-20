@@ -169,15 +169,14 @@ export default {
             return (this.entry.completed || []).filter(score => score.rank > 150);
         },
 
-        // Collect all level IDs the player has beaten
-        playerLevelIds() {
+         playerLevelKeys() {
             const completed = this.entry.completed || [];
             const verified = this.entry.verified || [];
-
+        
             return new Set([
-                ...completed.map(l => l.id).filter(id => id != null),
-                ...verified.map(l => l.id).filter(id => id != null)
-            ]);
+                ...completed.map(l => l.id ?? l.level?.toLowerCase().trim()),
+                ...verified.map(l => l.id ?? l.level?.toLowerCase().trim())
+            ].filter(Boolean));
         },
 
          playerPacks() {
