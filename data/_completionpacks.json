@@ -2,7 +2,7 @@
   {
     "name": "Ship Pack",
     "color": "#f542e3",
-    "points": 500,
+    "points": 300,
     "levels": [
       "SHIPSCAPES",
       "lo da fish water V",
@@ -13,7 +13,7 @@
     {
     "name": "Wave Pack",
     "color": "#2f4094",
-    "points": 350,
+    "points": 200,
     "levels": [
       "Bass God",
       "BLACKOUT",
@@ -25,7 +25,7 @@
   {
     "name": "Cube Pack",
     "color": "#62e835",
-    "points": 300,
+    "points": 100,
     "levels": [
       "WeezerOMGItsWeezer",
       "The Tears of hank",
@@ -38,7 +38,7 @@
   {
     "name": "Robot Pack",
     "color": "#d6d4d0",
-    "points": 650,
+    "points": 300,
     "levels": [
       "Cliff Hanger",
       "shark bait hoo haha",
@@ -51,7 +51,7 @@
   {
     "name": "Swing Pack",
     "color": "#cc921d",
-    "points": 300,
+    "points": 100,
     "levels": [
       "salted meatballs",
       "gravity 2",
@@ -61,7 +61,7 @@
   {
     "name": "Balls Pack",
     "color": "#e39349",
-    "points": 550,
+    "points": 250,
     "levels": [
         "Joyous Balls",
         "Happy Balls",
@@ -73,7 +73,7 @@
   {
     "name": "Dual Pack",
     "color": "#bf7d00",
-    "points": 400,
+    "points": 150,
     "levels": [
       "Kowareta 2",
       "Whiplash",
@@ -84,7 +84,7 @@
   {
     "name": "Consistency Pack",
     "color": "#1dcc94",
-    "points": 500,
+    "points": 200,
     "levels": [
       "clawbuckle sucks",
       "knee",
@@ -95,7 +95,7 @@
   {
     "name": "2 Player Pack",
     "color": "#d9261c",
-    "points": 700,
+    "points": 400,
     "levels": [
       "Out of this earth",
       "Drammer",
@@ -106,7 +106,7 @@
   {
     "name": "Memory Trials",
     "color": "#8d1cd9",
-    "points": 300,
+    "points": 100,
     "levels": [
       "memory trials II",
       "memory Trials 1",
@@ -117,7 +117,7 @@
   {
     "name": "Hank Pack",
     "color": "#b854b1",
-    "points": 350,
+    "points": 75,
     "levels": [
       "BLACKOUT",
       "The Tears of hank",
@@ -127,7 +127,7 @@
   {
     "name": "Anatomy Pack",
     "color": "#e0bf80",
-    "points": 500,
+    "points": 225,
     "levels": [
       "knee",
       "salted meatballs",
@@ -139,7 +139,7 @@
   {
     "name": "Hazbin Hotel",
     "color": "#3f688f",
-    "points": 500,
+    "points": 150,
     "levels": [
            "losing streak",
            "loser",
@@ -152,7 +152,7 @@
   {
     "name": "Hazbin Resort",
     "color": "#3f8b8f",
-    "points": 750,
+    "points": 250,
     "levels": [
             "easy",
             "VOX POPULI",
@@ -164,7 +164,7 @@
   {
     "name": "Impossible Endings Pack",
     "color": "#8f703f",
-    "points": 650,
+    "points": 250,
     "levels": [
             "easy",
             "Icedcave be like",
@@ -175,7 +175,7 @@
   {
     "name": "Decoration Pack I",
     "color": "#c30ce8",
-    "points": 600,
+    "points": 300,
     "levels": [
               "Stellar Symphony",
               "UNWELL",
@@ -190,7 +190,7 @@
   {
     "name": "Decoration Pack II",
     "color": "#7C1E96",
-    "points": 1000,
+    "points": 500,
     "levels": [
               "the golden pit",
               "Prism",
@@ -204,7 +204,7 @@
   {
     "name": "Jack Of All Trades",
     "color": "#f2f23f",
-    "points": 1500,
+    "points": 700,
     "levels": [
             "Cave A Neer",
             "Katamari",
