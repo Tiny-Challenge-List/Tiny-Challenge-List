@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/va7m1E6I4HU",
     "percentToQualify": "100",
     "records": [
+			{
+            "user": "Nuridint3b",
+            "link": "https://discord.com/channels/1413625809112924307/1484893757940961381/1484893757940961381",
+            "hz": "CBS",
+            "percent": 100,
+            "mobile": "true"
+        }
     ]
 }
