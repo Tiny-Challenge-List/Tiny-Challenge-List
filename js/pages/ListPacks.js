@@ -8,7 +8,8 @@ export default {
 
   data: () => ({
     packs: [],
-    list: [],
+    list: [], 
+    levels: [], 
     selectedPackIndex: 0,
     selectedLevelIndex: 0,
     loading: true,
@@ -25,7 +26,7 @@ export default {
 
     selectedLevel() {
       return (
-        this.list.find(([lvl]) => lvl?.id === this.selectedLevelId)?.[0] ||
+        this.levels.find(([lvl]) => lvl?.id === this.selectedLevelId)?.[0] ||
         null
       );
     },
@@ -38,40 +39,41 @@ export default {
       ];
     },
 
-    // Check if user completed pack
-    userCompletedPack() {
-      return (user, pack) => {
-        if (!user || !pack) return false;
+    sortedUsers() {
+      if (!this.selectedPack) return [];
 
-        const completed = this.getUserCompletions(user);
+      return [...this.list]
+        .map(user => {
+          const completed = this.getUserCompletions(user);
 
-        return pack.levels.every(id =>
-          completed.includes(id)
-        );
-      };
-    },
+          const progress = this.selectedPack.levels.filter(id =>
+            completed.includes(id)
+          ).length;
 
-    // Count progress
-    userProgress() {
-      return (user, pack) => {
-        if (!user || !pack) return [0, 0];
+          return {
+            ...user,
+            progress,
+            total: this.selectedPack.levels.length
+          };
+        })
+        .sort((a, b) => {
+          // Sort
+          if (b.progress !== a.progress) {
+            return b.progress - a.progress;
+          }
 
-        const completed = this.getUserCompletions(user);
-
-        const count = pack.levels.filter(id =>
-          completed.includes(id)
-        ).length;
-
-        return [count, pack.levels.length];
-      };
+          return (b.verified?.length || 0) - (a.verified?.length || 0);
+        });
     },
   },
 
   async mounted() {
-    const list = await fetchList(); // users
+    const users = await fetchList();
+    const levels = await fetch("/data/_list.json").then(res => res.json()); // 👈 LEVELS
     const packsData = await fetch("/data/_packs.json").then(res => res.json());
 
-    this.list = list;
+    this.list = users;
+    this.levels = levels;
     this.packs = packsData;
     this.loading = false;
   },
@@ -113,7 +115,10 @@ export default {
             <td class="level" :class="{ active: selectedLevelIndex === i }">
               <button @click="selectedLevelIndex = i">
                 <span class="type-label-lg">
-                  {{ levelId }}
+                  {{
+                    levels.find(([lvl]) => lvl?.id === levelId)?.[0]?.name ||
+                    levelId
+                  }}
                 </span>
               </button>
             </td>
@@ -169,19 +174,26 @@ export default {
             <h2>Completions</h2>
 
             <table class="user-list">
-              <tr v-for="user in list" :key="user.name">
+              <tr v-for="(user, index) in sortedUsers" :key="user.name">
 
+                <!-- Rank -->
+                <td class="rank">
+                  #{{ index + 1 }}
+                </td>
+
+                <!-- Username -->
                 <td class="user-name">
                   {{ user.name }}
                 </td>
 
+                <!-- Progress -->
                 <td class="progress">
-                  {{ userProgress(user, selectedPack)[0] }} /
-                  {{ userProgress(user, selectedPack)[1] }}
+                  {{ user.progress }} / {{ user.total }}
                 </td>
 
+                <!-- Completed -->
                 <td class="status">
-                  <span v-if="userCompletedPack(user, selectedPack)">✔</span>
+                  <span v-if="user.progress === user.total">✔</span>
                   <span v-else>—</span>
                 </td>
 
