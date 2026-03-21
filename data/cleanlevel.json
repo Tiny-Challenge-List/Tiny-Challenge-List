@@ -43,7 +43,13 @@
             "hz": "CBF",
             "percent": 100,
             "mobile": "true"
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://youtu.be/Cw2msiX9lC8?is=wohq6W_lJBMQzwWR",
+            "hz": "60",
+            "percent": 100,
+	        "mobile": "true"
         }
-        
     ]
 }
