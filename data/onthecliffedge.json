@@ -37,6 +37,13 @@
             "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1467381638668488797",
             "hz": "240",
             "percent": 100
+        },
+        {
+            "user": "Probro675",
+            "link": "https://medal.tv/games/geometry-dash/clips/mlL8JMSAb8QAxnAD_",
+            "hz": "60",
+            "percent": 100,
+	        "mobile": "true"
         }
     ]
 }
