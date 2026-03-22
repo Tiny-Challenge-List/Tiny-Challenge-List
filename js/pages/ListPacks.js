@@ -1,3 +1,5 @@
+// Basic Packs
+
 import { fetchList } from "../content.js";
 import { embed } from "../util.js";
 import Spinner from "../components/Spinner.js";
@@ -104,6 +106,10 @@ export default {
             frameborder="0"
           ></iframe>
           <ul class="stats">
+            <li>
+              <div class="type-title-sm">Points when completed</div>
+              <p>{{ selectedPack.points || 'N/A' }}</p>
+            </li>
             <li>
               <div class="type-title-sm">ID</div>
               <p>{{ selectedLevel.id }}</p>
