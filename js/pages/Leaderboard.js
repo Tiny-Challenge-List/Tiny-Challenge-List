@@ -213,32 +213,35 @@ export default {
     },
 
     async mounted() {
-        const [leaderboard, err] = await fetchLeaderboard();
+    const [leaderboard, err] = await fetchLeaderboard();
 
-        const excludedUsers = ["finni1505"];
+    const excludedUsers = ["finni1505"];
 
-        const filteredLeaderboard = leaderboard
-            .filter(entry => !excludedUsers.includes(entry.user))
-            .map(entry => ({
-                ...entry,
-                user: entry.user.trim().toLowerCase() === "zis76"
-                    ? "zis08"
-                    : entry.user
-            }));
+    const filteredLeaderboard = leaderboard
+        .filter(entry => !excludedUsers.includes(entry.user))
+        .map(entry => ({
+            ...entry,
+            user: entry.user.trim().toLowerCase() === "zis76"
+                ? "zis08"
+                : entry.user
+        }));
 
-        this.leaderboard = filteredLeaderboard;
+    this.leaderboard = filteredLeaderboard;
 
-        // LOAD PACKS
-        try {
-            const res = await fetch("/data/_completionpacks.json");
-            this.packCompletion = await res.json();
-        } catch (e) {
-            console.error("Failed to load packs", e);
-        }
+    try {
+        const res = await fetch("/data/_completionpacks.json");
+        this.packCompletion = await res.json();
+    } catch (e) {
+        console.error("Failed to load packs", e);
+    }
 
-        this.selected = 0;
-        this.err = err;
-        this.loading = false;
+    this.leaderboard.sort((a, b) => {
+        return this.getTotalWithPacks(b) - this.getTotalWithPacks(a);
+    });
+
+    this.selected = 0;
+    this.err = err;
+    this.loading = false;
     },
 
     methods: {
