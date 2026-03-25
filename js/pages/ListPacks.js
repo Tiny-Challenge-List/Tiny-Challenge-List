@@ -5,6 +5,7 @@ import LevelAuthors from "../components/List/LevelAuthors.js";
 
 export default {
   components: { Spinner, LevelAuthors },
+
   data: () => ({
     packs: [],
     list: [],
@@ -23,10 +24,10 @@ export default {
     },
 
     selectedLevel() {
-      return (
-        this.list.find(([lvl]) => lvl?.id === this.selectedLevelId)?.[0] ||
-        null
+      const found = this.list.find(
+        ([lvl]) => lvl?.id === this.selectedLevelId
       );
+      return found ? found[0] : null;
     },
 
     getOriginalRank() {
@@ -40,16 +41,22 @@ export default {
     // Pack completion
     packCompletions() {
       if (!this.selectedPack) return [];
-    
+
       const userMap = new Map();
-    
+
       this.selectedPack.levels.forEach((levelId) => {
-        const level = this.list.find(([lvl]) => lvl?.id === levelId)?.[0];
+        const found = this.list.find(([lvl]) => lvl?.id === levelId);
+        const level = found ? found[0] : null;
         if (!level) return;
-    
+
+        const countedUsers = new Set();
+
+        // Verifier
         if (level.verifier) {
           const verifier = level.verifier;
-    
+
+          countedUsers.add(verifier);
+
           if (!userMap.has(verifier)) {
             userMap.set(verifier, {
               user: verifier,
@@ -62,13 +69,19 @@ export default {
             u.verifications = (u.verifications || 0) + 1;
           }
         }
-    
+
+        // Records
         if (level.records) {
           level.records.forEach((record) => {
             if (record.percent !== 100) return;
-    
+
             const username = record.user;
-    
+
+            // prevent double count on same level
+            if (countedUsers.has(username)) return;
+
+            countedUsers.add(username);
+
             if (!userMap.has(username)) {
               userMap.set(username, {
                 user: username,
@@ -80,12 +93,13 @@ export default {
             }
           });
         }
-  });
-  
-    return Array.from(userMap.values()).sort(
-      (a, b) => b.completions - a.completions
-    );
-  }
+      });
+
+      return Array.from(userMap.values()).sort(
+        (a, b) => b.completions - a.completions
+      );
+    },
+  },
 
   async mounted() {
     const list = await fetchList();
@@ -188,8 +202,8 @@ export default {
               <p>{{ selectedLevel.version || 'Any' }}</p>
             </li>
           </ul>
-          
-          <!-- Pack completions -->
+
+          <!-- Pack Progression -->
           <div class="pack-completions" v-if="packCompletions.length">
             <h2>Pack Progression</h2>
             <table class="list">
@@ -199,10 +213,13 @@ export default {
                 <td class="completions">
                   {{ user.completions }} total
                 </td>
+                <td class="verifications">
+                  {{ user.verifications }} verifications
+                </td>
               </tr>
             </table>
           </div>
-          
+
         </div>
       </div>
     </main>
