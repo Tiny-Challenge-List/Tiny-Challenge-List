@@ -212,7 +212,7 @@ export default {
               <tr v-for="(user, i) in packCompletions" :key="user.user">
                 <td class="name">{{ user.user }}</td>
                 <td class="completions">
-                  {{ user.completions }} / {{ user.totalLevels }} levels
+                  {{ user.completions }} / {{ user.totalLevels }}
                 </td>
               </tr>
             </table>
