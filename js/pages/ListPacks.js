@@ -38,37 +38,54 @@ export default {
     },
 
     // Pack completion
-    packCompletions() {
-      if (!this.selectedPack) return [];
-
-      const userMap = new Map();
-
-      this.selectedPack.levels.forEach((levelId) => {
-        const level = this.list.find(([lvl]) => lvl?.id === levelId)?.[0];
-        if (!level || !level.records) return;
-
+  packCompletions() {
+    if (!this.selectedPack) return [];
+  
+    const userMap = new Map();
+  
+    this.selectedPack.levels.forEach((levelId) => {
+      const level = this.list.find(([lvl]) => lvl?.id === levelId)?.[0];
+      if (!level) return;
+  
+      if (level.verifier) {
+        const verifier = level.verifier;
+  
+        if (!userMap.has(verifier)) {
+          userMap.set(verifier, {
+            user: verifier,
+            completions: 1,
+            verifications: 1,
+          });
+        } else {
+          const u = userMap.get(verifier);
+          u.completions++;
+          u.verifications = (u.verifications || 0) + 1;
+        }
+      }
+  
+      if (level.records) {
         level.records.forEach((record) => {
-          // Optional: only count 100% completions
           if (record.percent !== 100) return;
-
+  
           const username = record.user;
-
+  
           if (!userMap.has(username)) {
             userMap.set(username, {
               user: username,
               completions: 1,
+              verifications: 0,
             });
           } else {
             userMap.get(username).completions++;
           }
         });
-      });
-
-      return Array.from(userMap.values()).sort(
-        (a, b) => b.completions - a.completions
-      );
-    },
-  },
+      }
+    });
+  
+    return Array.from(userMap.values()).sort(
+      (a, b) => b.completions - a.completions
+    );
+  }
 
   async mounted() {
     const list = await fetchList();
