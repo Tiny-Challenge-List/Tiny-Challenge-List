@@ -199,9 +199,6 @@ export default {
                 <td class="completions">
                   {{ user.completions }} total
                 </td>
-                <td class="verifications">
-                  {{ user.verifications || 0 }} verifications
-                </td>
               </tr>
             </table>
           </div>
