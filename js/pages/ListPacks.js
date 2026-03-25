@@ -208,7 +208,6 @@ export default {
             <h2>Pack Progression</h2>
             <table class="list">
               <tr v-for="(user, i) in packCompletions" :key="user.user">
-                <td class="rank">#{{ i + 1 }}</td>
                 <td class="name">{{ user.user }}</td>
                 <td class="completions">
                   {{ user.completions }} total
