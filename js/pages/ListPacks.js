@@ -174,7 +174,7 @@ export default {
           
           <!-- Pack completions -->
           <div class="pack-completions" v-if="packCompletions.length">
-            <h2>Pack Completions</h2>
+            <h2>Pack Progression</h2>
             <table class="list">
               <tr v-for="(user, i) in packCompletions" :key="user.user">
                 <td class="rank">#{{ i + 1 }}</td>
