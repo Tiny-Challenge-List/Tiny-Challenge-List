@@ -120,3 +120,26 @@
   gap: 1rem;
 }
 
+.page-list .level-container .level .pack-completions .list {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.page-list .level-container .level .pack-completions tr td:not(:last-child) {
+    padding-right: 1rem;
+}
+
+.page-list .level-container .level .pack-completions .rank,
+.page-list .level-container .level .pack-completions .name,
+.page-list .level-container .level .pack-completions .completions,
+.page-list .level-container .level .pack-completions .verifications {
+    padding-block: 1rem;
+}
+
+.page-list .level-container .level .pack-completions .name {
+    width: 100%;
+}
+
+.page-list .level-container .level .pack-completions .completions,
+.page-list .level-container .level .pack-completions .verifications {
+    text-align: end;
