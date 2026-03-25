@@ -179,7 +179,12 @@ export default {
               <tr v-for="(user, i) in packCompletions" :key="user.user">
                 <td class="rank">#{{ i + 1 }}</td>
                 <td class="name">{{ user.user }}</td>
-                <td class="completions">{{ user.completions }} levels</td>
+                <td class="completions">
+                  {{ user.completions }} total
+                </td>
+                <td class="verifications">
+                  {{ user.verifications || 0 }} verifications
+                </td>
               </tr>
             </table>
           </div>
