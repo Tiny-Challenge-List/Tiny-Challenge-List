@@ -131,10 +131,9 @@
 
 .page-list .level-container .level .pack-completions .rank,
 .page-list .level-container .level .pack-completions .name,
-.page-list .level-container .level .pack-completions .completions
-
+.page-list .level-container .level .pack-completions .completions,
 .page-list .level-container .level .pack-completions .name {
     width: 100%;
 }
 
-.page-list .level-container .level .pack-completions .completions
+.page-list .level-container .level .pack-completions .completions {
