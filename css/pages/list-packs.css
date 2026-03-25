@@ -120,20 +120,25 @@
   gap: 1rem;
 }
 
-.page-list .level-container .level .pack-completions .list {
+.page-list-packs .level-container .level .pack-completions .list {
     table-layout: fixed;
     width: 100%;
 }
 
-.page-list .level-container .level .pack-completions tr td:not(:last-child) {
+.page-list-packs .level-container .level .pack-completions tr td:not(:last-child) {
     padding-right: 1rem;
 }
 
-.page-list .level-container .level .pack-completions .rank,
-.page-list .level-container .level .pack-completions .name,
-.page-list .level-container .level .pack-completions .completions,
-.page-list .level-container .level .pack-completions .name {
+.page-list-packs .level-container .level .pack-completions .rank,
+.page-list-packs .level-container .level .pack-completions .name,
+.page-list-packs .level-container .level .pack-completions .completions {
+    padding-block: 1rem;
+}
+
+.page-list-packs .level-container .level .pack-completions .name {
     width: 100%;
 }
 
-.page-list .level-container .level .pack-completions .completions 
+.page-list-packs .level-container .level .pack-completions .completions {
+    text-align: end;
+}
