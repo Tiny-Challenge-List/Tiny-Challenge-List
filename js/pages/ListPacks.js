@@ -171,21 +171,21 @@ export default {
               <p>{{ selectedLevel.version || 'Any' }}</p>
             </li>
           </ul>
+          
+          <!-- Pack completions -->
+          <div class="pack-completions" v-if="packCompletions.length">
+            <h2>Pack Completions</h2>
+            <table class="list">
+              <tr v-for="(user, i) in packCompletions" :key="user.user">
+                <td class="rank">#{{ i + 1 }}</td>
+                <td class="name">{{ user.user }}</td>
+                <td class="completions">{{ user.completions }} levels</td>
+              </tr>
+            </table>
+          </div>
+          
         </div>
       </div>
-
-      <!-- Pack completions -->
-      <div class="pack-completions" v-if="packCompletions.length">
-        <h2>Pack Completions</h2>
-        <table class="list">
-          <tr v-for="(user, i) in packCompletions" :key="user.user">
-            <td class="rank">#{{ i + 1 }}</td>
-            <td class="name">{{ user.user }}</td>
-            <td class="completions">{{ user.completions }} levels</td>
-          </tr>
-        </table>
-      </div>
-
     </main>
   `,
 };
