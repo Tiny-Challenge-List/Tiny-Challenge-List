@@ -1,5 +1,3 @@
-// Basic Packs
-
 import { fetchList } from "../content.js";
 import { embed } from "../util.js";
 import Spinner from "../components/Spinner.js";
@@ -14,16 +12,23 @@ export default {
     selectedLevelIndex: 0,
     loading: true,
   }),
+
   computed: {
     selectedPack() {
       return this.packs[this.selectedPackIndex] || null;
     },
+
     selectedLevelId() {
       return this.selectedPack?.levels[this.selectedLevelIndex] || null;
     },
+
     selectedLevel() {
-      return this.list.find(([lvl]) => lvl?.id === this.selectedLevelId)?.[0] || null;
+      return (
+        this.list.find(([lvl]) => lvl?.id === this.selectedLevelId)?.[0] ||
+        null
+      );
     },
+
     getOriginalRank() {
       return (levelId) => {
         return (
@@ -31,23 +36,62 @@ export default {
         );
       };
     },
+
+    // Pack completion
+    packCompletions() {
+      if (!this.selectedPack) return [];
+
+      const userMap = new Map();
+
+      this.selectedPack.levels.forEach((levelId) => {
+        const level = this.list.find(([lvl]) => lvl?.id === levelId)?.[0];
+        if (!level || !level.records) return;
+
+        level.records.forEach((record) => {
+          // Optional: only count 100% completions
+          if (record.percent !== 100) return;
+
+          const username = record.user;
+
+          if (!userMap.has(username)) {
+            userMap.set(username, {
+              user: username,
+              completions: 1,
+            });
+          } else {
+            userMap.get(username).completions++;
+          }
+        });
+      });
+
+      return Array.from(userMap.values()).sort(
+        (a, b) => b.completions - a.completions
+      );
+    },
   },
+
   async mounted() {
     const list = await fetchList();
-    const packsData = await fetch("/data/_packs.json").then((res) => res.json());
+    const packsData = await fetch("/data/_packs.json").then((res) =>
+      res.json()
+    );
 
     this.list = list;
     this.packs = packsData;
     this.loading = false;
   },
+
   methods: {
     embed,
   },
+
   template: `
     <main v-if="loading">
       <Spinner></Spinner>
     </main>
+
     <main v-else class="page-list-packs">
+      
       <!-- Pack selector -->
       <div class="pack-selector">
         <button
@@ -62,7 +106,7 @@ export default {
       </div>
 
       <div class="list-container">
-        <!-- Level list in the selected pack -->
+        <!-- Level list -->
         <table class="list" v-if="selectedPack">
           <tr
             v-for="(levelId, i) in selectedPack.levels"
@@ -73,6 +117,7 @@ export default {
                 #{{ i + 1 }}
               </p>
             </td>
+
             <td
               class="level"
               :class="{ active: selectedLevelIndex === i }"
@@ -94,17 +139,20 @@ export default {
       <div class="level-container" v-if="selectedLevel">
         <div class="level">
           <h1>{{ selectedLevel.name }}</h1>
+
           <LevelAuthors
             :author="selectedLevel.author"
             :creators="selectedLevel.creators"
             :verifier="selectedLevel.verifier"
           ></LevelAuthors>
+
           <iframe
             class="video"
             id="videoframe"
             :src="embed(selectedLevel.showcase || selectedLevel.verification)"
             frameborder="0"
           ></iframe>
+
           <ul class="stats">
             <li>
               <div class="type-title-sm">Points when completed</div>
@@ -122,10 +170,22 @@ export default {
               <div class="type-title-sm">VERSION</div>
               <p>{{ selectedLevel.version || 'Any' }}</p>
             </li>
-            <li>
           </ul>
         </div>
       </div>
+
+      <!-- Pack completions -->
+      <div class="pack-completions" v-if="packCompletions.length">
+        <h2>Pack Completions</h2>
+        <table class="list">
+          <tr v-for="(user, i) in packCompletions" :key="user.user">
+            <td class="rank">#{{ i + 1 }}</td>
+            <td class="name">{{ user.user }}</td>
+            <td class="completions">{{ user.completions }} levels</td>
+          </tr>
+        </table>
+      </div>
+
     </main>
   `,
 };
