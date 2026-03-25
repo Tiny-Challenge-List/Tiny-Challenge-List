@@ -61,7 +61,7 @@
   {
     "name": "Balls Pack",
     "color": "#e39349",
-    "points": 250,
+    "points": 150,
     "levels": [
         131492060,
         129495075,
@@ -197,7 +197,7 @@
   {
     "name": "Decoration Pack I",
     "color": "#c30ce8",
-    "points": 300,
+    "points": 200,
     "levels": [
         134416964,
         132633874,
@@ -212,7 +212,7 @@
   {
     "name": "Decoration Pack II",
     "color": "#7C1E96",
-    "points": 500,
+    "points": 600,
     "levels": [
         129233199,
         129871470,
