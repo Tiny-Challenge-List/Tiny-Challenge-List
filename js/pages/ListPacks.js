@@ -43,7 +43,8 @@ export default {
       if (!this.selectedPack) return [];
 
       const userMap = new Map();
-
+      const totalLevels = this.selectedPack.levels.length;
+      
       this.selectedPack.levels.forEach((levelId) => {
         const found = this.list.find(([lvl]) => lvl?.id === levelId);
         const level = found ? found[0] : null;
@@ -62,6 +63,7 @@ export default {
               user: verifier,
               completions: 1,
               verifications: 1,
+              totalLevels,
             });
           } else {
             const u = userMap.get(verifier);
@@ -210,7 +212,7 @@ export default {
               <tr v-for="(user, i) in packCompletions" :key="user.user">
                 <td class="name">{{ user.user }}</td>
                 <td class="completions">
-                  {{ user.completions }} total
+                  {{ user.completions }} / {{ user.totalLevels }} levels
                 </td>
               </tr>
             </table>
