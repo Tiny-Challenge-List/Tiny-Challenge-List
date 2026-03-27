@@ -210,9 +210,27 @@ export default {
             <h2>Pack Progression</h2>
             <table class="list">
               <tr v-for="(user, i) in packCompletions" :key="user.user">
-                <td class="name">{{ user.user }}</td>
+                <td class="name">
+                  {{ user.user }}
+                  <span 
+                    v-if="user.completions === selectedPack.levels.length"
+                    class="crown"
+                  >
+                    👑
+                  </span>
+                </td>
+              
                 <td class="completions">
-                  {{ user.completions }}
+                  <div class="progress-bar">
+                    <div 
+                      class="progress"
+                      :style="{ width: (user.completions / selectedPack.levels.length * 100) + '%' }">
+                    </div>
+                  </div>
+              
+                  <span class="progress-text">
+                    {{ user.completions }} / {{ selectedPack.levels.length }}
+                  </span>
                 </td>
               </tr>
             </table>
