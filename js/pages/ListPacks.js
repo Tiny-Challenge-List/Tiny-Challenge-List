@@ -105,24 +105,22 @@ export default {
 
   async mounted() {
     const normalize = (name) => name.toLowerCase();
-
+  
     const list = await fetchList();
-
+  
     const packsData = await fetch("/data/_packs.json").then((res) =>
       res.json()
     );
-
+  
     const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
       res.json()
     );
-
+  
     const hiddenUsers = hiddenData.map(normalize);
-
+  
     const processRecords = (records) => {
       return records
-        .filter(record =>
-          !hiddenUsers.includes(normalize(record.user))
-        )
+        .filter(record => !hiddenUsers.includes(normalize(record.user)))
         .map(record => ({
           ...record,
           user:
@@ -132,14 +130,12 @@ export default {
         }));
     };
 
-    list.forEach((item) => {
-      const level = Array.isArray(item) ? item[0] : item;
-
+    list.forEach(([level]) => {
       if (level && Array.isArray(level.records)) {
         level.records = processRecords(level.records);
       }
     });
-
+  
     this.list = list;
     this.packs = packsData;
     this.loading = false;
