@@ -38,7 +38,6 @@ export default {
       };
     },
 
-    // Pack completion (CASE-INSENSITIVE FIX APPLIED)
     packCompletions() {
       if (!this.selectedPack) return [];
 
