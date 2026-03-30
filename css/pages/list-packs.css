@@ -153,6 +153,12 @@
   padding-block: 0.75rem;
 }
 
+.page-list-packs .progress-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem; 
+}
+
 .page-list-packs .pack-completions .name {
   width: 100%;
   font-weight: 500;
