@@ -104,41 +104,52 @@ export default {
   },
 
   async mounted() {
-    const normalize = (name) => name.toLowerCase();
+    const normalize = (name) => (name || "").toLowerCase();
   
-    const list = await fetchList();
+    try {
+      const list = await fetchList();
   
-    const packsData = await fetch("/data/_packs.json").then((res) =>
-      res.json()
-    );
+      const packsData = await fetch("/data/_packs.json").then((res) =>
+        res.json()
+      );
   
-    const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
-      res.json()
-    );
+      const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
+        res.json()
+      );
   
-    const hiddenUsers = hiddenData.map(normalize);
+      const hiddenUsers = hiddenData.map(normalize);
   
-    const processRecords = (records) => {
-      return records
-        .filter(record => !hiddenUsers.includes(normalize(record.user)))
-        .map(record => ({
-          ...record,
-          user:
-            normalize(record.user.trim()) === "zis76"
-              ? "zis08"
-              : record.user
-        }));
-    };
-
-    list.forEach(([level]) => {
-      if (level && Array.isArray(level.records)) {
-        level.records = processRecords(level.records);
+      const processRecords = (records) => {
+        return records
+          .filter(record => !hiddenUsers.includes(normalize(record.user)))
+          .map(record => ({
+            ...record,
+            user:
+              normalize(record.user.trim()) === "zis76"
+                ? "zis08"
+                : record.user
+          }));
+      };
+  
+      if (Array.isArray(list)) {
+        list.forEach((item) => {
+          if (!Array.isArray(item)) return;
+  
+          const level = item[0]; // [level, error]
+  
+          if (level && Array.isArray(level.records)) {
+            level.records = processRecords(level.records);
+          }
+        });
       }
-    });
   
-    this.list = list;
-    this.packs = packsData;
-    this.loading = false;
+      this.list = list || [];
+      this.packs = packsData || [];
+    } catch (err) {
+      console.error("Mounted error:", err);
+    } finally {
+      this.loading = false;
+    }
   },
 
   methods: {
