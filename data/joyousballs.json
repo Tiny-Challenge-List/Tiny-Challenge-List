@@ -7,5 +7,12 @@
     "verification": "https://youtu.be/D1tHKO0iM5w?si=6NXPxdMpLEcotdnY",
     "percentToQualify": "100",
     "records": [
+        {
+            "user": "Probro675",
+            "link": "https://youtu.be/YoYezJTZTzY?si=JD8YicXaj_msqzfw",
+            "hz": "60",
+            "percent": 100
+            "mobile": "true"
+        }
     ]
 }
