@@ -60,7 +60,7 @@ export default {
 
           if (!userMap.has(key)) {
             userMap.set(key, {
-              user: verifier, // preserve original casing
+              user: verifier,
               completions: 1,
               verifications: 1,
               totalLevels,
@@ -86,7 +86,7 @@ export default {
 
             if (!userMap.has(key)) {
               userMap.set(key, {
-                user: username, // preserve original casing
+                user: username,
                 completions: 1,
                 verifications: 0,
               });
@@ -105,19 +105,19 @@ export default {
 
   async mounted() {
     const normalize = (name) => name.toLowerCase();
-  
+
     const list = await fetchList();
-  
+
     const packsData = await fetch("/data/_packs.json").then((res) =>
       res.json()
     );
-  
+
     const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
       res.json()
     );
-  
-    const hiddenUsers = (hiddenData.hidden || hiddenData || []).map(normalize);
-  
+
+    const hiddenUsers = hiddenData.map(normalize);
+
     const processRecords = (records) => {
       return records
         .filter(record =>
@@ -131,14 +131,15 @@ export default {
               : record.user
         }));
     };
-  
-    // Apply to all levels
-    list.forEach(([level]) => {
+
+    list.forEach((item) => {
+      const level = Array.isArray(item) ? item[0] : item;
+
       if (level && Array.isArray(level.records)) {
         level.records = processRecords(level.records);
       }
     });
-  
+
     this.list = list;
     this.packs = packsData;
     this.loading = false;
@@ -147,7 +148,6 @@ export default {
   methods: {
     embed,
 
-    // Used ONLY for comparisons, not display
     normalize(name) {
       return name.toLowerCase();
     },
