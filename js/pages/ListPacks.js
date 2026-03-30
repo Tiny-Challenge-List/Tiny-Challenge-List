@@ -107,14 +107,38 @@ export default {
   },
 
   async mounted() {
-    const list = await fetchList();
-    const packsData = await fetch("/data/_packs.json").then((res) =>
-      res.json()
-    );
+  const normalize = (name) => name.toLowerCase();
 
-    this.list = list;
-    this.packs = packsData;
-    this.loading = false;
+  const hiddenUsers = ["finni1505", "d3adspac3"];
+
+  const processRecords = (records) => {
+    return records
+      .filter(record =>
+        !hiddenUsers.includes(normalize(record.user))
+      )
+      .map(record => ({
+        ...record,
+        user:
+          normalize(record.user.trim()) === "zis76"
+            ? "zis08"
+            : record.user
+      }));
+  };
+
+  const list = await fetchList();
+  const packsData = await fetch("/data/_packs.json").then((res) =>
+    res.json()
+  );
+
+  list.forEach(([level]) => {
+    if (level && Array.isArray(level.records)) {
+      level.records = processRecords(level.records);
+    }
+  });
+
+  this.list = list;
+  this.packs = packsData;
+  this.loading = false;
   },
 
   methods: {
