@@ -104,45 +104,45 @@ export default {
   },
 
   async mounted() {
-  const normalize = (name) => name.toLowerCase();
-
-  const list = await fetchList();
-
-  const packsData = await fetch("/data/_packs.json").then((res) =>
-    res.json()
-  );
-
-  const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
-    res.json()
-  );
-
-  const hiddenUsers = hiddenData.map(normalize);
-
-  const processRecords = (records) => {
-    return records
-      .filter(record =>
-        !hiddenUsers.includes(normalize(record.user))
-      )
-      .map(record => ({
-        ...record,
-        user:
-          normalize(record.user.trim()) === "zis76"
-            ? "zis08"
-            : record.user
-      }));
-  };
-
-  // Apply to all levels
-  list.forEach(([level]) => {
-    if (level && Array.isArray(level.records)) {
-      level.records = processRecords(level.records);
-    }
-  });
-
-  this.list = list;
-  this.packs = packsData;
-  this.loading = false;
-},
+    const normalize = (name) => name.toLowerCase();
+  
+    const list = await fetchList();
+  
+    const packsData = await fetch("/data/_packs.json").then((res) =>
+      res.json()
+    );
+  
+    const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
+      res.json()
+    );
+  
+    const hiddenUsers = hiddenData.map(normalize);
+  
+    const processRecords = (records) => {
+      return records
+        .filter(record =>
+          !hiddenUsers.includes(normalize(record.user))
+        )
+        .map(record => ({
+          ...record,
+          user:
+            normalize(record.user.trim()) === "zis76"
+              ? "zis08"
+              : record.user
+        }));
+    };
+  
+    // Apply to all levels
+    list.forEach(([level]) => {
+      if (level && Array.isArray(level.records)) {
+        level.records = processRecords(level.records);
+      }
+    });
+  
+    this.list = list;
+    this.packs = packsData;
+    this.loading = false;
+  },
 
   methods: {
     embed,
