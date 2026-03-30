@@ -73,7 +73,12 @@ export default {
 
         if (this.list) {
 
-            const hiddenUsers = ["finni1505", "D3adSpac3"];
+            const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
+              res.json()
+            );
+        
+            const hiddenUsers = hiddenData.map(normalize);
+  
 
             this.list.forEach(([level]) => {
                 if (level && Array.isArray(level.records)) {
