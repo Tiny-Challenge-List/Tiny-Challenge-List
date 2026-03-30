@@ -116,7 +116,7 @@ export default {
       res.json()
     );
   
-    const hiddenUsers = hiddenData.map(normalize);
+    const hiddenUsers = (hiddenData.hidden || hiddenData || []).map(normalize);
   
     const processRecords = (records) => {
       return records
