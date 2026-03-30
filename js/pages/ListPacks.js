@@ -112,7 +112,7 @@ export default {
     res.json()
   );
 
-  const hiddenData = await fetch("/data/hiddenUsers.json").then((res) =>
+  const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
     res.json()
   );
 
