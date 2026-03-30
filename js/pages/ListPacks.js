@@ -38,13 +38,15 @@ export default {
       };
     },
 
-    // Pack completion
+    // Pack completion (CASE-INSENSITIVE FIX APPLIED)
     packCompletions() {
       if (!this.selectedPack) return [];
 
+      const normalize = (name) => name.toLowerCase();
+
       const userMap = new Map();
       const totalLevels = this.selectedPack.levels.length;
-      
+
       this.selectedPack.levels.forEach((levelId) => {
         const found = this.list.find(([lvl]) => lvl?.id === levelId);
         const level = found ? found[0] : null;
@@ -55,18 +57,19 @@ export default {
         // Verifier
         if (level.verifier) {
           const verifier = level.verifier;
+          const key = normalize(verifier);
 
-          countedUsers.add(verifier);
+          countedUsers.add(key);
 
-          if (!userMap.has(verifier)) {
-            userMap.set(verifier, {
+          if (!userMap.has(key)) {
+            userMap.set(key, {
               user: verifier,
               completions: 1,
               verifications: 1,
               totalLevels,
             });
           } else {
-            const u = userMap.get(verifier);
+            const u = userMap.get(key);
             u.completions++;
             u.verifications = (u.verifications || 0) + 1;
           }
@@ -78,20 +81,21 @@ export default {
             if (record.percent !== 100) return;
 
             const username = record.user;
+            const key = normalize(username);
 
-            // prevent double count on same level
-            if (countedUsers.has(username)) return;
+            
+            if (countedUsers.has(key)) return;
 
-            countedUsers.add(username);
+            countedUsers.add(key);
 
-            if (!userMap.has(username)) {
-              userMap.set(username, {
+            if (!userMap.has(key)) {
+              userMap.set(key, {
                 user: username,
                 completions: 1,
                 verifications: 0,
               });
             } else {
-              userMap.get(username).completions++;
+              userMap.get(key).completions++;
             }
           });
         }
