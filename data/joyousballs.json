@@ -9,10 +9,10 @@
     "records": [
         {
             "user": "Probro675",
-            "link": "https://youtu.be/YoYezJTZTzY?si=JD8YicXaj_msqzfw",
+            "Link": "https://youtu.be/YoYezJTZTzY?si=JD8YicXaj_msqzfw",
             "hz": "60",
-            "percent": 100
-            "mobile": "true"
+            "percent": 100,
+	        "mobile": "true"
         }
     ]
 }
