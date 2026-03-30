@@ -157,6 +157,7 @@
 .page-list-packs .progress-text {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
   gap: 0.25rem; 
 }
 
