@@ -41,8 +41,6 @@ export default {
     packCompletions() {
       if (!this.selectedPack) return [];
 
-      const normalize = (name) => name.toLowerCase();
-
       const userMap = new Map();
       const totalLevels = this.selectedPack.levels.length;
 
