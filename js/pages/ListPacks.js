@@ -54,13 +54,13 @@ export default {
         // Verifier
         if (level.verifier) {
           const verifier = level.verifier;
-          const key = normalize(verifier);
+          const key = this.normalize(verifier);
 
           countedUsers.add(key);
 
           if (!userMap.has(key)) {
             userMap.set(key, {
-              user: verifier,
+              user: verifier, // preserve original casing
               completions: 1,
               verifications: 1,
               totalLevels,
@@ -78,16 +78,15 @@ export default {
             if (record.percent !== 100) return;
 
             const username = record.user;
-            const key = normalize(username);
+            const key = this.normalize(username);
 
-            
             if (countedUsers.has(key)) return;
 
             countedUsers.add(key);
 
             if (!userMap.has(key)) {
               userMap.set(key, {
-                user: username,
+                user: username, // preserve original casing
                 completions: 1,
                 verifications: 0,
               });
@@ -105,42 +104,48 @@ export default {
   },
 
   async mounted() {
-  const normalize = (name) => name.toLowerCase();
+    const normalize = (name) => name.toLowerCase();
 
-  const hiddenUsers = ["finni1505", "d3adspac3"];
+    const hiddenUsers = ["finni1505", "d3adspac3"];
 
-  const processRecords = (records) => {
-    return records
-      .filter(record =>
-        !hiddenUsers.includes(normalize(record.user))
-      )
-      .map(record => ({
-        ...record,
-        user:
-          normalize(record.user.trim()) === "zis76"
-            ? "zis08"
-            : record.user
-      }));
-  };
+    const processRecords = (records) => {
+      return records
+        .filter(record =>
+          !hiddenUsers.includes(normalize(record.user))
+        )
+        .map(record => ({
+          ...record,
+          user:
+            normalize(record.user.trim()) === "zis76"
+              ? "zis08"
+              : record.user
+        }));
+    };
 
-  const list = await fetchList();
-  const packsData = await fetch("/data/_packs.json").then((res) =>
-    res.json()
-  );
+    const list = await fetchList();
+    const packsData = await fetch("/data/_packs.json").then((res) =>
+      res.json()
+    );
 
-  list.forEach(([level]) => {
-    if (level && Array.isArray(level.records)) {
-      level.records = processRecords(level.records);
-    }
-  });
+    // Apply filtering + renaming once globally
+    list.forEach(([level]) => {
+      if (level && Array.isArray(level.records)) {
+        level.records = processRecords(level.records);
+      }
+    });
 
-  this.list = list;
-  this.packs = packsData;
-  this.loading = false;
+    this.list = list;
+    this.packs = packsData;
+    this.loading = false;
   },
 
   methods: {
     embed,
+
+    // Used ONLY for comparisons, not display
+    normalize(name) {
+      return name.toLowerCase();
+    },
   },
 
   template: `
