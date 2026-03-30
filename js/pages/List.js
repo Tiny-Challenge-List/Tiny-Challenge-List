@@ -68,58 +68,48 @@ export default {
     },
   },
   async mounted() {
-    const normalize = (name) => name.toLowerCase();
-  
-    this.list = await fetchList();
-    this.editors = await fetchEditors();
-  
-    if (this.list) {
-      const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
-        res.json()
-      );
-  
-      const hiddenUsers = hiddenData.map(normalize);
-  
-      const processRecords = (records) => {
-        return records
-          .filter((record) => !hiddenUsers.includes(normalize(record.user)))
-          .map((record) => ({
-            ...record,
-            user:
-              normalize(record.user.trim()) === "zis76"
-                ? "zis08"
-                : record.user,
-          }));
-      };
-  
-      this.list.forEach((item) => {
-        const level = Array.isArray(item) ? item[0] : item;
-  
-        if (level && Array.isArray(level.records)) {
-          level.records = processRecords(level.records);
-        }
-      });
-    }
-  
-    if (!this.list) {
-      this.errors = [
-        "Failed to load list. Retry in a few minutes or notify list staff.",
-      ];
-    } else {
-      this.errors.push(
-        ...this.list
-          .filter(([_, err]) => err)
-          .map(([_, err]) => `Failed to load level. (${err}.json)`)
-      );
-  
-      if (!this.editors) {
-        this.errors.push("Failed to load list editors.");
-      }
-    }
-  
-    this.loading = false;
-  },
+        this.list = await fetchList();
+        this.editors = await fetchEditors();
 
+        if (this.list) {
+
+            const hiddenUsers = ["finni1505", "D3adSpac3"];
+
+            this.list.forEach(([level]) => {
+                if (level && Array.isArray(level.records)) {
+                    level.records = level.records
+                        .filter(record =>
+                            !hiddenUsers.includes(record.user.toLowerCase())
+                        )
+                        .map(record => ({
+                            ...record,
+                            user: record.user.trim().toLowerCase() === "zis76"
+                                ? "zis08"
+                                : record.user
+                        }));
+                }
+            });
+
+        }
+
+
+  if (!this.list) {
+    this.errors = [
+      "Failed to load list. Retry in a few minutes or notify list staff.",
+    ];
+  } else {
+    this.errors.push(
+      ...this.list
+        .filter(([_, err]) => err)
+        .map(([_, err]) => `Failed to load level. (${err}.json)`)
+    );
+    if (!this.editors) {
+      this.errors.push("Failed to load list editors.");
+    }
+  }
+
+  this.loading = false;
+  },
   template: `
     <main v-if="loading">
       <Spinner></Spinner>
