@@ -15,6 +15,14 @@ export default {
   }),
 
   computed: {
+    levelMap() {
+      const map = new Map();
+      this.list.forEach(([lvl]) => {
+        if (lvl?.id) map.set(lvl.id, lvl);
+      });
+      return map;
+    },
+
     selectedPack() {
       return this.packs[this.selectedPackIndex] || null;
     },
@@ -24,17 +32,13 @@ export default {
     },
 
     selectedLevel() {
-      const found = this.list.find(
-        ([lvl]) => lvl?.id === this.selectedLevelId
-      );
-      return found ? found[0] : null;
+      return this.levelMap.get(this.selectedLevelId) || null;
     },
 
     getOriginalRank() {
       return (levelId) => {
-        return (
-          this.list.findIndex(([lvl]) => lvl?.id === levelId) + 1 || "?"
-        );
+        const index = this.list.findIndex(([lvl]) => lvl?.id === levelId);
+        return index >= 0 ? index + 1 : "?";
       };
     },
 
@@ -45,22 +49,18 @@ export default {
       const totalLevels = this.selectedPack.levels.length;
 
       this.selectedPack.levels.forEach((levelId) => {
-        const found = this.list.find(([lvl]) => lvl?.id === levelId);
-        const level = found ? found[0] : null;
+        const level = this.levelMap.get(levelId);
         if (!level) return;
 
         const countedUsers = new Set();
 
-        // Verifier
         if (level.verifier) {
-          const verifier = level.verifier;
-          const key = this.normalize(verifier);
-
+          const key = this.normalize(level.verifier);
           countedUsers.add(key);
 
           if (!userMap.has(key)) {
             userMap.set(key, {
-              user: verifier,
+              user: level.verifier,
               completions: 1,
               verifications: 1,
               totalLevels,
@@ -72,13 +72,11 @@ export default {
           }
         }
 
-        // Records
-        if (level.records) {
+        if (Array.isArray(level.records)) {
           level.records.forEach((record) => {
             if (record.percent !== 100) return;
 
-            const username = record.user;
-            const key = this.normalize(username);
+            const key = this.normalize(record.user);
 
             if (countedUsers.has(key)) return;
 
@@ -86,7 +84,7 @@ export default {
 
             if (!userMap.has(key)) {
               userMap.set(key, {
-                user: username,
+                user: record.user,
                 completions: 1,
                 verifications: 0,
               });
@@ -104,45 +102,47 @@ export default {
   },
 
   async mounted() {
-    const normalize = (name) => (name || "").toLowerCase();
-  
+    const normalize = (name) => (name || "").trim().toLowerCase();
+
     try {
       const list = await fetchList();
-  
+
       const packsData = await fetch("/data/_packs.json").then((res) =>
         res.json()
       );
-  
+
       const hiddenData = await fetch("/data/_hiddenUsers.json").then((res) =>
         res.json()
       );
-  
+
       const hiddenUsers = hiddenData.map(normalize);
-  
+
       const processRecords = (records) => {
         return records
-          .filter(record => !hiddenUsers.includes(normalize(record.user)))
-          .map(record => ({
+          .filter(
+            (record) => !hiddenUsers.includes(normalize(record.user))
+          )
+          .map((record) => ({
             ...record,
             user:
-              normalize(record.user.trim()) === "zis76"
+              normalize(record.user) === "zis76"
                 ? "zis08"
-                : record.user
+                : record.user,
           }));
       };
-  
+
       if (Array.isArray(list)) {
         list.forEach((item) => {
           if (!Array.isArray(item)) return;
-  
-          const level = item[0]; // [level, error]
-  
+
+          const level = item[0];
+
           if (level && Array.isArray(level.records)) {
             level.records = processRecords(level.records);
           }
         });
       }
-  
+
       this.list = list || [];
       this.packs = packsData || [];
     } catch (err) {
@@ -156,7 +156,7 @@ export default {
     embed,
 
     normalize(name) {
-      return name.toLowerCase();
+      return (name || "").trim().toLowerCase();
     },
   },
 
@@ -200,8 +200,7 @@ export default {
               <button @click="selectedLevelIndex = i">
                 <span class="type-label-lg">
                   {{
-                    list.find(([lvl]) => lvl?.id === levelId)?.[0]?.name ||
-                    'Error'
+                    levelMap.get(levelId)?.name || 'Error'
                   }}
                 </span>
               </button>
