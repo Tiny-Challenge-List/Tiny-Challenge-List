@@ -17,9 +17,18 @@ export default {
   computed: {
     levelMap() {
       const map = new Map();
-      this.list.forEach(([lvl]) => {
-        if (lvl?.id) map.set(lvl.id, lvl);
+
+      if (!Array.isArray(this.list)) return map;
+
+      this.list.forEach((item) => {
+        if (!Array.isArray(item)) return;
+
+        const lvl = item[0];
+        if (lvl && lvl.id) {
+          map.set(lvl.id, lvl);
+        }
       });
+
       return map;
     },
 
@@ -28,18 +37,13 @@ export default {
     },
 
     selectedLevelId() {
-      return this.selectedPack?.levels[this.selectedLevelIndex] || null;
+      if (!this.selectedPack) return null;
+      return this.selectedPack.levels[this.selectedLevelIndex] || null;
     },
 
     selectedLevel() {
+      if (!this.selectedLevelId) return null;
       return this.levelMap.get(this.selectedLevelId) || null;
-    },
-
-    getOriginalRank() {
-      return (levelId) => {
-        const index = this.list.findIndex(([lvl]) => lvl?.id === levelId);
-        return index >= 0 ? index + 1 : "?";
-      };
     },
 
     packCompletions() {
@@ -54,6 +58,7 @@ export default {
 
         const countedUsers = new Set();
 
+        // verifier
         if (level.verifier) {
           const key = this.normalize(level.verifier);
           countedUsers.add(key);
@@ -63,23 +68,22 @@ export default {
               user: level.verifier,
               completions: 1,
               verifications: 1,
-              totalLevels,
             });
           } else {
             const u = userMap.get(key);
             u.completions++;
-            u.verifications = (u.verifications || 0) + 1;
+            u.verifications++;
           }
         }
 
+        // records
         if (Array.isArray(level.records)) {
           level.records.forEach((record) => {
-            if (record.percent !== 100) return;
+            if (!record || record.percent !== 100) return;
 
             const key = this.normalize(record.user);
 
             if (countedUsers.has(key)) return;
-
             countedUsers.add(key);
 
             if (!userMap.has(key)) {
@@ -102,7 +106,8 @@ export default {
   },
 
   async mounted() {
-    const normalize = (name) => (name || "").trim().toLowerCase();
+    const normalize = (name) =>
+      typeof name === "string" ? name.trim().toLowerCase() : "";
 
     try {
       const list = await fetchList();
@@ -118,9 +123,14 @@ export default {
       const hiddenUsers = hiddenData.map(normalize);
 
       const processRecords = (records) => {
+        if (!Array.isArray(records)) return [];
+
         return records
           .filter(
-            (record) => !hiddenUsers.includes(normalize(record.user))
+            (record) =>
+              record &&
+              record.user &&
+              !hiddenUsers.includes(normalize(record.user))
           )
           .map((record) => ({
             ...record,
@@ -143,8 +153,8 @@ export default {
         });
       }
 
-      this.list = list || [];
-      this.packs = packsData || [];
+      this.list = Array.isArray(list) ? list : [];
+      this.packs = Array.isArray(packsData) ? packsData : [];
     } catch (err) {
       console.error("Mounted error:", err);
     } finally {
@@ -156,7 +166,9 @@ export default {
     embed,
 
     normalize(name) {
-      return (name || "").trim().toLowerCase();
+      return typeof name === "string"
+        ? name.trim().toLowerCase()
+        : "";
     },
   },
 
@@ -167,7 +179,6 @@ export default {
 
     <main v-else class="page-list-packs">
       
-      <!-- Pack selector -->
       <div class="pack-selector">
         <button
           v-for="(pack, index) in packs"
@@ -181,27 +192,16 @@ export default {
       </div>
 
       <div class="list-container">
-        <!-- Level list -->
         <table class="list" v-if="selectedPack">
-          <tr
-            v-for="(levelId, i) in selectedPack.levels"
-            :key="levelId"
-          >
+          <tr v-for="(levelId, i) in selectedPack.levels" :key="levelId">
             <td class="rank">
-              <p class="type-label-lg">
-                #{{ i + 1 }}
-              </p>
+              <p class="type-label-lg">#{{ i + 1 }}</p>
             </td>
 
-            <td
-              class="level"
-              :class="{ active: selectedLevelIndex === i }"
-            >
+            <td class="level" :class="{ active: selectedLevelIndex === i }">
               <button @click="selectedLevelIndex = i">
                 <span class="type-label-lg">
-                  {{
-                    levelMap.get(levelId)?.name || 'Error'
-                  }}
+                  {{ levelMap.get(levelId) ? levelMap.get(levelId).name : 'Error' }}
                 </span>
               </button>
             </td>
@@ -209,7 +209,6 @@ export default {
         </table>
       </div>
 
-      <!-- Level detail -->
       <div class="level-container" v-if="selectedLevel">
         <div class="level">
           <h1>{{ selectedLevel.name }}</h1>
@@ -218,60 +217,31 @@ export default {
             :author="selectedLevel.author"
             :creators="selectedLevel.creators"
             :verifier="selectedLevel.verifier"
-          ></LevelAuthors>
+          />
 
           <iframe
             class="video"
-            id="videoframe"
             :src="embed(selectedLevel.showcase || selectedLevel.verification)"
-            frameborder="0"
           ></iframe>
 
           <ul class="stats">
-            <li>
-              <div class="type-title-sm">Points when completed</div>
-              <p>{{ selectedPack.points || 'N/A' }}</p>
-            </li>
-            <li>
-              <div class="type-title-sm">ID</div>
-              <p>{{ selectedLevel.id }}</p>
-            </li>
-            <li>
-              <div class="type-title-sm">FPS</div>
-              <p>{{ selectedLevel.fps || 'Any' }}</p>
-            </li>
-            <li>
-              <div class="type-title-sm">VERSION</div>
-              <p>{{ selectedLevel.version || 'Any' }}</p>
-            </li>
+            <li><div>ID</div><p>{{ selectedLevel.id }}</p></li>
+            <li><div>FPS</div><p>{{ selectedLevel.fps || 'Any' }}</p></li>
+            <li><div>VERSION</div><p>{{ selectedLevel.version || 'Any' }}</p></li>
           </ul>
 
-          <!-- Pack Progression -->
-          <div class="pack-completions" v-if="packCompletions.length">
+          <div v-if="packCompletions.length">
             <h2>Pack Progression</h2>
+
             <table class="list">
-              <tr v-for="(user, i) in packCompletions" :key="user.user">
-                <td class="name">
+              <tr v-for="user in packCompletions" :key="user.user">
+                <td>
                   {{ user.user }}
-                  <span 
-                    v-if="user.completions === selectedPack.levels.length"
-                    class="crown"
-                  >
-                    👑
-                  </span>
+                  <span v-if="user.completions === selectedPack.levels.length">👑</span>
                 </td>
-              
-                <td class="completions">
-                  <div class="progress-bar">
-                    <div 
-                      class="progress"
-                      :style="{ width: (user.completions / selectedPack.levels.length * 100) + '%' }">
-                    </div>
-                  </div>
-              
-                  <span class="progress-text">
-                    {{ user.completions }} / {{ selectedPack.levels.length }}
-                  </span>
+
+                <td>
+                  {{ user.completions }} / {{ selectedPack.levels.length }}
                 </td>
               </tr>
             </table>
