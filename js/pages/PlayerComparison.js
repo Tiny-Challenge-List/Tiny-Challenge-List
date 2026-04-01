@@ -16,75 +16,64 @@ export default {
     }),
 
     template: `
-        <main v-if="loading">
-            <Spinner></Spinner>
-        </main>
+<main v-if="loading">
+    <Spinner></Spinner>
+</main>
 
-        <main v-else class="page-leaderboard-container">
-            <div class="page-leaderboard">
+<main v-else class="page-leaderboard-container">
+    <div class="page-leaderboard" style="display:flex; gap:20px;">
 
-                <div class="error-container">
-                    <p class="error" v-if="err.length > 0">
-                        Failed to load data: {{ err.join(', ') }}
-                    </p>
-                </div>
+        <!-- LEFT SIDE (LEADERBOARD) -->
+        <div style="width:40%;">
+            <table class="board">
+                <tr v-for="(ientry, i) in leaderboard" :key="i">
+                    <td>#{{ i + 1 }}</td>
 
-                <!-- LEADERBOARD -->
-                <div class="board-container">
-                    <table class="board">
-                        <tr v-for="(ientry, i) in leaderboard" :key="i">
-                            <td class="rank">
-                                <p class="type-label-lg">#{{ i + 1 }}</p>
-                            </td>
+                    <td>
+                        {{ ientry.user }}
+                    </td>
 
-                            <td class="total">
-                                <p class="type-label-lg">
-                                    {{ localize(ientry.total || 0) }}
-                                </p>
-                            </td>
+                    <td>
+                        {{ localize(ientry.total || 0) }}
+                    </td>
 
-                            <td class="user" :class="{ 'active': selected == i }">
-                                <button @click="selected = i">
-                                    <span class="type-label-lg">{{ ientry.user }}</span>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                    <td>
+                        <button @click="selected = i">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-                <!-- PLAYER VIEW -->
-                <div class="player-container">
-                    <div class="player">
+        <!-- RIGHT SIDE (PLAYER DETAILS) -->
+        <div style="width:60%;">
 
-                        <h1>Player Comparison</h1>
-                        <h2>#{{ selected + 1 }} {{ entry.user }}</h2>
+            <h1>Player Comparison</h1>
 
-                        <h3>{{ localize(entry.total || 0) }}</h3>
+            <h2>
+                #{{ selected + 1 }} {{ entry.user }}
+            </h2>
 
-                        <!-- TOP 15 HARDEST -->
-                        <h2 v-if="topHardest.length > 0">
-                            Top 15 Hardest ({{ topHardest.length }})
-                        </h2>
+            <h3>{{ localize(entry.total || 0) }}</h3>
 
-                        <table class="table">
-                            <tr v-for="(score, i) in topHardest" :key="i">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
-                                <td class="level">
-                                    {{ score.level }}
-                                </td>
-                                <td class="score">
-                                    +{{ localize(score.score) }}
-                                </td>
-                            </tr>
-                        </table>
+            <h2 v-if="topHardest.length">
+                Top 15 Hardest
+            </h2>
 
-                    </div>
-                </div>
+            <table class="table">
+                <tr v-for="(score, i) in topHardest" :key="i">
+                    <td>#{{ score.rank }}</td>
+                    <td>{{ score.level }}</td>
+                    <td>+{{ localize(score.score) }}</td>
+                </tr>
+            </table>
 
-            </div>
-        </main>
+        </div>
+
+    </div>
+</main>
+`
     `,
 
     computed: {
