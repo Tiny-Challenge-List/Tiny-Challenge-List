@@ -96,7 +96,6 @@ export default {
             };
         },
 
-        // ✅ Top 15 hardest levels
         topHardest() {
             return (this.entry.completed || [])
                 .filter(l => l.rank)
