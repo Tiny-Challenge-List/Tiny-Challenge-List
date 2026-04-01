@@ -1,18 +1,29 @@
 <script>
-function startApp() {
-  console.log("START APP RUNNING");
+function loadLeaderboard() {
+  // Only run on your leaderboard route
+  if (!location.hash.includes("playercomp")) return;
+
+  console.log("Loading leaderboard...");
+
+  // Find a place to inject into
+  let app = document.getElementById("leaderboard-app");
+
+  if (!app) {
+    app = document.createElement("div");
+    app.id = "leaderboard-app";
+
+    app.innerHTML = `
+      <div id="leaderboard"></div>
+      <div id="details">
+        <h1>Select a user</h1>
+      </div>
+    `;
+
+    document.body.appendChild(app);
+  }
 
   const container = document.getElementById("leaderboard");
   const details = document.getElementById("details");
-
-  console.log("leaderboard:", container);
-  console.log("details:", details);
-
-  // ❌ If these are null → THIS is your problem
-  if (!container || !details) {
-    console.log("Elements not found, retrying...");
-    return;
-  }
 
   const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
 
@@ -27,7 +38,6 @@ function startApp() {
       }
 
       const data = json.data;
-
       container.innerHTML = "";
 
       data.forEach((user, index) => {
@@ -41,7 +51,6 @@ function startApp() {
         `;
 
         div.onclick = () => showDetails(user, index);
-
         container.appendChild(div);
       });
 
@@ -70,7 +79,10 @@ function startApp() {
 }
 
 
-setInterval(startApp, 500);
+window.addEventListener("load", loadLeaderboard);
+
+window.addEventListener("hashchange", loadLeaderboard);
+</script>
 
 window.addEventListener("hashchange", () => {
   setTimeout(startApp, 200);
