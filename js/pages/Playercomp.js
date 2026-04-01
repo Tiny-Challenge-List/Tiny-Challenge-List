@@ -1,101 +1,136 @@
-<script>
-function initLeaderboard() {
-  console.log("INIT RUNNING");
+import { localize } from '../util.js';
+import Spinner from '../components/Spinner.js';
 
-  // Only run on correct page
-  if (!location.hash.includes("playercomp")) {
-    console.log("Not on playercomp page");
-    return;
-  }
+export default {
+    name: "PlayerComparison",
 
-  // Remove old version if it exists
-  const old = document.getElementById("leaderboard-app");
-  if (old) old.remove();
+    components: {
+        Spinner,
+    },
 
-  // CREATE UI (force visible)
-  const app = document.createElement("div");
-  app.id = "leaderboard-app";
+    data: () => ({
+        leaderboard: [],
+        loading: true,
+        selected: 0,
+        err: [],
+    }),
 
-  app.style.position = "fixed";
-  app.style.top = "80px";
-  app.style.left = "0";
-  app.style.right = "0";
-  app.style.bottom = "0";
-  app.style.background = "white";
-  app.style.zIndex = "9999";
-  app.style.display = "flex";
+    template: `
+        <main v-if="loading">
+            <Spinner></Spinner>
+        </main>
 
-  app.innerHTML = `
-    <div id="leaderboard" style="width:40%; overflow:auto; border-right:1px solid #ccc;"></div>
-    <div id="details" style="flex:1; padding:20px;">
-      <h1>Select a user</h1>
-    </div>
-  `;
+        <main v-else class="page-leaderboard-container">
+            <div class="page-leaderboard">
 
-  document.body.appendChild(app);
+                <div class="error-container">
+                    <p class="error" v-if="err.length > 0">
+                        Failed to load data: {{ err.join(', ') }}
+                    </p>
+                </div>
 
-  const container = document.getElementById("leaderboard");
-  const details = document.getElementById("details");
+                <!-- LEADERBOARD -->
+                <div class="board-container">
+                    <table class="board">
+                        <tr v-for="(ientry, i) in leaderboard" :key="i">
+                            <td class="rank">
+                                <p class="type-label-lg">#{{ i + 1 }}</p>
+                            </td>
 
-  const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
+                            <td class="total">
+                                <p class="type-label-lg">
+                                    {{ localize(ientry.total || 0) }}
+                                </p>
+                            </td>
 
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(json => {
-      console.log("API DATA:", json);
+                            <td class="user" :class="{ 'active': selected == i }">
+                                <button @click="selected = i">
+                                    <span class="type-label-lg">{{ ientry.user }}</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
-      if (!json.data) {
-        container.innerHTML = "Invalid API data";
-        return;
-      }
+                <!-- PLAYER VIEW -->
+                <div class="player-container">
+                    <div class="player">
 
-      const data = json.data;
-      container.innerHTML = "";
+                        <h1>Player Comparison</h1>
+                        <h2>#{{ selected + 1 }} {{ entry.user }}</h2>
 
-      data.forEach((user, index) => {
-        const div = document.createElement("div");
+                        <h3>{{ localize(entry.total || 0) }}</h3>
 
-        div.style.padding = "10px";
-        div.style.cursor = "pointer";
-        div.style.borderBottom = "1px solid #eee";
+                        <!-- TOP 15 HARDEST -->
+                        <h2 v-if="topHardest.length > 0">
+                            Top 15 Hardest ({{ topHardest.length }})
+                        </h2>
 
-        div.innerHTML = `
-          <b>#${index + 1}</b> ${user["Player"]} — ${user["Points"]}
-        `;
+                        <table class="table">
+                            <tr v-for="(score, i) in topHardest" :key="i">
+                                <td class="rank">
+                                    <p>#{{ score.rank }}</p>
+                                </td>
+                                <td class="level">
+                                    {{ score.level }}
+                                </td>
+                                <td class="score">
+                                    +{{ localize(score.score) }}
+                                </td>
+                            </tr>
+                        </table>
 
-        div.onclick = () => {
-          const completions = [];
+                    </div>
+                </div>
 
-          for (let i = 1; i <= 15; i++) {
-            let key =
-              i === 1 ? "1st Hardest" :
-              i === 2 ? "2nd Hardest" :
-              i === 3 ? "3rd Hardest" :
-              `${i}th Hardest`;
+            </div>
+        </main>
+    `,
 
-            if (user[key]) {
-              completions.push(`#${i} — ${user[key]}`);
-            }
-          }
+    computed: {
+        entry() {
+            return this.leaderboard[this.selected] || {
+                user: '',
+                total: 0,
+                completed: []
+            };
+        },
 
-          details.innerHTML = `
-            <h1>#${index + 1} ${user["Player"]}</h1>
-            <h2>${user["Points"]}</h2>
-            ${completions.join("<br>")}
-          `;
-        };
+        // ✅ Top 15 hardest levels
+        topHardest() {
+            return (this.entry.completed || [])
+                .filter(l => l.rank)
+                .sort((a, b) => a.rank - b.rank)
+                .slice(0, 15);
+        }
+    },
 
-        container.appendChild(div);
-      });
-    })
-    .catch(err => {
-      console.error("FETCH ERROR:", err);
-      container.innerHTML = "Failed to load data";
-    });
-}
+    async mounted() {
+        try {
+            const res = await fetch("https://script.google.com/macros/s/AKfycbxZ9Ewh5hB1SLDcxXxP3ax2qeg0UDYzq43qNL3YE_7ouLP5kEhCVvfNJcXbYNXWLQoB/exec");
+            const data = await res.json();
 
+            console.log("API DATA:", data);
 
-// RUN MULTIPLE TIMES (SPA SAFE)
-setInterval(initLeaderboard, 1000);
-window.addEventListener("hashchange", initLeaderboard);
-</script>
+            // 🔧 Adjust mapping if your API differs
+            this.leaderboard = data.map(player => ({
+                user: player.user || player.username,
+                total: player.total || player.points || 0,
+                completed: player.completed || []
+            }));
+
+        } catch (e) {
+            console.error(e);
+            this.err.push("Failed to load leaderboard");
+        }
+
+        // Sort by total descending
+        this.leaderboard.sort((a, b) => (b.total || 0) - (a.total || 0));
+
+        this.loading = false;
+    },
+
+    methods: {
+        localize
+    }
+};
