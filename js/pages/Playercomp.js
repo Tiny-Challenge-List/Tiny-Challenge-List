@@ -1,53 +1,43 @@
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+function startApp() {
+  const container = document.getElementById("leaderboard");
+  const details = document.getElementById("details");
+
+  if (!container || !details) return; // not on the right page
 
   const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
 
   let data = [];
 
   fetch(API_URL)
-  .then(res => res.json())
-  .then(json => {
-    console.log("API Data:", json);
+    .then(res => res.json())
+    .then(json => {
+      console.log("API Data:", json);
 
-    const container = document.getElementById("leaderboard");
+      if (!json.data) {
+        container.innerHTML = "Invalid data format.";
+        return;
+      }
 
-    container.innerHTML = "<pre>" + JSON.stringify(json, null, 2) + "</pre>";
-
-    // Try to access correct path
-    if (!json.data) {
-      console.error("No 'data' field found!");
-      return;
-    }
-
-    data = json.data;
-
-    // Clear debug and render
-    container.innerHTML = "";
-    renderLeaderboard();
-  })
-  .catch(err => {
-    console.error("FETCH ERROR:", err);
-    document.getElementById("leaderboard").innerHTML =
-      "Error loading data. Check console.";
-  });
-
+      data = json.data;
+      renderLeaderboard();
+    })
+    .catch(err => {
+      console.error(err);
+      container.innerHTML = "Error loading data.";
+    });
 
   function renderLeaderboard() {
-    const container = document.getElementById("leaderboard");
     container.innerHTML = "";
 
     data.forEach((user, index) => {
       const div = document.createElement("div");
       div.className = "user";
 
-      const name = user["Player"] || "Unknown";
-      const score = user["Points"] || 0;
-
       div.innerHTML = `
         <span>#${index + 1}</span>
-        <span>${name}</span>
-        <span>${score.toLocaleString()}</span>
+        <span>${user["Player"] || "Unknown"}</span>
+        <span>${(user["Points"] || 0).toLocaleString()}</span>
       `;
 
       div.onclick = () => {
@@ -60,25 +50,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-
   function showDetails(user, rank) {
-    const details = document.getElementById("details");
-
     const completions = [];
 
     for (let i = 1; i <= 15; i++) {
-      let key;
-
-      if (i === 1) key = "1st Hardest";
-      else if (i === 2) key = "2nd Hardest";
-      else if (i === 3) key = "3rd Hardest";
-      else key = `${i}th Hardest`;
+      let key =
+        i === 1 ? "1st Hardest" :
+        i === 2 ? "2nd Hardest" :
+        i === 3 ? "3rd Hardest" :
+        `${i}th Hardest`;
 
       if (user[key]) {
-        completions.push({
-          rank: i,
-          name: user[key]
-        });
+        completions.push({ rank: i, name: user[key] });
       }
     }
 
@@ -87,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <h2>${user["Points"].toLocaleString()}</h2>
       <h3>Top 15 Hardests</h3>
       ${
-        completions.length > 0
+        completions.length
           ? completions.map(c => `
               <div class="completion">
                 #${c.rank} — ${c.name}
@@ -97,6 +80,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     `;
   }
+}
 
+
+window.addEventListener("load", startApp);
+
+window.addEventListener("hashchange", () => {
+  setTimeout(startApp, 100); // wait for page render
 });
 </script>
