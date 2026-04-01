@@ -1,26 +1,38 @@
 <script>
-function loadLeaderboard() {
-  // Only run on your leaderboard route
-  if (!location.hash.includes("playercomp")) return;
+function initLeaderboard() {
+  console.log("INIT RUNNING");
 
-  console.log("Loading leaderboard...");
-
-  // Find a place to inject into
-  let app = document.getElementById("leaderboard-app");
-
-  if (!app) {
-    app = document.createElement("div");
-    app.id = "leaderboard-app";
-
-    app.innerHTML = `
-      <div id="leaderboard"></div>
-      <div id="details">
-        <h1>Select a user</h1>
-      </div>
-    `;
-
-    document.body.appendChild(app);
+  // Only run on correct page
+  if (!location.hash.includes("playercomp")) {
+    console.log("Not on playercomp page");
+    return;
   }
+
+  // Remove old version if it exists
+  const old = document.getElementById("leaderboard-app");
+  if (old) old.remove();
+
+  // CREATE UI (force visible)
+  const app = document.createElement("div");
+  app.id = "leaderboard-app";
+
+  app.style.position = "fixed";
+  app.style.top = "80px";
+  app.style.left = "0";
+  app.style.right = "0";
+  app.style.bottom = "0";
+  app.style.background = "white";
+  app.style.zIndex = "9999";
+  app.style.display = "flex";
+
+  app.innerHTML = `
+    <div id="leaderboard" style="width:40%; overflow:auto; border-right:1px solid #ccc;"></div>
+    <div id="details" style="flex:1; padding:20px;">
+      <h1>Select a user</h1>
+    </div>
+  `;
+
+  document.body.appendChild(app);
 
   const container = document.getElementById("leaderboard");
   const details = document.getElementById("details");
@@ -30,10 +42,10 @@ function loadLeaderboard() {
   fetch(API_URL)
     .then(res => res.json())
     .then(json => {
-      console.log("API:", json);
+      console.log("API DATA:", json);
 
       if (!json.data) {
-        container.innerHTML = "Bad data format";
+        container.innerHTML = "Invalid API data";
         return;
       }
 
@@ -42,49 +54,48 @@ function loadLeaderboard() {
 
       data.forEach((user, index) => {
         const div = document.createElement("div");
-        div.className = "user";
+
+        div.style.padding = "10px";
+        div.style.cursor = "pointer";
+        div.style.borderBottom = "1px solid #eee";
 
         div.innerHTML = `
-          <span>#${index + 1}</span>
-          <span>${user["Player"]}</span>
-          <span>${user["Points"]}</span>
+          <b>#${index + 1}</b> ${user["Player"]} — ${user["Points"]}
         `;
 
-        div.onclick = () => showDetails(user, index);
+        div.onclick = () => {
+          const completions = [];
+
+          for (let i = 1; i <= 15; i++) {
+            let key =
+              i === 1 ? "1st Hardest" :
+              i === 2 ? "2nd Hardest" :
+              i === 3 ? "3rd Hardest" :
+              `${i}th Hardest`;
+
+            if (user[key]) {
+              completions.push(`#${i} — ${user[key]}`);
+            }
+          }
+
+          details.innerHTML = `
+            <h1>#${index + 1} ${user["Player"]}</h1>
+            <h2>${user["Points"]}</h2>
+            ${completions.join("<br>")}
+          `;
+        };
+
         container.appendChild(div);
       });
-
-      function showDetails(user, rank) {
-        const completions = [];
-
-        for (let i = 1; i <= 15; i++) {
-          let key =
-            i === 1 ? "1st Hardest" :
-            i === 2 ? "2nd Hardest" :
-            i === 3 ? "3rd Hardest" :
-            `${i}th Hardest`;
-
-          if (user[key]) {
-            completions.push(`#${i} — ${user[key]}`);
-          }
-        }
-
-        details.innerHTML = `
-          <h1>#${rank + 1} ${user["Player"]}</h1>
-          <h2>${user["Points"]}</h2>
-          ${completions.join("<br>")}
-        `;
-      }
+    })
+    .catch(err => {
+      console.error("FETCH ERROR:", err);
+      container.innerHTML = "Failed to load data";
     });
 }
 
 
-window.addEventListener("load", loadLeaderboard);
-
-window.addEventListener("hashchange", loadLeaderboard);
-</script>
-
-window.addEventListener("hashchange", () => {
-  setTimeout(startApp, 200);
-});
+// RUN MULTIPLE TIMES (SPA SAFE)
+setInterval(initLeaderboard, 1000);
+window.addEventListener("hashchange", initLeaderboard);
 </script>
