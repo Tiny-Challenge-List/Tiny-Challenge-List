@@ -6,19 +6,31 @@ document.addEventListener("DOMContentLoaded", () => {
   let data = [];
 
   fetch(API_URL)
-    .then(res => res.json())
-    .then(json => {
-      console.log("API Data:", json);
+  .then(res => res.json())
+  .then(json => {
+    console.log("API Data:", json);
 
-      // ✅ FIX: access json.data
-      data = json.data;
+    const container = document.getElementById("leaderboard");
 
-      renderLeaderboard();
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      document.getElementById("leaderboard").innerHTML = "Failed to load data.";
-    });
+    container.innerHTML = "<pre>" + JSON.stringify(json, null, 2) + "</pre>";
+
+    // Try to access correct path
+    if (!json.data) {
+      console.error("No 'data' field found!");
+      return;
+    }
+
+    data = json.data;
+
+    // Clear debug and render
+    container.innerHTML = "";
+    renderLeaderboard();
+  })
+  .catch(err => {
+    console.error("FETCH ERROR:", err);
+    document.getElementById("leaderboard").innerHTML =
+      "Error loading data. Check console.";
+  });
 
 
   function renderLeaderboard() {
@@ -52,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function showDetails(user, rank) {
     const details = document.getElementById("details");
 
-    // ✅ Build completions manually from your fields
     const completions = [];
 
     for (let i = 1; i <= 15; i++) {
