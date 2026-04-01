@@ -1,100 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Leaderboard</title>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-  <!-- External CSS -->
-  <link rel="stylesheet" href="styles.css">
-</head>
+  const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
 
-<body>
+  let data = [];
 
-  <!-- APP CONTAINER -->
-  <div id="leaderboard-app">
-    <div id="leaderboard"></div>
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(json => {
+      console.log("API Data:", json);
 
-    <div id="details">
-      <h1>Select a user</h1>
-    </div>
-  </div>
+      // ✅ FIX: access json.data
+      data = json.data;
 
-  <!-- JS INSIDE HTML -->
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
-
-    let data = [];
-
-    fetch(API_URL)
-      .then(res => res.json())
-      .then(json => {
-        console.log("API Data:", json);
-        data = json;
-        renderLeaderboard();
-      })
-      .catch(err => {
-        console.error("Error:", err);
-        document.getElementById("leaderboard").innerHTML = "Failed to load data.";
-      });
+      renderLeaderboard();
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      document.getElementById("leaderboard").innerHTML = "Failed to load data.";
+    });
 
 
-    function renderLeaderboard() {
-      const container = document.getElementById("leaderboard");
-      container.innerHTML = "";
+  function renderLeaderboard() {
+    const container = document.getElementById("leaderboard");
+    container.innerHTML = "";
 
-      data.forEach((user, index) => {
-        const div = document.createElement("div");
-        div.className = "user";
+    data.forEach((user, index) => {
+      const div = document.createElement("div");
+      div.className = "user";
 
-        const name = user.name || "Unknown";
-        const score = user.score || 0;
+      const name = user["Player"] || "Unknown";
+      const score = user["Points"] || 0;
 
-        div.innerHTML = `
-          <span>#${index + 1}</span>
-          <span>${name}</span>
-          <span>${score.toLocaleString()}</span>
-        `;
-
-        div.onclick = () => {
-          document.querySelectorAll(".user").forEach(u => u.classList.remove("active"));
-          div.classList.add("active");
-          showDetails(user, index);
-        };
-
-        container.appendChild(div);
-      });
-    }
-
-
-    function showDetails(user, rank) {
-      const details = document.getElementById("details");
-
-      const completions = Array.isArray(user.completions) ? user.completions : [];
-
-      const top15 = completions
-        .sort((a, b) => (b.score || 0) - (a.score || 0))
-        .slice(0, 15);
-
-      details.innerHTML = `
-        <h1>#${rank + 1} ${user.name || "Unknown"}</h1>
-        <h2>${(user.score || 0).toLocaleString()}</h2>
-        <h3>Top 15 Completions</h3>
-        ${
-          top15.length > 0
-            ? top15.map(c => `
-                <div class="completion">
-                  #${c.rank || "?"} — ${c.name || "Unknown"}
-                </div>
-              `).join("")
-            : "<p>No completions found.</p>"
-        }
+      div.innerHTML = `
+        <span>#${index + 1}</span>
+        <span>${name}</span>
+        <span>${score.toLocaleString()}</span>
       `;
+
+      div.onclick = () => {
+        document.querySelectorAll(".user").forEach(u => u.classList.remove("active"));
+        div.classList.add("active");
+        showDetails(user, index);
+      };
+
+      container.appendChild(div);
+    });
+  }
+
+
+  function showDetails(user, rank) {
+    const details = document.getElementById("details");
+
+    // ✅ Build completions manually from your fields
+    const completions = [];
+
+    for (let i = 1; i <= 15; i++) {
+      let key;
+
+      if (i === 1) key = "1st Hardest";
+      else if (i === 2) key = "2nd Hardest";
+      else if (i === 3) key = "3rd Hardest";
+      else key = `${i}th Hardest`;
+
+      if (user[key]) {
+        completions.push({
+          rank: i,
+          name: user[key]
+        });
+      }
     }
 
-  });
-  </script>
+    details.innerHTML = `
+      <h1>#${rank + 1} ${user["Player"]}</h1>
+      <h2>${user["Points"].toLocaleString()}</h2>
+      <h3>Top 15 Hardests</h3>
+      ${
+        completions.length > 0
+          ? completions.map(c => `
+              <div class="completion">
+                #${c.rank} — ${c.name}
+              </div>
+            `).join("")
+          : "<p>No data found.</p>"
+      }
+    `;
+  }
 
-</body>
-</html>
+});
+</script>
