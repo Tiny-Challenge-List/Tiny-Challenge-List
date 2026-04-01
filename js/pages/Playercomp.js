@@ -23,7 +23,7 @@
   <script>
   document.addEventListener("DOMContentLoaded", () => {
 
-    const API_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMUvQRrGax1sFUaO12Tyh_lYGqQKgxv7nTONbPPx5djZcr7xO7GdDkvBePCKQZ_UlP1EiYLPly5Yv2pFuNNJq0X831GyhaAbLupakgPBhz5kSHxhMnIRkqDVG-z-5cE8ZJtnGy9ketPyAd12R1eQ3CUP35TANUB73iO3D7RI3uOVJWKZG9UtYyyZzPpR2KLvFceTQDm8OxxsuuFZxotcKn0jT5aglG49mSgl7ukkEweHrRJUMlU_byQyTzh6rlWxhqeGBIRM1by9zH6s44hcfVjTJPyweQ&lib=MyjyJ5yLrRB9A9XFy7P-FrSkAf2tFMscx";
+    const API_URL = "https://script.google.com/macros/s/AKfycbx8PEtkBUuxNLNp4OblKhbWRebAhiG4Upfem9TyVqTcissFCu3itMwESqwibNeZ-w0_/exec";
 
     let data = [];
 
