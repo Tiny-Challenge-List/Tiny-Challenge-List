@@ -160,7 +160,6 @@ export default {
                 }
             });
 
-            // sort LOW → HIGH (best first)
             return scores.sort((a, b) => a.value - b.value);
         },
 
