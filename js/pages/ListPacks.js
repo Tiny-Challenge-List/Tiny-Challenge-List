@@ -113,13 +113,6 @@ export default {
         .filter(record =>
           !hiddenUsers.includes(normalize(record.user))
         )
-        .map(record => ({
-          ...record,
-          user:
-            normalize(record.user.trim()) === "zis76"
-              ? "zis08"
-              : record.user
-        }));
     };
 
     const list = await fetchList();
