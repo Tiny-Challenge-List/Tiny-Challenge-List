@@ -106,28 +106,43 @@ export default {
 
     async mounted() {
         try {
-            const res = await fetch("https://script.google.com/macros/s/AKfycbxZ9Ewh5hB1SLDcxXxP3ax2qeg0UDYzq43qNL3YE_7ouLP5kEhCVvfNJcXbYNXWLQoB/exec");
-            const data = await res.json();
-
-            console.log("API DATA:", data);
-
-            // 🔧 Adjust mapping if your API differs
-            this.leaderboard = data.map(player => ({
-                user: player.user || player.username,
-                total: player.total || player.points || 0,
-                completed: player.completed || []
-            }));
-
+            const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
+    
+            const json = await res.json();
+            const data = json.data; // 🔥 FIX HERE
+    
+            console.log("DATA:", data);
+    
+            this.leaderboard = data.map(player => {
+    
+                const completed = [];
+    
+                for (let i = 1; i <= 15; i++) {
+                    const key = i + this.getSuffix(i) + " Hardest";
+    
+                    if (player[key]) {
+                        completed.push({
+                            level: player[key],
+                            rank: i
+                        });
+                    }
+                }
+    
+                return {
+                    user: player.Player,
+                    total: player.Points || 0,
+                    completed
+                };
+            });
+    
         } catch (e) {
             console.error(e);
             this.err.push("Failed to load leaderboard");
         }
-
-        // Sort by total descending
-        this.leaderboard.sort((a, b) => (b.total || 0) - (a.total || 0));
-
+    
+        this.leaderboard.sort((a, b) => b.total - a.total);
         this.loading = false;
-    },
+    }
 
     methods: {
         localize
