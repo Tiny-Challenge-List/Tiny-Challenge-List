@@ -16,64 +16,63 @@ export default {
     }),
 
     template: `
-<main v-if="loading">
-    <Spinner></Spinner>
-</main>
-
-<main v-else class="page-leaderboard-container">
-    <div class="page-leaderboard" style="display:flex; gap:20px;">
-
-        <!-- LEFT SIDE (LEADERBOARD) -->
-        <div style="width:40%;">
-            <table class="board">
-                <tr v-for="(ientry, i) in leaderboard" :key="i">
-                    <td>#{{ i + 1 }}</td>
-
-                    <td>
-                        {{ ientry.user }}
-                    </td>
-
-                    <td>
-                        {{ localize(ientry.total || 0) }}
-                    </td>
-
-                    <td>
-                        <button @click="selected = i">
-                            View
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-
-        <!-- RIGHT SIDE (PLAYER DETAILS) -->
-        <div style="width:60%;">
-
-            <h1>Player Comparison</h1>
-
-            <h2>
-                #{{ selected + 1 }} {{ entry.user }}
-            </h2>
-
-            <h3>{{ localize(entry.total || 0) }}</h3>
-
-            <h2 v-if="topHardest.length">
-                Top 15 Hardest
-            </h2>
-
-            <table class="table">
-                <tr v-for="(score, i) in topHardest" :key="i">
-                    <td>#{{ score.rank }}</td>
-                    <td>{{ score.level }}</td>
-                    <td>+{{ localize(score.score) }}</td>
-                </tr>
-            </table>
-
-        </div>
-
-    </div>
-</main>
-`
+        <main v-if="loading">
+            <Spinner></Spinner>
+        </main>
+        
+        <main v-else class="page-leaderboard-container">
+            <div class="page-leaderboard" style="display:flex; gap:20px;">
+        
+                <!-- LEFT SIDE (LEADERBOARD) -->
+                <div style="width:40%;">
+                    <table class="board">
+                        <tr v-for="(ientry, i) in leaderboard" :key="i">
+                            <td>#{{ i + 1 }}</td>
+        
+                            <td>
+                                {{ ientry.user }}
+                            </td>
+        
+                            <td>
+                                {{ localize(ientry.total || 0) }}
+                            </td>
+        
+                            <td>
+                                <button @click="selected = i">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        
+                <!-- RIGHT SIDE (PLAYER DETAILS) -->
+                <div style="width:60%;">
+        
+                    <h1>Player Comparison</h1>
+        
+                    <h2>
+                        #{{ selected + 1 }} {{ entry.user }}
+                    </h2>
+        
+                    <h3>{{ localize(entry.total || 0) }}</h3>
+        
+                    <h2 v-if="topHardest.length">
+                        Top 15 Hardest
+                    </h2>
+        
+                    <table class="table">
+                        <tr v-for="(score, i) in topHardest" :key="i">
+                            <td>#{{ score.rank }}</td>
+                            <td>{{ score.level }}</td>
+                            <td>+{{ localize(score.score) }}</td>
+                        </tr>
+                    </table>
+        
+                </div>
+        
+            </div>
+        </main>
     `,
 
     computed: {
