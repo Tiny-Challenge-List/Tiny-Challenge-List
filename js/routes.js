@@ -3,7 +3,6 @@ import Leaderboard from './pages/Leaderboard.js';
 import Roulette from './pages/Roulette.js';
 import ListPacks from './pages/ListPacks.js';
 import PlayerComparison from './pages/PlayerComparison.js';
-import Illist from './pages/illist.js';
 
 export default [
     { path: '/', component: List },
@@ -12,5 +11,4 @@ export default [
     { path: '/listpacks', component: ListPacks },
     { path: '/player', component: PlayerComparison },
     { path: '/player-comparison', component: PlayerComparison },
-    { path: '/illist', component: illist },
 ];
