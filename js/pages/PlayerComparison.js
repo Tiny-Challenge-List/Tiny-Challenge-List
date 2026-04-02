@@ -108,16 +108,18 @@ export default {
         }
     },
 
-        mounted() {
-            const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
+        async mounted() {
+            try {
+                const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
         
-            const script = document.createElement("script");
+                const res = await fetch(url, {
+                    method: "GET",
+                    mode: "cors",
+                    redirect: "follow"
+                });
         
-            script.src = url + "?callback=handleData";
+                const json = await res.json();
         
-            document.body.appendChild(script);
-        
-            window.handleData = (json) => {
                 const data = json.data;
         
                 this.leaderboard = data.map(player => {
@@ -142,9 +144,12 @@ export default {
                     };
                 });
         
-                this.leaderboard.sort((a, b) => b.total - a.total);
-                this.loading = false;
-            };
+            } catch (e) {
+                this.err.push("Load failed — try opening in Chrome or desktop");
+            }
+        
+            this.leaderboard.sort((a, b) => b.total - a.total);
+            this.loading = false;
         },
 
     methods: {
