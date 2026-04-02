@@ -219,12 +219,6 @@ export default {
 
     const filteredLeaderboard = leaderboard
         .filter(entry => !excludedUsers.includes(entry.user))
-        .map(entry => ({
-            ...entry,
-            user: entry.user.trim().toLowerCase() === "zis76"
-                ? "zis08"
-                : entry.user
-        }));
 
     this.leaderboard = filteredLeaderboard;
 
