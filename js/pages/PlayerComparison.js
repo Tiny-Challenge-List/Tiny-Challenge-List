@@ -106,7 +106,7 @@ export default {
 
     async mounted() {
         try {
-            const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
+            const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec"));
     
             const text = await res.text();
             console.log("RAW:", text);
