@@ -80,13 +80,7 @@ export default {
                     level.records = level.records
                         .filter(record =>
                             !hiddenUsers.includes(record.user.toLowerCase())
-                        )
-                        .map(record => ({
-                            ...record,
-                            user: record.user.trim().toLowerCase() === "zis76"
-                                ? "zis08"
-                                : record.user
-                        }));
+                        }
                 }
             });
 
