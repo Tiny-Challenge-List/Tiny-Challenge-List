@@ -108,23 +108,17 @@ export default {
         }
     },
 
-        async mounted() {
-            try {
-                const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
-
-                const res = await fetch(
-                    "https://api.allorigins.win/raw?url=" + encodeURIComponent(url)
-                );
+        mounted() {
+            const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
         
-                const json = await res.json();
+            const script = document.createElement("script");
         
-                const data = Array.isArray(json) ? json : json.data;
+            script.src = url + "?callback=handleData";
         
-                if (!Array.isArray(data)) {
-                    this.err.push("Data is not an array");
-                    this.loading = false;
-                    return;
-                }
+            document.body.appendChild(script);
+        
+            window.handleData = (json) => {
+                const data = json.data;
         
                 this.leaderboard = data.map(player => {
         
@@ -148,13 +142,10 @@ export default {
                     };
                 });
         
-            } catch (e) {
-                this.err.push("Fetch failed completely");
-            }
-        
-            this.leaderboard.sort((a, b) => b.total - a.total);
-            this.loading = false;
-},
+                this.leaderboard.sort((a, b) => b.total - a.total);
+                this.loading = false;
+            };
+        },
 
     methods: {
         localize
