@@ -78,24 +78,25 @@ export default {
   },
 
   async mounted() {
-    try {
-      const res = await fetch("https://script.google.com/macros/s/AKfycbwDklQbeFU7qBzt4xpo6yd-W6TjfAtTi4L3lfQsT7beIP7jRNQXss03tgdqJOiyP-Xf/exec");
-
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      const data = await res.json();
-
-      this.leaderboard = data
-        .map(this.transformPlayer)
-        .sort((a, b) => b.total - a.total);
-
-    } catch (e) {
-      console.error(e);
-      this.error = "Failed to load leaderboard";
-    } finally {
-      this.loading = false;
+      try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbwDklQbeFU7qBzt4xpo6yd-W6TjfAtTi4L3lfQsT7beIP7jRNQXss03tgdqJOiyP-Xf/exec");
+    
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    
+        const json = await res.json();
+        const data = json.data; // ⭐ FIX HERE
+    
+        this.leaderboard = data
+          .map(this.transformPlayer)
+          .sort((a, b) => b.total - a.total);
+    
+      } catch (e) {
+        console.error(e);
+        this.error = "Failed to load leaderboard";
+      } finally {
+        this.loading = false;
+      }
     }
-  },
 
   methods: {
     localize(num) {
