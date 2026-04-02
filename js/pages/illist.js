@@ -16,6 +16,7 @@ const roleIconMap = {
 
 export default {
     components: { Spinner, LevelAuthors },
+
     template: `
         <main v-if="loading">
             <Spinner></Spinner>
@@ -23,16 +24,16 @@ export default {
 
         <main v-else class="page-list">
             <div class="list-container">
-                <table class="list" v-if="illist">
-                    <tr v-for="([level, err], i) in illist">
+                <table class="list" v-if="illist && illist.length">
+                    <tr v-for="(item, i) in illist" :key="i">
                         <td class="rank">
                             <p class="type-label-lg">#{{ i + 1 }}</p>
                         </td>
 
-                        <td class="level" :class="{ 'active': selected == i, 'error': !level }">
+                        <td class="level" :class="{ 'active': selected === i, 'error': !item[0] }">
                             <button @click="selected = i">
                                 <span class="type-label-lg">
-                                    {{ level?.name || \`Error (\${err}.json)\` }}
+                                    {{ item[0]?.name || \`Error (\${item[1]}.json)\` }}
                                 </span>
                             </button>
                         </td>
@@ -78,7 +79,7 @@ export default {
                     </p>
 
                     <table class="records">
-                        <tr v-for="record in level.records" class="record">
+                        <tr v-for="(record, rIndex) in level.records" :key="rIndex" class="record">
                             <td class="percent">
                                 <p>{{ record.percent }}%</p>
                             </td>
@@ -103,15 +104,17 @@ export default {
                     </table>
                 </div>
 
-                <div v-else class="level" style="height: 100%; justify-content: center; align-items: center;">
+                <div v-else class="level empty">
                     <p>(ノಠ益ಠ)ノ彡┻━┻</p>
                 </div>
             </div>
 
             <div class="meta-container">
                 <div class="meta">
-                    <div class="errors" v-show="errors.length > 0">
-                        <p class="error" v-for="error of errors">{{ error }}</p>
+                    <div class="errors" v-if="errors.length">
+                        <p class="error" v-for="(error, i) in errors" :key="i">
+                            {{ error }}
+                        </p>
                     </div>
 
                     <div class="og">
@@ -124,12 +127,15 @@ export default {
                     <template v-if="editors">
                         <h3>List Editors</h3>
                         <ol class="editors">
-                            <li v-for="editor in editors">
+                            <li v-for="(editor, i) in editors" :key="i">
                                 <img 
                                     :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" 
                                     :alt="editor.role">
 
-                                <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">
+                                <a v-if="editor.link" 
+                                   class="type-label-lg link" 
+                                   target="_blank" 
+                                   :href="editor.link">
                                     {{ editor.name }}
                                 </a>
 
@@ -165,34 +171,39 @@ export default {
 
     computed: {
         level() {
-            return this.illist[this.selected]?.[0];
+            return this.illist?.[this.selected]?.[0] || null;
         },
 
         video() {
             if (!this.level?.showcase) {
                 return embed(this.level?.verification);
             }
-
             return embed(this.level.showcase);
         }
     },
 
     async mounted() {
-        this.illist = await fetchIllist();
-        this.editors = await fetchEditors();
+        try {
+            this.illist = await fetchIllist();
+            this.editors = await fetchEditors();
 
-        if (!this.illist) {
-            this.errors.push("Failed to load illist.");
-        } else {
-            this.errors.push(
-                ...this.illist
-                    .filter(([_, err]) => err)
-                    .map(([_, err]) => `Failed to load level. (${err}.json)`)
-            );
-        }
+            if (!this.illist) {
+                this.errors.push("Failed to load illist.");
+            } else {
+                this.errors.push(
+                    ...this.illist
+                        .filter(([_, err]) => err)
+                        .map(([_, err]) => `Failed to load level. (${err}.json)`)
+                );
+            }
 
-        if (!this.editors) {
-            this.errors.push("Failed to load list editors.");
+            if (!this.editors) {
+                this.errors.push("Failed to load list editors.");
+            }
+
+        } catch (e) {
+            console.error(e);
+            this.errors.push("Unexpected error occurred.");
         }
 
         this.loading = false;
