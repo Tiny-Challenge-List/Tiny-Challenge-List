@@ -58,7 +58,7 @@ export default {
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
                         <h3>{{ localize(getTop15Score(entry)) }}</h3>
 
-                        <h2>Top 15 Scores</h2>
+                        <h2>Top 15 Levels</h2>
                         <table class="table">
                             <tr v-for="(score, i) in top15Breakdown" :key="i">
                                 <td class="rank">
@@ -68,9 +68,6 @@ export default {
                                     <span class="type-label-lg">
                                         {{ score.level }}
                                     </span>
-                                </td>
-                                <td class="score">
-                                    <p>{{ score.value }}</p>
                                 </td>
                             </tr>
                         </table>
@@ -91,10 +88,8 @@ export default {
             };
         },
 
-        // BUILD TOP 15 WITH PENALTIES
         top15Breakdown() {
-            const scores = this.buildScoreList(this.entry);
-            return scores.slice(0, 15);
+            return this.buildScoreList(this.entry).slice(0, 15);
         }
     },
 
@@ -137,20 +132,20 @@ export default {
                 .forEach(l => {
                     scores.push({
                         level: l.level,
-                        value: l.rank - 120,
+                        value: l.rank,
                         rankLabel: `#${l.rank}`
                     });
                 });
 
             const penaltyValue = this.totalLevels + 100;
 
-            const uniqueLevels = new Set();
+            const allLevels = new Set();
             this.leaderboard.forEach(e => {
                 [...(e.completed || []), ...(e.verified || [])]
-                    .forEach(l => uniqueLevels.add(l.level));
+                    .forEach(l => allLevels.add(l.level));
             });
 
-            uniqueLevels.forEach(level => {
+            allLevels.forEach(level => {
                 if (!playerLevels.has(level)) {
                     scores.push({
                         level: "Participation Penalty",
@@ -162,12 +157,15 @@ export default {
 
             return scores.sort((a, b) => a.value - b.value);
         },
-
+        
         getTop15Score(entry) {
             const scores = this.buildScoreList(entry);
-            return scores
+
+            const total = scores
                 .slice(0, 15)
                 .reduce((sum, s) => sum + s.value, 0);
+
+            return total - 120;
         }
     },
 };
