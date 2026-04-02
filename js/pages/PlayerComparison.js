@@ -94,7 +94,7 @@ export default {
 
     async mounted() {
         try {
-            const res = await fetch("https://script.google.com/macros/s/AKfycbxZ9Ewh5hB1SLDcxXxP3ax2qeg0UDYzq43qNL3YE_7ouLP5kEhCVvfNJcXbYNXWLQoB/exec");
+            const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
             const data = await res.json();
 
             console.log("API DATA:", data);
