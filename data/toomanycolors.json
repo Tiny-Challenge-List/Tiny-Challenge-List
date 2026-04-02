@@ -36,6 +36,13 @@
             "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1451307192455266325",
             "hz": "360",
             "percent": 100
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://discord.com/channels/1413625809112924307/1488669717353988298/1488669717353988298",
+            "hz": "60",
+            "percent": 100,
+            "mobile": "true"
         }
     ]
 }
