@@ -77,7 +77,7 @@ export default {
 
     async mounted() {
         try {
-            const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
+            const res = await fetch("https://script.google.com/macros/s/AKfycbwDklQbeFU7qBzt4xpo6yd-W6TjfAtTi4L3lfQsT7beIP7jRNQXss03tgdqJOiyP-Xf/exec");
 
             if (!res.ok) {
                 throw new Error(`HTTP error: ${res.status}`);
