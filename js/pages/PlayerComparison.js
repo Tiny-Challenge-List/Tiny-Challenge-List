@@ -104,17 +104,17 @@ export default {
         }
     },
 
-    async mounted() {
+        async mounted() {
         try {
-            const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec"));
+            const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
     
-            const text = await res.text();
-            console.log("RAW:", text);
+            const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url));
     
-            const json = JSON.parse(text);
-            const data = json.data; // important
+            const data = await res.json();
     
-            this.leaderboard = data.map(player => {
+            console.log("DATA:", data);
+    
+            this.leaderboard = data.data.map(player => {
     
                 const completed = [];
     
