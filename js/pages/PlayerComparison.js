@@ -28,6 +28,10 @@ export default {
                         Failed to load data: {{ err.join(', ') }}
                     </p>
                 </div>
+                
+                <div v-if="err.length" style="background:red; color:white; padding:10px;">
+                    {{ err.join(', ') }}
+                </div>
 
                 <!-- LEADERBOARD -->
                 <div class="board-container">
@@ -109,10 +113,14 @@ export default {
                 const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
         
                 const json = await res.json();
-                console.log("FULL JSON:", json);
         
-                // 🔥 THIS IS THE KEY FIX
-                const data = json.data;
+                const data = Array.isArray(json) ? json : json.data;
+        
+                if (!Array.isArray(data)) {
+                    this.err.push("Data is not an array");
+                    this.loading = false;
+                    return;
+                }
         
                 this.leaderboard = data.map(player => {
         
@@ -137,13 +145,12 @@ export default {
                 });
         
             } catch (e) {
-                console.error("ERROR:", e);
-                this.err.push("Failed to load leaderboard");
+                this.err.push("Fetch failed completely");
             }
         
             this.leaderboard.sort((a, b) => b.total - a.total);
             this.loading = false;
-        },
+},
 
     methods: {
         localize
