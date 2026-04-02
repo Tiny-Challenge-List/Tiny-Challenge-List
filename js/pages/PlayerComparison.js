@@ -1,9 +1,9 @@
+import { fetchLeaderboard } from '../content.js';
 import { localize } from '../util.js';
+
 import Spinner from '../components/Spinner.js';
 
 export default {
-    name: "PlayerComparison",
-
     components: {
         Spinner,
     },
@@ -25,12 +25,8 @@ export default {
 
                 <div class="error-container">
                     <p class="error" v-if="err.length > 0">
-                        Failed to load data: {{ err.join(', ') }}
+                        Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
                     </p>
-                </div>
-                
-                <div v-if="err.length" style="background:red; color:white; padding:10px;">
-                    {{ err.join(', ') }}
                 </div>
 
                 <!-- LEADERBOARD -->
@@ -40,13 +36,11 @@ export default {
                             <td class="rank">
                                 <p class="type-label-lg">#{{ i + 1 }}</p>
                             </td>
-
                             <td class="total">
                                 <p class="type-label-lg">
-                                    {{ localize(ientry.total || 0) }}
+                                    {{ localize(getTop15Total(ientry)) }}
                                 </p>
                             </td>
-
                             <td class="user" :class="{ 'active': selected == i }">
                                 <button @click="selected = i">
                                     <span class="type-label-lg">{{ ientry.user }}</span>
@@ -60,26 +54,23 @@ export default {
                 <div class="player-container">
                     <div class="player">
 
-                        <h1>Player Comparison</h1>
-                        <h2>#{{ selected + 1 }} {{ entry.user }}</h2>
+                        <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
+                        <h3>{{ localize(getTop15Total(entry)) }}</h3>
 
-                        <h3>{{ localize(entry.total || 0) }}</h3>
-
-                        <!-- TOP 15 HARDEST -->
-                        <h2 v-if="topHardest.length > 0">
-                            Top 15 Hardest ({{ topHardest.length }})
+                        <!-- ONLY TOP 15 -->
+                        <h2 v-if="top15Levels.length > 0">
+                            Top 15 Levels
                         </h2>
-
                         <table class="table">
-                            <tr v-for="(score, i) in topHardest" :key="i">
-                                <td class="rank">
-                                    <p>#{{ score.rank }}</p>
-                                </td>
+                            <tr v-for="score in top15Levels" :key="score.level">
+                                <td class="rank"><p>#{{ score.rank }}</p></td>
                                 <td class="level">
-                                    {{ score.level }}
+                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                        {{ score.level }}
+                                    </a>
                                 </td>
                                 <td class="score">
-                                    +{{ localize(score.score) }}
+                                    <p>+{{ localize(score.score) }}</p>
                                 </td>
                             </tr>
                         </table>
@@ -94,65 +85,57 @@ export default {
     computed: {
         entry() {
             return this.leaderboard[this.selected] || {
-                user: '',
-                total: 0,
-                completed: []
+                completed: [],
+                verified: [],
+                user: ''
             };
         },
 
-        topHardest() {
-            return (this.entry.completed || [])
-                .filter(l => l.rank)
-                .sort((a, b) => a.rank - b.rank)
+        // GET TOP 15 LEVELS
+        top15Levels() {
+            const allScores = [
+                ...(this.entry.completed || []),
+                ...(this.entry.verified || [])
+            ];
+
+            return allScores
+                .sort((a, b) => b.score - a.score)
                 .slice(0, 15);
         }
     },
 
-        async mounted() {
-            try {
-                const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
-        
-                const res = await fetch(url, {
-                    method: "GET",
-                    mode: "cors",
-                    redirect: "follow"
-                });
-        
-                const json = await res.json();
-        
-                const data = json.data;
-        
-                this.leaderboard = data.map(player => {
-        
-                    const completed = [];
-        
-                    for (let i = 1; i <= 15; i++) {
-                        const key = i + this.getSuffix(i) + " Hardest";
-        
-                        if (player[key]) {
-                            completed.push({
-                                level: player[key],
-                                rank: i
-                            });
-                        }
-                    }
-        
-                    return {
-                        user: player.Player,
-                        total: player.Points || 0,
-                        completed
-                    };
-                });
-        
-            } catch (e) {
-                this.err.push("Load failed — try opening in Chrome or desktop");
-            }
-        
-            this.leaderboard.sort((a, b) => b.total - a.total);
-            this.loading = false;
-        },
+    async mounted() {
+        const [leaderboard, err] = await fetchLeaderboard();
+
+        const excludedUsers = ["finni1505", "D3adSpac3"];
+
+        this.leaderboard = leaderboard
+            .filter(entry => !excludedUsers.includes(entry.user));
+
+        // SORT BY TOP 15 TOTAL
+        this.leaderboard.sort((a, b) => {
+            return this.getTop15Total(b) - this.getTop15Total(a);
+        });
+
+        this.selected = 0;
+        this.err = err;
+        this.loading = false;
+    },
 
     methods: {
-        localize
-    }
+        localize,
+
+        // SUM OF TOP 15 SCORES
+        getTop15Total(entry) {
+            const allScores = [
+                ...(entry.completed || []),
+                ...(entry.verified || [])
+            ];
+
+            const sorted = allScores.sort((a, b) => b.score - a.score);
+            const top15 = sorted.slice(0, 15);
+
+            return top15.reduce((sum, s) => sum + (s.score || 0), 0);
+        }
+    },
 };
