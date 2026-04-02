@@ -105,45 +105,45 @@ export default {
     },
 
         async mounted() {
-        try {
-            const url = "https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec";
-    
-            const res = await fetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(url));
-    
-            const data = await res.json();
-    
-            console.log("DATA:", data);
-    
-            this.leaderboard = data.data.map(player => {
-    
-                const completed = [];
-    
-                for (let i = 1; i <= 15; i++) {
-                    const key = i + this.getSuffix(i) + " Hardest";
-    
-                    if (player[key]) {
-                        completed.push({
-                            level: player[key],
-                            rank: i
-                        });
+            try {
+                const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
+        
+                const json = await res.json();
+                console.log("FULL JSON:", json);
+        
+                // 🔥 THIS IS THE KEY FIX
+                const data = json.data;
+        
+                this.leaderboard = data.map(player => {
+        
+                    const completed = [];
+        
+                    for (let i = 1; i <= 15; i++) {
+                        const key = i + this.getSuffix(i) + " Hardest";
+        
+                        if (player[key]) {
+                            completed.push({
+                                level: player[key],
+                                rank: i
+                            });
+                        }
                     }
-                }
-    
-                return {
-                    user: player.Player,
-                    total: player.Points || 0,
-                    completed
-                };
-            });
-    
-        } catch (e) {
-            console.error("ERROR:", e);
-            this.err.push("Failed to load leaderboard");
-        }
-    
-        this.leaderboard.sort((a, b) => b.total - a.total);
-        this.loading = false;
-    },
+        
+                    return {
+                        user: player.Player,
+                        total: player.Points || 0,
+                        completed
+                    };
+                });
+        
+            } catch (e) {
+                console.error("ERROR:", e);
+                this.err.push("Failed to load leaderboard");
+            }
+        
+            this.leaderboard.sort((a, b) => b.total - a.total);
+            this.loading = false;
+        },
 
     methods: {
         localize
