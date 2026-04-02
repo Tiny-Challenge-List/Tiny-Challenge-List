@@ -142,7 +142,7 @@ export default {
     
         this.leaderboard.sort((a, b) => b.total - a.total);
         this.loading = false;
-    }
+    },
 
     methods: {
         localize
