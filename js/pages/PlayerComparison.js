@@ -23,7 +23,7 @@ export default {
         <main v-else class="page-leaderboard-container">
             <div class="page-leaderboard" style="display:flex; gap:20px;">
         
-                <!-- LEFT SIDE (LEADERBOARD) -->
+                <!-- LEFT SIDE -->
                 <div style="width:40%;">
                     <table class="board">
                         <tr v-for="(ientry, i) in leaderboard" :key="i">
@@ -46,7 +46,7 @@ export default {
                     </table>
                 </div>
         
-                <!-- RIGHT SIDE (PLAYER DETAILS) -->
+                <!-- RIGHT SIDE -->
                 <div style="width:60%;">
         
                     <h1>Player Comparison</h1>
@@ -99,7 +99,6 @@ export default {
 
             console.log("API DATA:", data);
 
-            // 🔧 Adjust mapping if your API differs
             this.leaderboard = data.map(player => ({
                 user: player.user || player.username,
                 total: player.total || player.points || 0,
@@ -111,7 +110,6 @@ export default {
             this.err.push("Failed to load leaderboard");
         }
 
-        // Sort by total descending
         this.leaderboard.sort((a, b) => (b.total || 0) - (a.total || 0));
 
         this.loading = false;
