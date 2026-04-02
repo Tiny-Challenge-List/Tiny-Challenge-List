@@ -96,7 +96,7 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
 
   methods: {
     localize(num) {
