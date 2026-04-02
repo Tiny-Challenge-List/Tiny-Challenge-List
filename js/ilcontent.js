@@ -22,7 +22,7 @@ export async function fetchIllist() {
                         {
                             ...level,
                             path,
-                            records: level.records.sort(
+                            records: (level.records || []).sort(
                                 (a, b) => b.percent - a.percent,
                             ),
                         },
