@@ -13,6 +13,7 @@ export default {
         loading: true,
         selected: 0,
         err: [],
+        totalLevels: 0
     }),
 
     template: `
@@ -38,7 +39,7 @@ export default {
                             </td>
                             <td class="total">
                                 <p class="type-label-lg">
-                                    {{ localize(getTop15Total(ientry)) }}
+                                    {{ localize(getTop15Score(ientry)) }}
                                 </p>
                             </td>
                             <td class="user" :class="{ 'active': selected == i }">
@@ -55,22 +56,21 @@ export default {
                     <div class="player">
 
                         <h1>#{{ selected + 1 }} {{ entry.user }}</h1>
-                        <h3>{{ localize(getTop15Total(entry)) }}</h3>
+                        <h3>{{ localize(getTop15Score(entry)) }}</h3>
 
-                        <!-- ONLY TOP 15 -->
-                        <h2 v-if="top15Levels.length > 0">
-                            Top 15 Levels
-                        </h2>
+                        <h2>Top 15 Scores</h2>
                         <table class="table">
-                            <tr v-for="score in top15Levels" :key="score.level">
-                                <td class="rank"><p>#{{ score.rank }}</p></td>
+                            <tr v-for="(score, i) in top15Breakdown" :key="i">
+                                <td class="rank">
+                                    <p>{{ score.rankLabel }}</p>
+                                </td>
                                 <td class="level">
-                                    <a class="type-label-lg" target="_blank" :href="score.link">
+                                    <span class="type-label-lg">
                                         {{ score.level }}
-                                    </a>
+                                    </span>
                                 </td>
                                 <td class="score">
-                                    <p>+{{ localize(score.score) }}</p>
+                                    <p>{{ score.value }}</p>
                                 </td>
                             </tr>
                         </table>
@@ -91,16 +91,10 @@ export default {
             };
         },
 
-        // GET TOP 15 LEVELS
-        top15Levels() {
-            const allScores = [
-                ...(this.entry.completed || []),
-                ...(this.entry.verified || [])
-            ];
-
-            return allScores
-                .sort((a, b) => b.score - a.score)
-                .slice(0, 15);
+        // BUILD TOP 15 WITH PENALTIES
+        top15Breakdown() {
+            const scores = this.buildScoreList(this.entry);
+            return scores.slice(0, 15);
         }
     },
 
@@ -112,9 +106,15 @@ export default {
         this.leaderboard = leaderboard
             .filter(entry => !excludedUsers.includes(entry.user));
 
-        // SORT BY TOP 15 TOTAL
+        const allLevels = new Set();
+        this.leaderboard.forEach(entry => {
+            [...(entry.completed || []), ...(entry.verified || [])]
+                .forEach(l => allLevels.add(l.level));
+        });
+        this.totalLevels = allLevels.size;
+
         this.leaderboard.sort((a, b) => {
-            return this.getTop15Total(b) - this.getTop15Total(a);
+            return this.getTop15Score(a) - this.getTop15Score(b);
         });
 
         this.selected = 0;
@@ -125,17 +125,50 @@ export default {
     methods: {
         localize,
 
-        // SUM OF TOP 15 SCORES
-        getTop15Total(entry) {
-            const allScores = [
-                ...(entry.completed || []),
-                ...(entry.verified || [])
-            ];
+        buildScoreList(entry) {
+            const scores = [];
 
-            const sorted = allScores.sort((a, b) => b.score - a.score);
-            const top15 = sorted.slice(0, 15);
+            const playerLevels = new Set([
+                ...(entry.completed || []).map(l => l.level),
+                ...(entry.verified || []).map(l => l.level)
+            ]);
 
-            return top15.reduce((sum, s) => sum + (s.score || 0), 0);
+            [...(entry.completed || []), ...(entry.verified || [])]
+                .forEach(l => {
+                    scores.push({
+                        level: l.level,
+                        value: l.rank - 120,
+                        rankLabel: `#${l.rank}`
+                    });
+                });
+
+            const penaltyValue = this.totalLevels + 100;
+
+            const uniqueLevels = new Set();
+            this.leaderboard.forEach(e => {
+                [...(e.completed || []), ...(e.verified || [])]
+                    .forEach(l => uniqueLevels.add(l.level));
+            });
+
+            uniqueLevels.forEach(level => {
+                if (!playerLevels.has(level)) {
+                    scores.push({
+                        level: "Participation Penalty",
+                        value: penaltyValue,
+                        rankLabel: "—"
+                    });
+                }
+            });
+
+            // sort LOW → HIGH (best first)
+            return scores.sort((a, b) => a.value - b.value);
+        },
+
+        getTop15Score(entry) {
+            const scores = this.buildScoreList(entry);
+            return scores
+                .slice(0, 15)
+                .reduce((sum, s) => sum + s.value, 0);
         }
     },
 };
