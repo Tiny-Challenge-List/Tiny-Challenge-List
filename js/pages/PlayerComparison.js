@@ -16,12 +16,10 @@ export default {
     }),
 
     template: `
-    <main v-if="loading">
-        <Spinner></Spinner>
-    </main>
+    <main>
+        <Spinner v-if="loading" />
 
-    <main v-else>
-        <div style="display:flex; gap:20px; padding:20px;">
+        <div v-else style="display:flex; gap:20px; padding:20px;">
 
             <!-- LEFT SIDE (PLAYERS) -->
             <div style="width:40%;">
@@ -39,7 +37,6 @@ export default {
 
             <!-- RIGHT SIDE -->
             <div style="width:60%;">
-
                 <h1>Player Comparison</h1>
 
                 <h2>
@@ -52,13 +49,12 @@ export default {
                     Top 15 Hardest
                 </h2>
 
-                <table class="table">
+                <table class="table" v-if="topHardest.length">
                     <tr v-for="(score, i) in topHardest" :key="i">
                         <td>#{{ score.rank }}</td>
                         <td>{{ score.level }}</td>
                     </tr>
                 </table>
-
             </div>
 
         </div>
@@ -73,7 +69,7 @@ export default {
                 completed: []
             };
         },
-        
+
         topHardest() {
             return this.entry.completed || [];
         }
@@ -82,12 +78,17 @@ export default {
     async mounted() {
         try {
             const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
-            const data = await res.json();
 
-            console.log("RAW DATA:", data);
+            if (!res.ok) {
+                throw new Error(`HTTP error: ${res.status}`);
+            }
+
+            const text = await res.text();
+            console.log("RAW RESPONSE:", text);
+
+            const data = JSON.parse(text);
 
             this.leaderboard = data.map(player => {
-
                 const completed = [];
 
                 for (let i = 1; i <= 15; i++) {
@@ -102,18 +103,18 @@ export default {
                 }
 
                 return {
-                    user: player.Player || player.player,
+                    user: player.Player || player.player || 'Unknown',
                     total: player.Points || player.points || 0,
                     completed
                 };
             });
 
+            this.leaderboard.sort((a, b) => b.total - a.total);
+
         } catch (e) {
-            console.error(e);
+            console.error("Fetch/Parse error:", e);
             this.err.push("Failed to load leaderboard");
         }
-
-        this.leaderboard.sort((a, b) => b.total - a.total);
 
         this.loading = false;
     },
