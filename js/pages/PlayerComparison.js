@@ -119,3 +119,134 @@ export default {
         localize
     }
 };
+import { localize } from '../util.js';
+import Spinner from '../components/Spinner.js';
+
+export default {
+    name: "PlayerComparison",
+
+    components: {
+        Spinner,
+    },
+
+    data: () => ({
+        leaderboard: [],
+        loading: true,
+        selected: 0,
+        err: [],
+    }),
+
+    template: `
+    <main v-if="loading">
+        <Spinner></Spinner>
+    </main>
+
+    <main v-else>
+        <div style="display:flex; gap:20px; padding:20px;">
+
+            <!-- LEFT SIDE (PLAYERS) -->
+            <div style="width:40%;">
+                <table class="board">
+                    <tr v-for="(p, i) in leaderboard" :key="i">
+                        <td>#{{ i + 1 }}</td>
+                        <td>{{ p.user }}</td>
+                        <td>{{ localize(p.total) }}</td>
+                        <td>
+                            <button @click="selected = i">View</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div style="width:60%;">
+
+                <h1>Player Comparison</h1>
+
+                <h2>
+                    #{{ selected + 1 }} {{ entry.user }}
+                </h2>
+
+                <h3>{{ localize(entry.total) }}</h3>
+
+                <h2 v-if="topHardest.length">
+                    Top 15 Hardest
+                </h2>
+
+                <table class="table">
+                    <tr v-for="(score, i) in topHardest" :key="i">
+                        <td>#{{ score.rank }}</td>
+                        <td>{{ score.level }}</td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </main>
+    `,
+
+    computed: {
+        entry() {
+            return this.leaderboard[this.selected] || {
+                user: '',
+                total: 0,
+                completed: []
+            };
+        },
+        
+        topHardest() {
+            return this.entry.completed || [];
+        }
+    },
+
+    async mounted() {
+        try {
+            const res = await fetch("https://script.google.com/macros/s/AKfycby_xB4R69fxzm_mEcruv5W6I11RoErEngz_Sww0npUGpuhEWW71HagzSyssQAtQdbIN/exec");
+            const data = await res.json();
+
+            console.log("RAW DATA:", data);
+
+            this.leaderboard = data.map(player => {
+
+                const completed = [];
+
+                for (let i = 1; i <= 15; i++) {
+                    const key = i + this.getSuffix(i) + " Hardest";
+
+                    if (player[key]) {
+                        completed.push({
+                            level: player[key],
+                            rank: i
+                        });
+                    }
+                }
+
+                return {
+                    user: player.Player || player.player,
+                    total: player.Points || player.points || 0,
+                    completed
+                };
+            });
+
+        } catch (e) {
+            console.error(e);
+            this.err.push("Failed to load leaderboard");
+        }
+
+        this.leaderboard.sort((a, b) => b.total - a.total);
+
+        this.loading = false;
+    },
+
+    methods: {
+        localize,
+
+        getSuffix(n) {
+            if (n === 1) return "st";
+            if (n === 2) return "nd";
+            if (n === 3) return "rd";
+            return "th";
+        }
+    }
+};
