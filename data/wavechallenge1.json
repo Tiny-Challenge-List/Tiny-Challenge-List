@@ -8,5 +8,11 @@
     "percentToQualify": "100",
     "fps": "Any",
     "records": [
+        {
+            "user": "tFluffy",
+            "link": "https://www.youtube.com/watch?v=RAlT3mi95HY",
+            "hz": "240",
+            "percent": 100
+        }
     ]
 }
