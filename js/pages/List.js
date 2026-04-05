@@ -232,6 +232,81 @@ export default {
       <div v-else class="level" style="height: 100%; display:flex; justify-content:center; align-items:center;">
         <p>(ノಠ益ಠ)ノ彡┻━┻</p>
       </div>
+      <div class="meta-container">
+        <div class="meta">
+          <div class="errors" v-show="errors.length > 0">
+            <p class="error" v-for="error of errors">{{ error }}</p>
+          </div>
+          <template v-if="editors">
+            <h3>List Editors</h3>
+            <ol class="editors">
+              <li v-for="editor in editors" :key="editor.name">
+                <img :src="\`/assets/\${roleIconMap[editor.role]}\${store.dark ? '-dark' : ''}.svg\`" :alt="editor.role">
+                <a v-if="editor.link" class="type-label-lg link" target="_blank" :href="editor.link">{{ editor.name }}</a>
+                <p v-else>{{ editor.name }}</p>
+              </li>
+            </ol>
+            </template>
+                    <h3>Submission Requirements</h3>
+                    <p>
+                        Clicks Sound or hand-cam are required
+                    </p>
+                    <p>
+                        Alternating Is allowed
+                    </p>
+                    <p>
+                        Levels must be beaten on 60, 120, 144, 180, or 240 or higher (Unless you use your monitor native refresh rate)
+                    </p>
+                    <p>
+                        Levels that require you to use a weird fps (ex: Katamari) are allowed
+                    </p>
+                    <p>
+                        The maximum CPS for your level cannot exceed 9 or higher
+                    </p>
+                    <p>
+                        The recording must have a previous attempt and entire death animation shown before the completion, unless the completion is on the first attempt. Everyplay records are exempt from this
+                    </p>
+                    <p>
+                        The recording must also show the player hit the endwall, or the completion will be invalidated.
+                    </p>
+                    <p>
+                        Obvious secret ways are not allowed
+                    </p>
+                    <p>
+                        You need to use Cheat Indicator (Unless your on a vanilla cliet)
+                    </p>
+                    <p>
+                        Do not use easy modes, only a record of the unmodified level qualifies
+                    </p>
+                    <p>
+                        Once a level falls onto the Legacy List, we dont accept records after it falls off
+                    </p>
+                    <p>
+                        Noclip accuracy is not allowed, even if you didn't die in it at all.
+                    </p>
+                    <p>
+          
+                    </p>
+                    <div class="og">
+            <p class="type-label-md">
+              Website layout made by
+              <a href="https://tsl.pages.dev/" target="_blank">TheShittyList</a>
+            </p>
+          </div>
+          <div class="oo">
+            <p class="type-label-md">
+              Code for packs made by
+              <a href="https://github.com/snailmusic" target="_blank">Snail</a>
+            </p>
+          </div>
+          <div class="gg">
+            <p class="type-label-md">
+              Code for search bar made by
+              <a href="https://youtube.com/@aelzfr?si=cxdgt4r3wp4S4Dyn" target="_blank">Aelz</a>
+            </p>
+          </div>
+                </div>
+          </div>
     </main>
   `,
 };
