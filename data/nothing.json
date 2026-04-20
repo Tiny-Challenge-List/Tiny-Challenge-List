@@ -62,6 +62,19 @@
             "link": "https://www.youtube.com/watch?v=_3CWpGJ_UQU",
             "hz": "CBS",
             "percent": 100
+        },
+        {
+            "user": "FoldedZero",
+            "link": "https://youtu.be/xd3q9_nshtA",
+            "hz": "CBS",
+            "percent": 100
+        },
+        {
+            "user": "DFT",
+            "link": "https://youtu.be/IK15A4Bi7ls",
+            "hz": "CBS",
+            "percent": 100
         }
+        
     ]
 }
