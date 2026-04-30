@@ -1,11 +1,6 @@
 [
     {
         "role": "owner",
-        "name": "zis08",
-        "link": "https://youtube.com/@siz08675?si=1qpwrROqHTUbha0d"
-    },
-    {
-        "role": "owner",
         "name": "RustyGD",
         "link": "https://youtube.com/@rusty_gd?si=ftntwvZEkLzmiikI"
     },
@@ -38,5 +33,10 @@
         "role": "helper",
         "name": "Nuridint3b",
         "link": "https://www.youtube.com/@Nuridint3b"
+    },
+    {
+        "role": "dev",
+        "name": "zis08",
+        "link": "https://youtube.com/@siz08675?si=1qpwrROqHTUbha0d"
     }
 ]
