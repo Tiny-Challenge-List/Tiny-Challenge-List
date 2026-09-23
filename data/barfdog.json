@@ -44,6 +44,18 @@
             "hz": "60",
             "percent": 100,
             "mobile": "true"
+        },
+        {
+            "user": "Quantum",
+            "link": "https://media.quizizz.com/_mdserver/main/media/resource/gs/quizizz-media/uploadedFiles/a86c0120-6468-4fe8-86d3-0b19206fb8dd-v2",
+            "hz": "CBS",
+            "percent": 100
+        },
+        {
+            "user": "shafikdabest",
+            "link": "https://youtu.be/WtPmgtVQNuY",
+            "hz": "240",
+            "percent": 100
         }
     ]
 }
