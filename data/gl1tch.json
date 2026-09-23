@@ -26,6 +26,12 @@
             "hz": "60",
             "percent": 100,
             "mobile": "true"
+        },
+        {
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=g36LEqIKdbY",
+            "hz": "CBS",
+            "percent": 100
         }
     ]
 }
