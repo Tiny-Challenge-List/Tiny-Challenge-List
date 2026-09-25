@@ -156,6 +156,10 @@ export default {
               <p>{{ selectedLevel.id }}</p>
             </li>
             <li>
+              <div class="type-title-sm">FPS</div>
+              <p>{{ selectedLevel.ss || 'Any' }}</p>
+            </li>
+            <li>
               <div class="type-title-sm">Skillset</div>
               <p>{{ selectedLevel.ss || 'Wave' }}</p>
             </li>
