@@ -157,7 +157,7 @@ export default {
             </li>
             <li>
               <div class="type-title-sm">FPS</div>
-              <p>{{ selectedLevel.ss || 'Any' }}</p>
+              <p>{{ selectedLevel.fps || 'Any' }}</p>
             </li>
             <li>
               <div class="type-title-sm">Skillset</div>
