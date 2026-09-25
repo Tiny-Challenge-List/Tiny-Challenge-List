@@ -90,6 +90,7 @@
 .page-list .level-container .level .records .hz {
     text-align: end;
 }
+.page-list .meta-container .og a:hover,
 .page-list .level-container .level .records a:hover {
     text-decoration: underline;
 }
@@ -125,9 +126,7 @@
 .page-list .meta .editors li a:hover {
     text-decoration: underline;
 }
-.page-list .meta-container .og a:hover
-.page-list .meta-container .gg a:hover
-.page-list .meta-container .oo a:hover
+
 .page-list .list-container {
     padding-inline: 1rem;
     display: flex;
@@ -156,4 +155,16 @@
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 4px var(--color-primary);
+}
+.level-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.demon-face {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
 }
