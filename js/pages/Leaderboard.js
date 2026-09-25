@@ -24,6 +24,20 @@ export default {
         <main v-else class="page-leaderboard-container">
             <div class="page-leaderboard">
 
+
+                <div class="leaderboard-switch">
+                    <button
+                        class="active"
+                        @click="$router.push('/leaderboard')">
+                        Player Leaderboard
+                    </button>
+                
+                    <button
+                        @click="$router.push('/qualityboard')">
+                        Creator Leaderboard
+                    </button>
+                </div>
+
                 <div class="error-container">
                     <p class="error" v-if="err.length > 0">
                         Leaderboard may be incorrect, as the following levels could not be loaded: {{ err.join(', ') }}
@@ -215,7 +229,7 @@ export default {
     async mounted() {
     const [leaderboard, err] = await fetchLeaderboard();
 
-    const excludedUsers = ["finni1505", "D3adSpac3"];
+    const excludedUsers = ["finni1505"];
 
     const filteredLeaderboard = leaderboard
         .filter(entry => !excludedUsers.includes(entry.user))
@@ -268,4 +282,3 @@ export default {
         }
     },
 };
-
