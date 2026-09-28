@@ -11,17 +11,27 @@
     },
     {
         "role": "admin",
-        "name": "Sadisyourlife",
-        "link": "https://www.youtube.com/@justaguy8255"
+        "name": "FoldedZero",
+        "link": "https://www.youtube.com/@FoldedZero"
     },
     {
         "role": "admin",
-        "name": "FoldedZero",
-        "link": "https://www.youtube.com/@FoldedZero"
+        "name": "Probro675",
+        "link": "https://www.youtube.com/@justaguy8255"
     },
     {
         "role": "helper",
         "name": "Nuridint3b",
         "link": "https://www.youtube.com/@Nuridint3b"
+    },
+    {
+        "role": "helper",
+        "name": "Fent",
+        "link": ""
+    },
+    {
+        "role": "helper",
+        "name": "Tomato",
+        "link": ""
     }
 ]
