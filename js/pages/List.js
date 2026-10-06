@@ -168,7 +168,7 @@ export default {
       <a
         v-if="selectedLevel.nong"
         class="nong-download"
-        :href="`/nong/${selectedLevel.nong}`"
+        :href="'/nong/' + selectedLevel.nong"
         download
       >
         nong Download
