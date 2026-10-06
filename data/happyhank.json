@@ -2,10 +2,16 @@
     "id": 127222284,
     "name": "Happy Hank",
     "author": "zis76",
-    "creators": ["zis76", "Windboss07", "Guyinthighhighs"],
+    "creators": [
+        "zis76",
+        "Windboss07",
+        "Guyinthighhighs"
+    ],
     "verifier": "Rusty",
     "verification": "https://www.youtube.com/watch?v=elRt4BaQAWg",
     "percentToQualify": "100",
+    "face": "h2",
+    "ss": "Wave",
     "records": [
         {
             "user": "Sadisyourlife",
