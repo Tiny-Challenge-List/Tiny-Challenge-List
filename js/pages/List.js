@@ -159,12 +159,22 @@ export default {
               <div class="type-title-sm">FPS</div>
               <p>{{ selectedLevel.fps || 'Any' }}</p>
             </li>
-            <li>
-              <div class="type-title-sm">Skillset</div>
-              <p>{{ selectedLevel.ss || 'Wave' }}</p>
-            </li>
-          </ul>
-          <h2>Records</h2>
+     <li>
+        <div class="type-title-sm">Skillset</div>
+        <p>{{ selectedLevel.ss || 'Wave' }}</p>
+      </li>
+      </ul>
+      
+      <a
+        v-if="selectedLevel.nong"
+        class="nong-download"
+        :href="`/nong/${selectedLevel.nong}`"
+        download
+      >
+        nong Download
+      </a>
+      
+      <h2>Records</h2>
           <p v-if="selectedIndexInFullList <= 75">
             <strong>{{ selectedLevel.percentToQualify }}%</strong> or better to qualify
           </p>
