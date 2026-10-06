@@ -153,7 +153,7 @@ export default {
               :href="'/nong/' + selectedLevel.nong"
               download
             >
-              nong Download
+              Nong Download
             </a>
           </div>
           <iframe class="video" id="videoframe" :src="embed(selectedLevel.showcase || selectedLevel.verification)" frameborder="0"></iframe>
