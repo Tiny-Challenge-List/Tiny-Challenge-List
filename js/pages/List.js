@@ -140,7 +140,22 @@ export default {
                 {{ selectedLevel.name }}
             </h1>
         </div>
-          <LevelAuthors :author="selectedLevel.author" :creators="selectedLevel.creators" :verifier="selectedLevel.verifier"></LevelAuthors>
+          <div class="authors-nong-row">
+            <LevelAuthors
+              :author="selectedLevel.author"
+              :creators="selectedLevel.creators"
+              :verifier="selectedLevel.verifier"
+            ></LevelAuthors>
+          
+            <a
+              v-if="selectedLevel.nong"
+              class="nong-download"
+              :href="'/nong/' + selectedLevel.nong"
+              download
+            >
+              nong Download
+            </a>
+          </div>
           <iframe class="video" id="videoframe" :src="embed(selectedLevel.showcase || selectedLevel.verification)" frameborder="0"></iframe>
           <ul class="stats">
             <li>
