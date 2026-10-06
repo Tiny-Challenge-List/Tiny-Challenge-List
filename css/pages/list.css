@@ -168,3 +168,24 @@
     height: 64px;
     object-fit: contain;
 }
+.authors-nong-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.nong-download {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.nong-download:hover {
+  opacity: 0.85;
+}
