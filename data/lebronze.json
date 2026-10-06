@@ -9,5 +9,12 @@
     "face": "1",
     "ss": "Robot",
     "records": [
+        {
+            "user": "ArioPC",
+            "link": "https://youtu.be/ikX_9HACj8U?si=0FMXMA4ZUglDVtk3",
+            "hz": "CBS"
+            "percent": 100,
+            "mobile": "true"
+        }
     ]
 }
