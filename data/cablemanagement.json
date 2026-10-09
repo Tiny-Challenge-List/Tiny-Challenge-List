@@ -20,7 +20,8 @@
             "user": "Nuridint3b",
             "link": "https://www.youtube.com/watch?v=jNlMDB96rKQ",
             "hz": "60",
-            "percent": 100
+            "percent": 100,
+            "mobile: "true"
         }
     ]
 }
