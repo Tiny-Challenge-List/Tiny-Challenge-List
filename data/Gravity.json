@@ -64,6 +64,13 @@
             "link": "https://youtu.be/yE2vw_Og3Kc",
             "hz": "CBF",
             "percent": 100
+        },
+         {
+            "user": "ArioPC",
+            "link": "https://cdn.discordapp.com/attachments/1558313283088425061/1558313284627857539/RPReplay_Final1791601055.mov?ex=6acafbd7&is=6ac9aa57&hm=87be4b2fa5e1cea44561a21bb5758e9e74e5e2fd8a702cc704d00bab7b226c25&",
+            "hz": "CBS",
+            "percent": 100,
+            "mobile": "true"
         }
     ]
 }
