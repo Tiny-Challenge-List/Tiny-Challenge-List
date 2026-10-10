@@ -1,0 +1,36 @@
+{
+    "id": 134506121,
+    "name": "IJMSBS",
+    "author": "Triologix",
+    "creators": [],
+    "verifier": "Triologix",
+    "verification": "https://youtu.be/WuQxYK0qZqI?si=SDn6ga0WRF3Ai7CE",
+    "percentToQualify": "100",
+    "face": "1",
+    "ss": "One Click",
+    "records": [
+        {
+            "user": "MMB9595",
+            "percent": 100,
+            "hz": 360
+        },
+        {
+            "user": "zis08",
+            "link": "https://discord.com/channels/1438982485726724118/1530712355854352407",
+            "percent": 100,
+            "hz": "COS"
+        },
+        {
+            "user": "probro675",
+            "link": "https://youtu.be/YTwLqYaSRFQ?is=u0UNGerpGd2t9yO8",
+            "percent": 100,
+            "hz": "CBS"
+        },
+        {
+            "user": "tomato",
+            "link": "https://youtu.be/ApeQw-6tIHU",
+            "percent": 100,
+            "hz": "CBF"
+        }
+    ]
+}
