@@ -55,11 +55,18 @@
             "hz": "240",
             "percent": 100
       },
-    {
+        {
             "user": "Probro675",
             "link": "https://youtu.be/XTDbwNlogKM?is=tY3ikdR5y46wIPPZ",
             "hz": "CBF",
             "percent": 100
+        },
+        {
+            "user": "Nuridint3b",
+            "link": "https://youtu.be/7DszXQGTKno?si=nfM1qazIvSfzdxF9"
+            "hz": "CBF",
+            "percent": 100,
+            "mobile": "true"
         }
     ]
 }
