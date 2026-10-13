@@ -15,8 +15,13 @@
             "percent": 100,
             "hz": "60",
             "mobile": "true"
+        },
+        {
+            "user": "zis76",
+            "link": "https://discord.com/channels/1413625809112924307/1559332198757441588",
+            "hz": "CBF",
+            "percent": 100
         }
-    
     ]
 }
 
