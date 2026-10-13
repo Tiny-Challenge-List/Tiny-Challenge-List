@@ -45,9 +45,16 @@
             "percent": 100,
             "mobile": "true"
         },
-        {   "user": "Rusty",
-             "link": "https://www.youtube.com/watch?v=lc_rAzuLtQI",
+        {   
+            "user": "Rusty",
+            "link": "https://www.youtube.com/watch?v=lc_rAzuLtQI",
             "hz": "CBS",
+            "percent": 100
+        },
+         { 
+            "user": "Swatthat",
+            "link": "https://medal.tv/games/geometry-dash/clips/nIz2LqNIdrx2D97HB?invite=cr-MSxLMk8sNDI4OTI2MzI2cbf",
+            "hz": "CBF",
             "percent": 100
         }
     ]
