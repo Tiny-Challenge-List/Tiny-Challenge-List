@@ -9,7 +9,20 @@
     "face": "h1",
     "ss": "Wave, Ship",
     "records": [           
-
+ 
+        {
+            "user": "tFluffy",
+            "link": "https://cdn.discordapp.com/attachments/1560444789206425640/1560444793639927919/i_doggied_my_creaf.mp4?ex=6ad365b6&is=6ad21436&hm=e45e5fc28ba4d528674504efe609a7429722ae479de4b44605618e4a56eebd28&",
+            "hz": "240",
+            "percent": 100
+        },
+        
+        {
+            "user": "ArioPC",
+            "link": "https://medal.tv/games/geometry-dash/clips/nJxRWC2yLDNQn7MYE?invite=cr-MSw1dVIsMjE3MzQ4MzIz",
+            "hz": "CBS",
+            "percent": 100
+        }
     
     ]
 }
