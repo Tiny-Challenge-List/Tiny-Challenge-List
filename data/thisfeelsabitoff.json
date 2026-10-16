@@ -39,6 +39,12 @@
             "link": "https://youtu.be/RBhcdbF_5_E?si=ekwnclai-Qs9u7eu",
             "hz": "CBS",
             "percent": 100
-        }
+        },
+        {
+            "user": "tomato",
+            "link": "https://youtu.be/3KuVCwfJaoU",
+            "hz": "60",
+            "percent": 100
+       }
     ]
 }
