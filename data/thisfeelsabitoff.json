@@ -45,6 +45,13 @@
             "link": "https://youtu.be/3KuVCwfJaoU",
             "hz": "60",
             "percent": 100
-       }
+        },
+        {
+            "user": "ArioPC",
+            "link": "https://discord.com/channels/1413625809112924307/1561429027007238204",
+            "hz": "CBS",
+            "percent": 100,
+            "mobile": "true
+        }
     ]
 }
