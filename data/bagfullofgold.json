@@ -36,6 +36,12 @@
             "hz": "CBS",
             "percent": 100,
             "mobile": "true"
+      },
+        {
+            "user": "Tomato",
+            "link": "https://youtu.be/syOCH1GX9bk?si=Gz_aOMAtkAHw-VYm",
+            "hz": "CBF",
+            "percent": 100
       }
     ]
 }
