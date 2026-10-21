@@ -1,0 +1,31 @@
+{
+    "id": 139167165,
+    "name": "Shardiopolis",
+    "author": "probro675",
+    "creators": [],
+    "verifier": "probro675",
+    "verification": "https://youtu.be/S2B2JVEOxbQ?si=0hlf-vQHAkxh612i",
+    "percentToQualify": "100",
+    "face": "h4",
+    "ss": "Robot",
+    "records": [ {
+            "user": "MMB9595",
+            "link": "https://www.youtube.com/watch?v=iUkaTd9exK0",
+            "percent": 100,
+            "hz": 360
+        }, 
+        {
+            "user": "zis08",
+            "link": "https://medal.tv/games/geometry-dash/clips/mPuMMCtSDT99NBHgY?invite=cr-MSx6MWUsMTY4ODkwOTU4",
+            "percent": 100,
+            "hz": 240
+        },
+        {
+            "user": "ArioPC",
+            "link": "https://medal.tv/games/geometry-dash/clips/mSINX6pz870cHYqAf?invite=cr-MSxUZHUsMjE3MzQ4MzIz",
+            "hz": "CBF",
+            "percent": 100
+        }
+    
+    ]       
+}
