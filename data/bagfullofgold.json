@@ -43,10 +43,17 @@
             "hz": "CBF",
             "percent": 100
       },
-    {
+       {
             "user": "Rusty",
             "link": "https://youtu.be/PfHm2yE6Y5k?t=204&is=dcFN_zF9-IF7n-ie",
             "hz": "CBF",
+            "percent": 100
+        },
+
+        {
+            "user": "zis76",
+            "link": "https://medal.tv/games/geometry-dash/clips/nJZhU5uIH2aHbis9N",
+            "hz": "240",
             "percent": 100
         }
     ]
