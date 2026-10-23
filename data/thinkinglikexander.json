@@ -23,10 +23,16 @@
             "percent": 100,
             "mobile": "true"
         },
-            {
+        {
             "user": "Tomato",
             "link": "https://youtu.be/r5f7c3GTxa4?si=CNXIpKgiwUmhZiu2&t=92",
             "hz": "CBF",
+            "percent": 100
+        },
+        {
+            "user": "zis76",
+            "link": "https://medal.tv/games/geometry-dash/clips/nJYWG98afnOSKdFS7",
+            "hz": "240",
             "percent": 100
         }
     ]
