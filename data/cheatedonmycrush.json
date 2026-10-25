@@ -11,15 +11,42 @@
     "ss": "Dual",
     "records": [
     
+         {
+            "user": "Sadisyourlife",
+            "link": "https://cdn.discordapp.com/attachments/1413628930065301616/1445781945807011900/Cheated_on_my_Crush.mp4?ex=693198dd&is=6930475d&hm=4e25cb03fb110f72b8ee487abdf8503b5986f89d24aafac945966a178fa2d4ae&",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "finni1505",
+            "link": "https://medal.tv/de/games/geometry-dash/clips/lFLcw18z6r5kZcjzM?invite=cr-MSxDQjcsMzY5MjUzOTQw&v=30",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1413628930065301616/1449663340904321044",
+            "hz": "60",
+            "percent": 100
+        },
+        {
+            "user": "zis76",
+            "link": "https://www.youtube.com/watch?v=fUA0KAibNTU",
+            "hz": "60",
+            "percent": 100
+        },
         {
             "user": "Nuridint3b",
-            "link": "https://youtu.be/JrRs34Tn0eI?is=FEbngfXT2b75DBCr",
+            "link": "https://youtu.be/ZAcgVXYHbDo?si=nDYflyL_QFawpcbw",
             "hz": "60",
-            "mobile": true,
+            "percent": 100,
+            "mobile": "true"
+        },
+        {
+            "user": "DarkCity8",
+            "link": "https://files.catbox.moe/8plqsj.mp4",
+            "hz": "60",
             "percent": 100
         }
-
-     
-    
     ]
 }
