@@ -60,7 +60,13 @@
         },
         {
             "user": "probro675",
-            "link": "https://youtu.be/RBhcdbF_5_E?si=ekwnclai-Qs9u7eu",
+            "link": "https://youtu.be/RBhcdbF_5_E?si=ekwnclai-Qs9u7eu", 
+            "hz": "CBS",
+            "percent": 100
+        },
+        {
+            "user": "ArioPC",
+            "link": "https://medal.tv/games/geometry-dash/clips/nJVkSKORKDuXU65zM?invite=cr-MSxUV1YsMjE3MzQ4MzIz ",
             "hz": "CBS",
             "percent": 100
         }
