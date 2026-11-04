@@ -9,8 +9,12 @@
     "face": "e2",
     "ss": "Memory, Timings",
     "records": [
-
-
+         {
+            "user": "ArioPC",
+            "link": "https://medal.tv/games/geometry-dash/clips/nMnwcFD2OaIcVJ3h4?invite=cr-MSxoVGgsMjE3MzQ4MzIz",
+            "hz": "120",
+            "percent": 100
+        }
     ]
 
 }
