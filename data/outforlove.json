@@ -40,6 +40,12 @@
             "hz": "60",
             "percent": 100,
             "mobile": "true"
+        },
+         {
+            "user": "Tomato",
+            "link": "https://discord.com/channels/1413625809112924307/1566315378513154120/1566315378513154120",
+            "hz": "720",
+            "percent": 100
         }
     ]
 }
