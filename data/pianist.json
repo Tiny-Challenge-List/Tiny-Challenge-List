@@ -46,10 +46,16 @@
             "hz": "480",
             "percent": 100
        },
-    {
+       {
             "user": "puufy",
             "link": "https://youtu.be/ViUKBoKxGUA",
             "hz": "CBS",
+            "percent": 100
+       },
+       {
+            "user": "MapleMilkshake",
+            "link": "https://www.youtube.com/watch?v=yL4hD1pAYVw",
+            "hz": "240",
             "percent": 100
        }
     ]
