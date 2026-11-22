@@ -51,6 +51,12 @@
             "link": "https://youtu.be/RwiSp8K-M78",
             "hz": "CBS",
             "percent": 100
+       },
+         {
+            "user": "MapleMilkshake",
+            "link": "https://www.youtube.com/watch?v=5lABQgIqFHc",
+            "hz": "240",
+            "percent": 100
        }
     ]
 }
