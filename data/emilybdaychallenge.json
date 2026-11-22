@@ -15,8 +15,13 @@
             "link": "https://youtu.be/dUo9BJ5RO7I",
             "hz": "CBF",
             "percent": 100
-        }
-
+        },
+         {
+            "user": "MapleMilkshake",
+            "link": "https://www.youtube.com/watch?v=ahToe-WgQVs",
+            "hz": "240",
+            "percent": 100
+       }
     ]
 
 }
